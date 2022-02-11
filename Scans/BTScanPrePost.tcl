@@ -14,7 +14,7 @@ remove_hw_sio_scan [get_hw_sio_scans {}]
 set systemTime [clock seconds]
  
 set folderName [clock format $systemTime -format %Y_%m_%d_%H%M-%S]
-set folderName "/home/meholmbe/alpha_scan/$folderName"
+set folderName "/home/meholmbe/optics-scan/results/$folderName"
 
 # generate the folders 
 exec mkdir -p -- $folderName
