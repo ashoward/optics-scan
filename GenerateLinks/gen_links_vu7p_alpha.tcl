@@ -28,7 +28,7 @@ package require json
 set MGTtypeId [ dict create GTH "_1_0_50/IBERT" GTY "_1_0_0/IBERT" ]
 
 # open files
-set tclBase "/afs/cern.ch/user/m/meholmbe/alpha_scan/alpha_prime/batch"
+set tclBase "/home/meholmbe/optics-scan"
 
 set configFileName "$tclBase/json/connections_config_vu7p_alpha.json"
 set vu7p_so1_v1_fileName "$tclBase/json/vu7p_so1_v1_connectivity.json"

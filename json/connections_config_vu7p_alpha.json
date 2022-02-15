@@ -1,0 +1,42 @@
+{
+    "BaseBoard" : "Serenity_08",
+    "JTAG" : {
+	"JTAGid" : "Xilinx/00000000000000",
+        "host"   : "localhost:3121"
+    },
+    "DCs" : { 
+    "X0" : { "type" : "vu7p_so1",
+             "id" : "hnzf",
+           },
+    "X1" : { "type" : "vu7p_so1",
+             "id" : "hnzf",
+           }
+    },
+    "hardwareConnections" : {
+        "socket0"  : "DAQ"     ,
+        "socket1"  : "Tx0"     ,
+        "socket2"  : "Rx0"     ,
+        "socket3"  : "Tx1"     ,
+        "socket4"  : "Rx1"     ,
+        "socket5"  : "Tx2"     ,
+        "socket6"  : "Rx2"     ,
+        "socket7"  : "Tx3"     ,
+        "socket8"  : "Rx3"     ,
+        "socket9"  : "Tx4"     ,
+        "socket10" : "Rx4"     ,
+        "socket11" : "Tx5"     ,
+        "socket12" : "Rx5"     ,
+        "socket13" : "ext"     
+    },
+    "connections" : {
+        "connectionX0_A" : { "connectionType" : "Fibre",
+                             "sideA" : { "site" : "X0",
+                                         "connector" : "Rx1" 
+                                       },
+                             "sideB" : { "site" : "X0",
+                                         "connector" : "Tx1" 
+                                       }
+                           }
+    }
+     
+}
