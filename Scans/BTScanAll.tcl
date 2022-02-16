@@ -42,8 +42,6 @@ set config [ dict create ]
 
 
 array set rxterm_setting_gty {
-    1  100
-    6  400
     11  800
 }
 # All possible RxTerm values
@@ -57,7 +55,7 @@ array set rxterm_setting_gty {
     # 8  550
     # 9  600
     # 10  700
-    # 11  800
+    # 11  800 # Default
     # 12  850
     # 13  900
     # 14  950
@@ -68,7 +66,6 @@ array set rxterm_setting_gty {
 array set txdiff_setting_gty {
     (00101) 530
     (11000) 950
-    (01111) 760
     (11111) 1040
 }
 # All possible TxDiffSwing values
@@ -96,7 +93,7 @@ array set txdiff_setting_gty {
     # (10101) 900
     # (10110) 920
     # (10111) 930
-    # (11000) 950
+    # (11000) 950 # Default
     # (11001) 970
     # (11010) 980
     # (11011) 990
@@ -110,10 +107,9 @@ array set txpost_setting_gty {
     (00000) 0.00
     (01001) 2.21
     (01111) 4.08
-    (10100) 6.02
 }
 # All possible TxPost values
-    # (00000) 0.00
+    # (00000) 0.00 # Default
     # (00001) 0.22
     # (00010) 0.45
     # (00011) 0.68
@@ -153,7 +149,7 @@ array set txpre_setting_gty {
     (01111) 4.08
 }
 # All possible TxPre values
-#     (00000) 0.00
+#     (00000) 0.00 # Default
 #     (00001) 0.22
 #     (00010) 0.45
 #     (00011) 0.68
@@ -198,7 +194,7 @@ array set eq_val {
 # All possible EQ values
   # 1 0
   # 2 1
-  # 3 2
+  # 3 2 # Default
   # 4 3
   # 5 4
   # 6 5
