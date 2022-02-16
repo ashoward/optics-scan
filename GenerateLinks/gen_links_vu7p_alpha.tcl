@@ -30,9 +30,11 @@ set MGTtypeId [ dict create GTH "_1_0_50/IBERT" GTY "_1_0_0/IBERT" ]
 # Set base directory of optics scan
 set tclBase "/home/meholmbe/optics-scan"
 # Open files
-set configFileName "$tclBase/json/connections_config_vu7p_alpha.json"
-# set configFileName "$tclBase/json/connections_config_vu7p_alpha_inverted.json"
 set vu7p_so1_v1_fileName "$tclBase/json/vu7p_so1_v1_connectivity.json"
+# Map Tx0 to Rx0, Tx1 to Rx1, etc.
+set configFileName "$tclBase/json/connections_config_vu7p_alpha.json"
+# Map Tx0 to Rx11, Tx1 to Rx10, etc.
+# set configFileName "$tclBase/json/connections_config_vu7p_alpha_inverted.json"
 
 
 set configFileIn [open $configFileName r]
@@ -67,7 +69,7 @@ set connections [ dict get $config connections ]
 #puts "channel argument is: $argv"
 
 
-##### Generate
+#### Generate links
 
 dict for { id c } $connections {
     
@@ -207,7 +209,7 @@ dict for { id c } $connections {
 
 }
 
-### Setup links
+#### Setup links
 set links [get_hw_sio_links]
 
 foreach link $links {
