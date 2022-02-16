@@ -498,7 +498,6 @@ foreach group $groups {
     # Save best scan
     write_hw_sio_scan -force "$folderName/data/best_area/$scanName" [get_hw_sio_scans $best_xil_newScan($link)]
 
-
     # Best Error Count
     set text ""
     if { $j > 0 } {
@@ -515,7 +514,6 @@ foreach group $groups {
     # Save one of the best scans...
     write_hw_sio_scan -force "$folderName/data/best_errors/$scanName" [get_hw_sio_scans $best_err_xil_newScan($link)]
 
-
     # Set one of the best configurations
     set_property TXPRE "$best_err_txpre($link) dB $best_err_txpre_index($link)" [get_hw_sio_links $link]
     set_property TXPOST "$best_err_txpost($link) dB $best_err_txpost_index($link)" [get_hw_sio_links $link]
@@ -523,7 +521,6 @@ foreach group $groups {
 
     incr j
   }
-
 }
 
 puts $fout "\}"
