@@ -1,39 +1,39 @@
 ## ALL relevant settings - beware > 500000 sweeps!!
 
-### which precision ###
+### Which precision ###
 
 ##set dwell_ber 1e-8
 set dwell_ber 1e-6
 
 #######################
 
-# remove the current scans if any
+# Remove the current scans if any
 remove_hw_sio_scan [get_hw_sio_scans {}]
 
-# get the system time to name the directory
+# Get the system time to name the directory
 set systemTime [clock seconds]
  
 set folderName [clock format $systemTime -format %Y_%m_%d_%H%M-%S]
-set folderName "/home/meholmbe/optics-scan/results/$folderName-swing"
+set folderName "/home/meholmbe/optics-scan/results/$folderName-all"
 
-# generate the folders 
+# Generate the folders 
 exec mkdir -p -- $folderName
 exec mkdir -p -- $folderName/data
 exec mkdir -p -- $folderName/data/best
 
-# open file to store the configuration 
+# Open file to store the configuration 
 set fout [open ./configuration_summary.json w]
 puts $fout "{"
-# open file to store the best configuration
+# Open file to store the best configuration
 set fbest [open ./best_summary.json w]
 puts $fbest "{"
 set fbest_err [open ./best_errors_summary.json w]
 puts $fbest_err "{"
-# open file to store the BER
+# Open file to store the BER
 set fber [open ./BER_summary.txt w]
 puts $fber "Link: $argv\n"
 
-# get links 
+# Get links 
 set links [ get_hw_sio_links ]
 
 set groups [ get_hw_sio_linkgroups ]
@@ -42,104 +42,118 @@ set config [ dict create ]
 
 
 array set rxterm_setting_gty {
-    1  100
-    2  200
+    11  800
 }
-#  3  250
-#  4  330
-#  5  350
-#  6  400
-#  7  500
-#  8  550
-#  9  600
-#  10  700
-#  11  800
-#  12  850
-#  13  900
-#  14  950
-#  15  1000
-#  16  1100 
-# }
+# All possible RxTerm values
+    # 1  100
+    # 2  200
+    # 3  250
+    # 4  330
+    # 5  350
+    # 6  400
+    # 7  500
+    # 8  550
+    # 9  600
+    # 10  700
+    # 11  800 # Default
+    # 12  850
+    # 13  900
+    # 14  950
+    # 15  1000
+    # 16  1100
+
 
 array set txdiff_setting_gty {
-    (00000) 390
-    (00001) 430
+    (00101) 530
+    (11000) 950
+    (11111) 1040
 }
-#     (00010) 450
-#     (00011) 470
-#     (00100) 490
-#     (00101) 530
-#     (00110) 550
-#     (00111) 570
-#     (01000) 590
-#     (01001) 630
-#     (01010) 650
-#     (01011) 670
-#     (01100) 690
-#     (01101) 730
-#     (01110) 740
-#     (01111) 760
-#     (10000) 780
-#     (10001) 820
-#     (10010) 840
-#     (10011) 850
-#     (10100) 870
-#     (10101) 900
-#     (10110) 920
-#     (10111) 930
-#     (11000) 950
-#     (11001) 970
-#     (11010) 980
-#     (11011) 990
-#     (11100) 1000
-#     (11101) 1020
-#     (11110) 1030
-#     (11111) 1040
-# }
+# All possible TxDiffSwing values
+    # (00000) 390
+    # (00001) 430
+    # (00010) 450
+    # (00011) 470
+    # (00100) 490
+    # (00101) 530
+    # (00110) 550
+    # (00111) 570
+    # (01000) 590
+    # (01001) 630
+    # (01010) 650
+    # (01011) 670
+    # (01100) 690
+    # (01101) 730
+    # (01110) 740
+    # (01111) 760
+    # (10000) 780
+    # (10001) 820
+    # (10010) 840
+    # (10011) 850
+    # (10100) 870
+    # (10101) 900
+    # (10110) 920
+    # (10111) 930
+    # (11000) 950 # Default
+    # (11001) 970
+    # (11010) 980
+    # (11011) 990
+    # (11100) 1000
+    # (11101) 1020
+    # (11110) 1030
+    # (11111) 1040
+
 
 array set txpost_setting_gty {
     (00000) 0.00
-    (00001) 0.22
+    (01001) 2.21
+    (01111) 4.08
 }
+# All possible TxPost values
+    # (00000) 0.00 # Default
+    # (00001) 0.22
     # (00010) 0.45
     # (00011) 0.68
     # (00100) 0.92
-#     (00101) 1.16
-#     (00110) 1.41
-#     (00111) 1.67
-#     (01000) 1.94
-#     (01001) 2.21
-#     (01010) 2.50
-#     (01011) 2.79
-#     (01100) 3.10
-#     (01101) 3.41
-#     (01110) 3.74
-#     (01111) 4.08
-#     (10000) 4.44
-#     (10001) 4.81
-#     (10010) 5.19
-#     (10011) 5.60
-#     (10100) 6.02
-#     (10101) 6.47
-#     (10110) 6.94
-#     (10111) 7.43
-#     (11000) 7.96
-#     (11001) 8.52
-#     (11010) 9.12
-#     (11011) 9.76
-#     (11100) 10.46
-#     (11101) 11.21
-#     (11110) 12.04
-#     (11111) 12.96
-# }
+    # (00101) 1.16
+    # (00110) 1.41
+    # (00111) 1.67
+    # (01000) 1.94
+    # (01001) 2.21
+    # (01010) 2.50
+    # (01011) 2.79
+    # (01100) 3.10
+    # (01101) 3.41
+    # (01110) 3.74
+    # (01111) 4.08
+    # (10000) 4.44
+    # (10001) 4.81
+    # (10010) 5.19
+    # (10011) 5.60
+    # (10100) 6.02
+    # (10101) 6.47
+    # (10110) 6.94
+    # (10111) 7.43
+    # (11000) 7.96
+    # (11001) 8.52
+    # (11010) 9.12
+    # (11011) 9.76
+    # (11100) 10.46
+    # (11101) 11.21
+    # (11110) 12.04
+    # (11111) 12.96
+
 
 array set txpre_setting_gty {
     (00000) 0.00
-    (00001) 0.22
+    (01001) 2.21
+    (01111) 4.08
 }
-    # (00010) 0.45
-    # (00011) 0.68
-    # (00100) 0.92
+# All possible TxPre values
+#     (00000) 0.00 # Default
+#     (00001) 0.22
+#     (00010) 0.45
+#     (00011) 0.68
+#     (00100) 0.92
 #     (00101) 1.16
 #     (00110) 1.41
 #     (00111) 1.67
@@ -156,21 +170,21 @@ array set txpre_setting_gty {
 #     (10010) 5.19
 #     (10011) 5.60
 #     (10100) 6.02
-# }
 # What are these for...
-    # (10101) 6.02
-    # (10110) 6.02
-    # (10111) 6.02
-    # (11000) 6.02
-    # (11001) 6.02
-    # (11010) 6.02
-    # (11011) 6.02
-    # (11100) 6.02
-    # (11101) 6.02
-    # (11110) 6.02
-    # (11111) 6.02
+#     (10101) 6.02
+#     (10110) 6.02
+#     (10111) 6.02
+#     (11000) 6.02
+#     (11001) 6.02
+#     (11010) 6.02
+#     (11011) 6.02
+#     (11100) 6.02
+#     (11101) 6.02
+#     (11110) 6.02
+#     (11111) 6.02
 
-# start loop
+
+# Start loop over values
 set i 0
 set sweep 0
 foreach group $groups {
@@ -184,7 +198,7 @@ foreach group $groups {
   set links [get_hw_sio_links -of_objects [get_hw_sio_linkgroups $group]]
 
   foreach link $links {
-    # best Open Area
+    # Best Open Area
     set best_area($link) -1
     set best_txdiff($link) -1
     set best_txdiff_index($link) -1
@@ -195,7 +209,7 @@ foreach group $groups {
     set best_errors($link) 999999999999
     set best_dfe($link) unset
     set best_xil_newScan($link) unset
-    # best Error Count
+    # Best Error Count
     set best_err_area($link) -1
     set best_err_txdiff($link) -1
     set best_err_txdiff_index($link) -1
@@ -227,17 +241,17 @@ foreach group $groups {
               set_property TX_PATTERN "PRBS 31-bit" [get_hw_sio_links $link]
               set_property RX_PATTERN "PRBS 31-bit" [get_hw_sio_links $link]
 
-              ## set datawidths
+              # Set datawidths
               set rx_datawidth [get_property RX_DATA_WIDTH [get_hw_sio_links $link] ]
               set tx_datawidth [get_property TX_DATA_WIDTH [get_hw_sio_links $link] ]
               puts "TX datawidthvalue value: $tx_datawidth"
               puts "RX datawidthvalue value: $rx_datawidth"
 
-              # set RX term
+              # Set RX term
               set_property RXTERM "$rxterm_setting_gty($index_rxterm) mV" [get_hw_sio_links $link]
               puts "RXTERM: $rxterm_setting_gty($index_rxterm)"
 
-              # set TX pre/post
+              # Set TX pre/post
               set_property TXDIFFSWING "$txdiff_setting_gty($index_diff) mV $index_diff" [get_hw_sio_links $link]
               set_property TXPRE "$txpre_setting_gty($index_pre) dB $index_pre" [get_hw_sio_links $link]
               set_property TXPOST "$txpost_setting_gty($index_post) dB $index_post" [get_hw_sio_links $link]
@@ -256,13 +270,13 @@ foreach group $groups {
               set_property LOGIC.TX_RESET_DATAPATH 0 [get_hw_sio_links $link]
               commit_hw_sio [get_hw_sio_links $link]
 
-              # reset counters
+              # Reset counters
               set_property LOGIC.MGT_ERRCNT_RESET_CTRL 1 [get_hw_sio_links $link]
               commit_hw_sio [get_hw_sio_links $link]
               set_property LOGIC.MGT_ERRCNT_RESET_CTRL 0 [get_hw_sio_links $link]
               commit_hw_sio [get_hw_sio_links $link]
 
-              # from link name define scan name
+              # Define scan name from link name
               set linkName [get_property DESCRIPTION $link]
               if { $dfe == "0" } {
                 set DFE lpm
@@ -272,17 +286,17 @@ foreach group $groups {
 
               set scanName "$DFE RXTERM-$rxterm_setting_gty($index_rxterm) TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) Scan $groupName $linkName"
 
-              # get the DCs info
+              # Get the DCs info
               set linkName [ lindex [ split $linkName " " ] 1 ]
               set tx [ lindex [ split $linkName ":" ] 0 ]
               set rx [ lindex [ split $linkName ":" ] 1 ]
               set DCtx [ dict create site [lindex [ split $tx "-"] 0 ] type [lindex [ split $tx "-"] 1 ] id [lindex [ split $tx "-"] 2 ] ]
               set DCrx [ dict create site [lindex [ split $rx "-"] 0 ] type [lindex [ split $rx "-"] 1 ] id [lindex [ split $rx "-"] 2 ] ]
 
-              # the site is the TX site
+              # The site is the TX site
               set site [ dict get $DCtx site ]
 
-              # get all qplls and their status
+              # Get all qplls and their status
               set QPLLs [ get_hw_sio_plls -of_objects [ get_hw_sio_commons -of_objects [ get_hw_sio_gtgroup -of_objects [ get_hw_sio_gts -of_objects [get_hw_sio_links $link] ] ] ] ]
 
               set PLL0status [get_property STATUS [lindex $QPLLs 0] ]
@@ -292,7 +306,7 @@ foreach group $groups {
               set tx [ get_property TX_ENDPOINT $link ]
               set rxEndpoint [ get_property RX_ENDPOINT $link ]
 
-              # do not scan if pll is not locked, report it instead
+              # Do not scan if pll is not locked, report it instead
               if { $PLL0status == "NOT LOCKED" } {
                 puts "WARNING wrong PLL status ($scanName): PLL0 is $PLL0status, PLL1 is $PLL1status"
                 set error_count none
@@ -302,7 +316,7 @@ foreach group $groups {
                 set_property HORIZONTAL_INCREMENT {1} [get_hw_sio_scans $xil_newScan]
                 set_property DWELL_BER $dwell_ber [get_hw_sio_scans $xil_newScan]
 
-                # run the scan! :) 
+                # Run the scan! :) 
                 run_hw_sio_scan [get_hw_sio_scans $xil_newScan]
                 wait_on_hw_sio_scan [get_hw_sio_scans $xil_newScan]
 
@@ -335,7 +349,7 @@ foreach group $groups {
                   set best_xil_newScan($link) $xil_newScan
                 }
 
-                # save the scan! :D
+                # Save the scan! :D
                 exec mkdir -p -- $folderName/data/sweep$sweep
                 write_hw_sio_scan -force "$folderName/data/sweep${sweep}/$scanName" [get_hw_sio_scans $xil_newScan]
               }
@@ -347,7 +361,7 @@ foreach group $groups {
               set rx_polarity [ get_property PORT.RXPOLARITY $link ]
               set DFE_enabled [ get_property RXDFEENABLED  $link ]
 
-              # write configuration to out file
+              # Write configuration to out file
               set text ""
 
               if { $i > 0 } {
@@ -434,7 +448,7 @@ foreach group $groups {
                 lappend best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm))"
               }
 
-              # write BER file
+              # Write BER file
               set text ""
               append text "$scanName : \n"
               append text "txDiff : $txdiff_setting_gty($index_diff)\n"
@@ -458,13 +472,13 @@ foreach group $groups {
     }
   }
 
-  # the best configurations
+  # The best configurations
   set j 0
   foreach link $links {
 
     set linkName [get_property DESCRIPTION $link]
 
-    # best Open Area
+    # Best Open Area
     set text ""
     if { $j > 0 } {
       append text "\},\n"
@@ -481,11 +495,11 @@ foreach group $groups {
 
     puts $fbest $text
 
-    # save best scan
+    # Save best scan
     write_hw_sio_scan -force "$folderName/data/best_area/$scanName" [get_hw_sio_scans $best_xil_newScan($link)]
 
 
-    # best Error Count
+    # Best Error Count
     set text ""
     if { $j > 0 } {
       append text "\},\n"
@@ -502,9 +516,10 @@ foreach group $groups {
     write_hw_sio_scan -force "$folderName/data/best_errors/$scanName" [get_hw_sio_scans $best_err_xil_newScan($link)]
 
 
-    # set one of the best configurations
+    # Set one of the best configurations
     set_property TXPRE "$best_err_txpre($link) dB $best_err_txpre_index($link)" [get_hw_sio_links $link]
     set_property TXPOST "$best_err_txpost($link) dB $best_err_txpost_index($link)" [get_hw_sio_links $link]
+    # Add the other values as well?
 
     incr j
   }
