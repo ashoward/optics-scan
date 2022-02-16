@@ -36,7 +36,7 @@ Start Vivado and open Hardware Manager. In the Hardware Menu to the left, press 
 
 ## Run Scans
 
-Make sure the steps in Setup has been made.
+Make sure the steps in Setup has been made. The final results will be written to a `results/` folder.
 
 ### Run Interactively
 
