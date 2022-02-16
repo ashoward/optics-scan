@@ -25,7 +25,7 @@ exec mkdir -p -- $folderName/data/best
 set fout [open ./configuration_summary.json w]
 puts $fout "{"
 # Open file to store the best configuration
-set fbest [open ./best_summary.json w]
+set fbest [open ./best_area_summary.json w]
 puts $fbest "{"
 set fbest_err [open ./best_errors_summary.json w]
 puts $fbest_err "{"
@@ -445,6 +445,6 @@ close $fbest_err
 close $fber
 
 exec mv ./configuration_summary.json $folderName
-exec mv ./best_summary.json $folderName
+exec mv ./best_area_summary.json $folderName
 exec mv ./best_errors_summary.json $folderName
 exec mv ./BER_summary.txt $folderName
