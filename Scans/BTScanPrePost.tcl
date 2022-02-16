@@ -1,4 +1,5 @@
 # ALL relevant settings - beware > 500000 sweeps!!
+# 500 scans per hour
 
 ### Which precision ###
 
