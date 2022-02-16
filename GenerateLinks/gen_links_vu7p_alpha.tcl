@@ -27,12 +27,12 @@ package require json
 
 set MGTtypeId [ dict create GTH "_1_0_50/IBERT" GTY "_1_0_0/IBERT" ]
 
-# open files
+# Set base directory of optics scan
 set tclBase "/home/meholmbe/optics-scan"
-
+# Open files
 set configFileName "$tclBase/json/connections_config_vu7p_alpha.json"
+# set configFileName "$tclBase/json/connections_config_vu7p_alpha_inverted.json"
 set vu7p_so1_v1_fileName "$tclBase/json/vu7p_so1_v1_connectivity.json"
-## add here all the other config file 
 
 
 set configFileIn [open $configFileName r]
@@ -41,7 +41,7 @@ set connectivity [dict create \
                       # ----->>>>> add here any configuration: e.g. VU9P and sm1_v2
                  ]
 
-# get data 
+# Get data 
 set configRaw [read $configFileIn]
 
 set config [ ::json::json2dict $configRaw ]
@@ -67,7 +67,7 @@ set connections [ dict get $config connections ]
 #puts "channel argument is: $argv"
 
 
-##### generate
+##### Generate
 
 dict for { id c } $connections {
     
@@ -85,29 +85,17 @@ dict for { id c } $connections {
     set daughterCardB   [ dict get $DCs $siteB ]
     set socketBtmp      [ dict get [dict get $connectivity [dict get $daughterCardB type] ] $connectorB] 
     
-    ## invert lines on the fiber/bundle if needed
+    ## Invert lines on the fibre/bundle if needed
     set socketB []
     set nConnections [ dict size $socketBtmp ]
-    if { $connectionType == "Cu12" } {
+    if { $connectionType == "InvertFibre" } {
         
         for {set i [expr $nConnections-1]} {$i > -1} {incr i -1} { 
             dict set socketB $i [ dict get $socketBtmp $i ] 
         }
-        
-    } elseif { $connectionType == "Cu4plus4" } {
-    
-        for {set i [expr $nConnections-1]} {$i > -1} {incr i -1} { 
-            dict set socketB $i [dict get $socketBtmp $i] 
-        }
-    
+
     } elseif { $connectionType == "Fibre" } {
         
-        for {set i [expr 0]} {$i < $nConnections} {incr i} { 
-            dict set socketB $i [dict get $socketBtmp $i] 
-        }
-        
-    } elseif { $connectionType == "hsb" } {
-    
         for {set i [expr 0]} {$i < $nConnections} {incr i} { 
             dict set socketB $i [dict get $socketBtmp $i] 
         }
@@ -119,10 +107,10 @@ dict for { id c } $connections {
     
     } 
 
-    ## generate the links
+    ##Generate the links
     foreach {socketLineIdA A} $socketA {socketLineIdB B} $socketB {
         
-        # get the MGTs path and type
+        # Get the MGTs path and type
         set MGTa     [ dict get $A MGT ]
         set MGTaType [ dict get $A type ]
         set MGTb     [ dict get $B MGT ]
@@ -184,35 +172,34 @@ dict for { id c } $connections {
         }
         
 
-#	if { $txSocketLineId == "$argv" } {
-	
-	set rxDCid   [ dict get [ dict get $DCs X$rxSite ] id ]
-	set rxDCtype [ dict get [ dict get $DCs X$rxSite ] type ]
-	set txDCid   [ dict get [ dict get $DCs X$txSite ] id ]  
-	set txDCtype [ dict get [ dict get $DCs X$txSite ] type ]
-	
-	set rxMGTid [dict get $MGTtypeId $rxMGTtype ]
-	set txMGTid [dict get $MGTtypeId $txMGTtype ]
-	
-	set txPath "$pathBase/$txSite$txMGTid/$txMGT"
-	set rxPath "$pathBase/$rxSite$rxMGTid/$rxMGT"
-	
-	set description "Link X$txSite-$txDCtype-$txDCid-$txConnectorLogic-$txSocketLineId:X$rxSite-$rxDCtype-$rxDCid-$rxConnectorLogic-$rxSocketLineId"
-	puts $description
-	#######puts $description
+#   if { $txSocketLineId == "$argv" } {
+    
+    set rxDCid   [ dict get [ dict get $DCs X$rxSite ] id ]
+    set rxDCtype [ dict get [ dict get $DCs X$rxSite ] type ]
+    set txDCid   [ dict get [ dict get $DCs X$txSite ] id ]  
+    set txDCtype [ dict get [ dict get $DCs X$txSite ] type ]
+    
+    set rxMGTid [dict get $MGTtypeId $rxMGTtype ]
+    set txMGTid [dict get $MGTtypeId $txMGTtype ]
+    
+    set txPath "$pathBase/$txSite$txMGTid/$txMGT"
+    set rxPath "$pathBase/$rxSite$rxMGTid/$rxMGT"
+    
+    set description "Link X$txSite-$txDCtype-$txDCid-$txConnectorLogic-$txSocketLineId:X$rxSite-$rxDCtype-$rxDCid-$rxConnectorLogic-$rxSocketLineId"
+    puts $description
         
-	# generate the link
-	puts $txPath
-	puts $rxPath
-	set xil_newLink [create_hw_sio_link -description $description [lindex [get_hw_sio_txs $txPath] 0] [lindex [get_hw_sio_rxs $rxPath] 0] ]
-	puts $xil_newLink
-	lappend xil_newLinks $xil_newLink
+    # Generate the link
+    puts $txPath
+    puts $rxPath
+    set xil_newLink [create_hw_sio_link -description $description [lindex [get_hw_sio_txs $txPath] 0] [lindex [get_hw_sio_rxs $rxPath] 0] ]
+    puts $xil_newLink
+    lappend xil_newLinks $xil_newLink
 
-#	}
-	    
+#   }
+        
     }
 
-    # group links
+    # Group links
     set groupDescription "$baseBoard-$connectionType:$siteA-$connectorAlogic<->$siteB-$connectorBlogic"
     puts $groupDescription
     set xil_newLinkGroup [create_hw_sio_linkgroup -description $groupDescription [get_hw_sio_links $xil_newLinks]]
@@ -220,7 +207,7 @@ dict for { id c } $connections {
 
 }
 
-### setup links
+### Setup links
 set links [get_hw_sio_links]
 
 foreach link $links {
@@ -235,31 +222,27 @@ foreach link $links {
     set_property TX_PATTERN {PRBS 31-bit} [get_hw_sio_links $link]
     set_property RX_PATTERN {PRBS 31-bit} [get_hw_sio_links $link]
 
-    # set polarity only if status is NO LINK
+    # Set polarity only if status is NO LINK
     set linkStatus [ get_property STATUS [get_hw_sio_links $link] ]
     if { $linkStatus == "NO LINK" } {
-	set tx_polarity [ get_property PORT.TXPOLARITY $link ]
-	set rx_polarity [ get_property PORT.RXPOLARITY $link ]
-	if { $tx_polarity != $rx_polarity } {
-	    set_property PORT.RXPOLARITY {1} [get_hw_sio_links $link]
-	    commit_hw_sio [get_hw_sio_links $link]
-	}
+        set tx_polarity [ get_property PORT.TXPOLARITY $link ]
+        set rx_polarity [ get_property PORT.RXPOLARITY $link ]
+        if { $tx_polarity != $rx_polarity } {
+            set_property PORT.RXPOLARITY {1} [get_hw_sio_links $link]
+            commit_hw_sio [get_hw_sio_links $link]
+        }
     }
 
-    # rx reset
+    # Rx reset
     set_property LOGIC.RX_RESET_DATAPATH 1 [get_hw_sio_links $link]
     commit_hw_sio [get_hw_sio_links $link]
     set_property LOGIC.RX_RESET_DATAPATH 0 [get_hw_sio_links $link]
     commit_hw_sio [get_hw_sio_links $link]
     
-    # reset counters
+    # Reset counters
     set_property LOGIC.MGT_ERRCNT_RESET_CTRL 1 [get_hw_sio_links $link]
     commit_hw_sio [get_hw_sio_links $link]
     set_property LOGIC.MGT_ERRCNT_RESET_CTRL 0 [get_hw_sio_links $link]
     commit_hw_sio [get_hw_sio_links $link]
 
 }
-
-
-
-
