@@ -3,6 +3,9 @@ import argparse
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.manifold import TSNE
+import numpy as np
+import seaborn as sns
 
 # Argument parser
 parser = argparse.ArgumentParser(description="Reads scan data and makes plots.", formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -23,7 +26,8 @@ def readBERFile(file_name):
 	file = open(file_name, "r") # Open file
 
 	current_link = ""
-	column_names = ["txDiff", "txPre", "txPost", "rxTerm", "txEq", "Bits", "Errors", "BER", "OpenA"] # Names of the columns, same as the values in BER_summary.txt except for OpenA
+	# column_names = ["txDiff", "txPre", "txPost", "rxTerm", "txEq", "Bits", "Errors", "BER", "OpenA"] # Names of the columns, same as the values in BER_summary.txt except for OpenA
+	column_names = ["txDiff", "txPre", "txPost", "txEq", "Errors", "OpenA"]
 
 	for line in file:
 	
@@ -63,6 +67,44 @@ def readBERFile(file_name):
 
 
 # Now let's do the shit
-df = readBERFile(args.inputDir+"BER_summary.txt")
+df_dict = readBERFile(args.inputDir+"BER_summary.txt")
 
-print(df)
+# Create a dataframe with all links
+df_data = pd.DataFrame()
+link_dict = {} # dictionary of links and their corresponding value
+link_number = -1 # numerical value for links as training and plotting can't handle strings
+
+for key, df in df_dict.items():
+	# Add link and value to dictionary
+	if key not in link_dict:
+		link_number += 1
+		link_dict[key] = link_number
+
+	# Add new column with link number
+	df["Link"] = link_number
+	df_data = df_data.append(df)
+
+df_data.reset_index(inplace=True)
+
+# Do the TSNE dimentionality reduction
+tsne = TSNE(n_components=2, perplexity=30, n_iter=1000, learning_rate=200)
+tsne_results = tsne.fit_transform(df_data.values)
+
+# Convert results into dataframe
+df_results = pd.DataFrame(tsne_results, columns=['tsne-x','tsne-y'])
+df_results = df_results.join(df_data["Link"])
+
+# Plot the results
+plt.figure()
+
+sns.scatterplot(
+    x="tsne-x", y="tsne-y",
+    hue="Link",
+    palette=sns.color_palette("hls", len(link_dict)),
+    data=df_results,
+    legend="full",
+    alpha=0.3
+)
+
+# plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.show()
