@@ -1,4 +1,5 @@
 ## ALL relevant settings - beware > 500000 sweeps!!
+## 500 scans per hour
 
 ### Which precision ###
 
@@ -42,6 +43,8 @@ set config [ dict create ]
 
 
 array set rxterm_setting_gty {
+    1  100
+    6  400
     11  800
 }
 # All possible RxTerm values
@@ -107,6 +110,7 @@ array set txpost_setting_gty {
     (00000) 0.00
     (01001) 2.21
     (01111) 4.08
+    (10100) 6.02
 }
 # All possible TxPost values
     # (00000) 0.00 # Default
@@ -529,7 +533,7 @@ foreach group $groups {
     }
     append text "\"$link\" : \{\n"
     append text "\"LinkName: \"$linkName\", \n"
-    append text "\"ScanName: \"$best_scanName\", \n"
+    append text "\"ScanName: \"$best_scanName($link)\", \n"
     append text "\"BestArea\" : \"$best_area($link)\", \n"
     append text "\"Errors\" : \"$best_errors($link)\", \n"
     append text "\"txDiff\" : \"$best_txdiff($link)\", \n"
@@ -550,7 +554,7 @@ foreach group $groups {
     }
     append text "\"$link\" : \{\n"
     append text "\"LinkName: \"$linkName\", \n"
-    append text "\"ScanName: \"$best_err_scanName\", \n"
+    append text "\"ScanName: \"$best_err_scanName($link)\", \n"
     append text "\"BestArea\" : \"$best_err_area($link)\", \n"
     append text "\"Errors\" : \"$best_err_errors($link)\", \n"
     append text "\"DFE\" : \"$best_err_dfe($link)\", \n"
