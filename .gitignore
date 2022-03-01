@@ -2,6 +2,7 @@ results/
 *.txt
 best*.json
 *summary.json
+*.png
 
 .Xil/
 *.log
