@@ -505,7 +505,7 @@ foreach group $groups {
                 append text "Bits  : $received_bits\n"
                 append text "Errors: $error_count\n"
                 append text "BER   : $rx_ber\n"
-                append text "Open A: $open_area\n"
+                append text "OpenA : $open_area\n"
                 append text "DFE   : $DFE\n"
 
                 puts $fber $text
