@@ -1,6 +1,6 @@
 
 # Script to run scans in batch mode
-# Syntax: vivado -mode batch -source batch-scan-all.tcl
+# Syntax: vivado -mode batch -source Batch/batch-scan-all.tcl
 
 open_hw_manager
 connect_hw_server -allow_non_jtag
