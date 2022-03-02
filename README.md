@@ -9,6 +9,7 @@ Scripts and files for testing and scanning the optical links on Serenity.
 - `GenerateLinks/` scripts for generating the links. It is possible to change which `json` configuration file to load to change the order of the links.
 - `Scans/` scripts for running the actual scans.
 - `json/` configuration files, e.g. for generating the links.
+- `plotting_script.py` script that uses the results from the scans to create plots.
 
 ## Setup
 
@@ -47,6 +48,12 @@ In the top menu in Vivado Hardware Manager, go to Tools, and to Run Tcl Script. 
 In the terminal, type
 
     vivado -mode batch -source Batch/batch-scan-all.tcl
+
+## Plot Results
+
+Plotting script can plot histograms of e.g. the open area, error count, and number of good links, for each configuration in histograms. It can also use tSNE to plot the multi-dimensional configuration/results space into a two-dimensional scatter plot. Example of how to run
+
+    python3 plotting_script.py -i results/<DIRECTORY_NAME> -o plots/
 
 ## Useful Links
 
