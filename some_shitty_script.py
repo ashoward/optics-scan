@@ -1,4 +1,5 @@
-#!/usr/bin/env python3 
+#!/usr/bin/env python3
+import os
 import argparse
 
 import matplotlib
@@ -10,63 +11,70 @@ import seaborn as sns
 
 # Argument parser
 parser = argparse.ArgumentParser(description="Reads scan data and makes plots.", formatter_class=argparse.RawDescriptionHelpFormatter)
-parser.add_argument("-i", "--inputDir", default="./", help="Directory to the scan results.")
-parser.add_argument("-o", "--outputDir", default=".", help="Name of output directory. (default = %(default)s)")
+parser.add_argument("-i", "--inputDir", default=None, nargs="+", help="Directory to the scan results.")
+parser.add_argument("-o", "--outputDir", default="./results/", help="Name of output directory. (default = %(default)s)")
 args = parser.parse_args()
 
-# Fix some shit
-args.inputDir += "/"
+# Create list of input files
+input_list = [dir+"/BER_summary.txt" for dir in args.inputDir]
+
+# Create output directory
 args.outputDir += "/"
+if not os.path.exists(args.outputDir):
+	os.mkdir(args.outputDir)
 
 
 # Reads a BER file and saves it as a dictionary of pandas dataframe. One dataframe per link.
-def readBERFile(file_name):
-
-	file = open(file_name, "r") # Open file
+def readBERFile(file_list):
 
 	df_dict = {} # Dictionary of dataframes, one per link
 	current_link = ""
 	column_names = ["txDiff", "txPre", "txPost", "rxTerm", "txEq", "Bits", "Errors", "BER", "OpenA"] # Names of the columns, same as the values in BER_summary.txt
 
-	for line in file:
-		print(line)
-		line = line.replace(" ", "") # Remove all spaces
+	# Loop over all input files
+	for file_name in file_list:
 
-		if "Scan" in line:
-			# Update current link name
-			current_link = line.split("Link")[1][:-2]
+		file = open(file_name, "r") # Open file
 
-			# Add link to dictionary and decide which row to write
-			if current_link not in df_dict:
-				df_dict[current_link] = pd.DataFrame(columns = column_names)
+		for line in file:
+
+			line = line.replace(" ", "") # Remove all spaces
+
+			if "Scan" in line:
+				# Update current link name
+				current_link = line.split("Link")[1][:-2]
+
+				# Add link to dictionary and decide which row to write
+				if current_link not in df_dict:
+					df_dict[current_link] = pd.DataFrame(columns = column_names)
+					df = df_dict[current_link]
+					row = 0
+				else:
+					df = df_dict[current_link]
+					row = df.index[-1] + 1
+
+				# Add empty row 
 				df = df_dict[current_link]
-				row = 0
-			else:
-				df = df_dict[current_link]
-				row = df.index[-1] + 1
+				df.loc[row] = [None] * len(column_names)
 
-			# Add empty row 
-			df = df_dict[current_link]
-			df.loc[row] = [None] * len(column_names)
+				# Process next line
+				continue
 
-			# Process next line
-			continue
+			elif "Link:" in line or line == "\n":
+				continue
 
-		elif "Link:" in line or line == "\n":
-			continue
+			# Get key and value from line
+			key, val = line.split(":")
 
-		# Get key and value from line
-		key, val = line.split(":")
-
-		# Insert val in the dataframe
-		if key in column_names:
-			df.at[row, key] = float(val)
+			# Insert val in the dataframe
+			if key in column_names:
+				df.at[row, key] = float(val)
 
 	return df_dict
 
 
 # Make 2D plots out of multidimensional data using tSNE
-def plotTSNE(df_dict, only_good_points=False):
+def plotTSNE(df_dict, only_good_configs=False, openarea_cut=50, output_dir=args.outputDir):
 
 	# Create a dataframe with all links
 	df_data = pd.DataFrame()
@@ -86,14 +94,18 @@ def plotTSNE(df_dict, only_good_points=False):
 	# Only keep the interesting columns
 	df_data = df_data[["txDiff", "txPre", "txPost", "txEq", "Errors", "OpenA", "Link"]]
 
-	# Delete rows with non-zero errors? And small open area?
-	if only_good_points:
+	# Add/remove columns depending on what plots to create
+	if only_good_configs:
 		df_data.reset_index(inplace=True) # Reset index or we will drop more than needed
-		df_data.drop(df_data[(df_data.Errors>0) & (df_data.OpenA>50)].index, inplace=True)
+		df_data.drop(df_data[(df_data.Errors>0) & (df_data.OpenA>openarea_cut)].index, inplace=True)
 		df_data.drop(columns=["Errors", "OpenA"], inplace=True)
 	else:
 		df_errors = df_data[["Errors"]].copy() # True/False, If have errors or not
-		df_errors = df_errors[["Errors"]].astype("bool")	
+		# df_errors = df_errors[["Errors"]].astype("bool")
+		df_errors.loc[df_data.Errors == 0, 'Errors'] = "False"
+		df_errors.loc[df_data.Errors > 1000, 'Errors'] = "True"
+		df_errors.loc[(df_data.Errors <= 1000) & (df_data.Errors > 0), 'Errors'] = "False-ish (<1000 errors)"
+
 		df_errors.reset_index(inplace=True)
 
 	# Reset index
@@ -106,7 +118,7 @@ def plotTSNE(df_dict, only_good_points=False):
 	# Convert results into dataframe
 	df_results = pd.DataFrame(tsne_results, columns=['tsne-x','tsne-y'])
 	df_results = df_results.join(df_data["Link"])
-	if not only_good_points:
+	if not only_good_configs:
 		df_results = df_results.join(df_errors["Errors"])
 
 	# Plot the results
@@ -116,20 +128,20 @@ def plotTSNE(df_dict, only_good_points=False):
 		data=df_results, x="tsne-x", y="tsne-y",
 		hue="Link",
 		palette=sns.color_palette("hls", len(link_dict)),
-		style=None if only_good_points else "Errors",
+		style=None if only_good_configs else "Errors",
 		legend="full",
-		alpha=0.3
-	)
+		alpha=0.4
+	).set(title="Only good configurations, 0 errors, Open Area>%i%%" % openarea_cut if only_good_configs else "All configurations")
 
-	# plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+	plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+	plt.savefig("%stsne_%s.pdf" % (output_dir, "good" if only_good_configs else "all"), bbox_inches='tight', dpi=1200)
 	plt.show()
+	plt.close()
 
 
 # Plots some shit: takes one dataframe as input, corresponding to one link
 # Plots the Open Area or Error Count for all configurations in a histogram
-def plotHistShit(df, link_name="SomeLink", openarea_cut=30, plot_error=False):
-
-	print(df)
+def plotHistShit(df, link_name="SomeLink", openarea_cut=50, plot_error=False, output_dir=args.outputDir):
 
 	# Count number of bins we need
 	nTxPre_vals = df["txPre"].nunique()
@@ -200,17 +212,18 @@ def plotHistShit(df, link_name="SomeLink", openarea_cut=30, plot_error=False):
 		plt.clim(vmin=0, vmax=None) # Doesn't work with log scale
 		cbar.set_label('Error count')
 
-	plt.show()
 	# Save figure
-	plt.savefig("shit_%s_%s.png" % ("error" if plot_error else "openArea", link_name))
+	plt.savefig("%sshit_%s_%s.pdf" % (output_dir, "error" if plot_error else "openArea", link_name), dpi=1200)
+	# plt.show()
 	plt.close()
 
-# Now let's do the shit
-df_dict = readBERFile(args.inputDir+"BER_summary.txt")
+
+# Read input files and save as dictionary
+df_dict = readBERFile(input_list)
 
 # Plot using tSNE
-# plotTSNE(df_dict)
-# plotTSNE(df_dict, only_good_points=True)
+plotTSNE(df_dict)
+plotTSNE(df_dict, only_good_configs=True)
 
 # Plot one shit
 # plotHistShit(next(iter(df_dict.values())))

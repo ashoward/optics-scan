@@ -3,8 +3,11 @@ results/
 best*.json
 *summary.json
 *.png
+*.pdf
 
 .Xil/
 *.log
 *.jou
 *.str
+
+.DS_Store
