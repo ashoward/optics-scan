@@ -140,6 +140,34 @@ class AmazingClassName():
                     self.super_good_links[x_index][y_index] += 1
 
 
+    # Function that sets the axes ticks for configuration histograms
+    def setConfigAxesTicks(self, axes, fontsize=10):
+
+        # Plot TxDiff Axis
+        axes.set_xlabel("TxDiff [mV]")
+        x1_tick_labels = [str(int(val)) for i in range(self.nTxEq_vals) for val in self.txDiff_vals]
+        axes.set_xticks(np.arange(self.nTxDiff_vals*self.nTxEq_vals))  # Set ticks
+        axes.set_xticklabels(x1_tick_labels, fontsize=fontsize)  # Set tick labels
+
+        # Plot TxPost Axis
+        axes.set_ylabel("TxPost [dB]")
+        y1_tick_labels = [str(val) for i in range(self.nTxPre_vals) for val in self.txPost_vals]
+        axes.set_yticks(np.arange(self.nTxPre_vals*self.nTxPost_vals))  # Set ticks
+        axes.set_yticklabels(y1_tick_labels, fontsize=fontsize)  # Set tick labels
+
+        # Plot TxEq values
+        ax_x2 = axes.secondary_xaxis('top', xlabel="Eq [some unit]")
+        x2_tick_labels = [str(val) for val in self.txEq_vals for i in range(self.nTxDiff_vals)]
+        ax_x2.set_xticks(np.arange(self.nTxDiff_vals*self.nTxEq_vals)) # Set ticks
+        ax_x2.set_xticklabels(x2_tick_labels, fontsize=fontsize) # Set tick labels
+
+        # Plot TxPre values
+        ax_y2 = axes.secondary_yaxis('right', ylabel="TxPre [dB]")
+        y2_tick_labels = [str(val) for val in self.txPre_vals for i in range(self.nTxPost_vals)]
+        ax_y2.set_yticks(np.arange(self.nTxPre_vals*self.nTxPost_vals)) # Set ticks
+        ax_y2.set_yticklabels(y2_tick_labels, fontsize=fontsize) # Set tick labels
+
+
     # Make 2D plots out of multidimensional data using tSNE
     def plotTSNE(self, only_good_configs=False):
     
@@ -207,29 +235,7 @@ class AmazingClassName():
         # Make plot
         fig, axes = plt.subplots(figsize=(12, 9))
         axes.set_title(title)
-    
-        # Plot TxDiff Axis
-        locs, labels = plt.xticks()  # Get the current locations and labels.
-        axes.set_xlabel("TxDiff [mV]")
-        x1_tick_labels = [str(int(val)) for i in range(self.nTxEq_vals) for val in self.txDiff_vals]
-        plt.xticks(np.arange(0, self.nTxDiff_vals*self.nTxEq_vals, step=1))  # Set label locations.
-        plt.xticks(np.arange(self.nTxDiff_vals*self.nTxEq_vals), x1_tick_labels)  # Set text labels.
-        # Plot TxPost Axis
-        locs, labels = plt.yticks()  # Get the current locations and labels.
-        axes.set_ylabel("TxPost [dB]")
-        y1_tick_labels = [str(val) for i in range(self.nTxPre_vals) for val in self.txPost_vals]
-        plt.yticks(np.arange(0, self.nTxPre_vals*self.nTxPost_vals, step=1))  # Set label locations.
-        plt.yticks(np.arange(self.nTxPre_vals*self.nTxPost_vals), y1_tick_labels)  # Set text labels.
-        # Plot TxEq values
-        ax_x2 = axes.secondary_xaxis('top', xlabel="Eq [some unit]")
-        x2_tick_labels = [str(val) for val in self.txEq_vals for i in range(self.nTxDiff_vals)]
-        ax_x2.set_xticks(np.arange(self.nTxDiff_vals*self.nTxEq_vals)) # Set ticks
-        ax_x2.set_xticklabels(x2_tick_labels) # Set tick labels
-        # Plot TxPre values
-        ax_y2 = axes.secondary_yaxis('right', ylabel="TxPre [dB]")
-        y2_tick_labels = [str(val) for val in self.txPre_vals for i in range(self.nTxPost_vals)]
-        ax_y2.set_yticks(np.arange(self.nTxPre_vals*self.nTxPost_vals)) # Set ticks
-        ax_y2.set_yticklabels(y2_tick_labels) # Set tick labels
+        self.setConfigAxesTicks(axes)
     
         # Plot the primary array
         plt.imshow(primary_array)
@@ -258,15 +264,11 @@ class AmazingClassName():
     # Same as above but plots histograms for all 12 links in the same plot
     def plot12Arrays(self, primary_dict=None, secondary_dict=None, title="", cbar_label="", cbar_limits=(None,None), output_name=""):
     
-        ncols = 4
-        nrows = 3
+        ncols, nrows = 4, 3 # Number of subplots in each column/row
+        c, r = 0, 0 # Some counters
     
         fig, fig_axes = plt.subplots(ncols=ncols, nrows=nrows, figsize=(24, 15))
         fig.suptitle(title, fontsize=20)
-    
-        # Some counters
-        c = 0
-        r = 0
     
         # Loop over all dataframes in the dictionary
         for link in self.link_dict.keys():
@@ -274,27 +276,7 @@ class AmazingClassName():
             # Make subplot
             axes = fig_axes[r,c]
             axes.set_title(link)
-
-            # Plot TxDiff Axis
-            axes.set_xlabel("TxDiff [mV]")
-            x1_tick_labels = [str(int(val)) for i in range(self.nTxEq_vals) for val in self.txDiff_vals]
-            axes.set_xticks(np.arange(self.nTxDiff_vals*self.nTxEq_vals))  # Set ticks
-            axes.set_xticklabels(x1_tick_labels, fontsize=8)  # Set tick labels
-            # Plot TxPost Axis
-            axes.set_ylabel("TxPost [dB]")
-            y1_tick_labels = [str(val) for i in range(self.nTxPre_vals) for val in self.txPost_vals]
-            axes.set_yticks(np.arange(self.nTxPre_vals*self.nTxPost_vals))  # Set ticks
-            axes.set_yticklabels(y1_tick_labels, fontsize=8)  # Set tick labels
-            # Plot TxEq values
-            ax_x2 = axes.secondary_xaxis('top', xlabel="Eq [some unit]")
-            x2_tick_labels = [str(val) for val in self.txEq_vals for i in range(self.nTxDiff_vals)]
-            ax_x2.set_xticks(np.arange(self.nTxDiff_vals*self.nTxEq_vals)) # Set ticks
-            ax_x2.set_xticklabels(x2_tick_labels, fontsize=8) # Set tick labels
-            # Plot TxPre values
-            ax_y2 = axes.secondary_yaxis('right', ylabel="TxPre [dB]")
-            y2_tick_labels = [str(val) for val in self.txPre_vals for i in range(self.nTxPost_vals)]
-            ax_y2.set_yticks(np.arange(self.nTxPre_vals*self.nTxPost_vals)) # Set ticks
-            ax_y2.set_yticklabels(y2_tick_labels, fontsize=8) # Set tick labels
+            self.setConfigAxesTicks(axes, fontsize=8)
     
             im = axes.imshow(primary_dict[link], vmin=cbar_limits[0], vmax=cbar_limits[1])
     
