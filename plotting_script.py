@@ -12,7 +12,7 @@ import seaborn as sns
 # Argument parser
 parser = argparse.ArgumentParser(description="Reads scan data and makes plots.", formatter_class=argparse.RawDescriptionHelpFormatter)
 parser.add_argument("-i", "--inputDir", default=None, nargs="+", help="Directory to the scan results.")
-parser.add_argument("-o", "--outputDir", default="./results/", help="Name of output directory. (default = %(default)s)")
+parser.add_argument("-o", "--outputDir", default="./plots/", help="Name of output directory. (default = %(default)s)")
 args = parser.parse_args()
 
 # Create list of input files
@@ -21,7 +21,7 @@ input_list = [dir+"/BER_summary.txt" for dir in args.inputDir]
 # Create output directory
 args.outputDir += "/"
 if not os.path.exists(args.outputDir):
-    os.mkdir(args.outputDir)
+    os.makedirs(args.outputDir)
 
 
 # Help functions
@@ -39,7 +39,7 @@ def convert_int_prefix(num):
 # Class that is amazing
 class AmazingClassName():
 
-    def __init__(self, file_list, output_dir="./", openarea_cut=50):
+    def __init__(self, file_list, output_dir="./", openarea_cut=30):
 
         # Set input parameters
         self.file_list = file_list
@@ -73,6 +73,7 @@ class AmazingClassName():
         self.error_dict = {link : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for link in self.link_dict.keys()}
         # Make array with the number of good links for every configuration
         self.good_links = np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals))
+        self.super_good_links = np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals))
 
         # Fill arrays
         self.fillArrays()
@@ -133,8 +134,10 @@ class AmazingClassName():
             self.openA_dict[link][x_index][y_index] = row["OpenA"] if (row["Errors"] == 0 and row["OpenA"] > self.openarea_cut) else np.nan
             self.error_dict[link][x_index][y_index] = row["Errors"]
             # Check if good configuration
-            if row["Errors"] == 0 and row["OpenA"] > self.openarea_cut:
+            if row["Errors"] == 0:
                 self.good_links[x_index][y_index] += 1
+                if row["OpenA"] > self.openarea_cut:
+                    self.super_good_links[x_index][y_index] += 1
 
 
     # Make 2D plots out of multidimensional data using tSNE
@@ -361,13 +364,22 @@ amazing_thing.plot12Arrays(primary_dict=amazing_thing.openA_dict,
                            output_name="openArea_error"
                           )
 
-# Plot number of good links
+# Plot number of good links, 0 errors
 amazing_thing.plotSingleArray(primary_array=amazing_thing.good_links,
                               secondary_array=amazing_thing.good_links,
-                              title="Number of good links: 0 Errors, Open Area>%i%%" % (amazing_thing.openarea_cut),
+                              title="Number of good links: 0 Errors",
                               cbar_label="Number of good links",
                               cbar_limits=(0,12),
                               output_name="good_links"
+                             )
+
+# Plot number of super good links, cut on both error and open area
+amazing_thing.plotSingleArray(primary_array=amazing_thing.super_good_links,
+                              secondary_array=amazing_thing.super_good_links,
+                              title="Number of super good links: 0 Errors, Open Area>%i%%" % (amazing_thing.openarea_cut),
+                              cbar_label="Number of super good links",
+                              cbar_limits=(0,12),
+                              output_name="super_good_links"
                              )
 
 # Inverted stuff
