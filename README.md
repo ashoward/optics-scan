@@ -22,9 +22,10 @@ Clone this repo into the machine, with Vivado installed, you want to run the sca
 
 Before running the scans, SSH into the Serenity board and set it up:
 
-    source setup_320_alpha.sh
+    source setup_320_alpha.sh # For board 04
+    source setup_320_biFF.sh # For board 03
 
-This will enter SMASH in interactive mode at the end. To run the `Scans/BTScanAll.tcl`, or any other script that includes SSHing to the board to modify settings using SMASH, make sure to exit SMASH interacative mode (escape key) before running the script, or it will get stuck. Also, make sure to have an SSH key set up on the board to avoid the password.
+This will enter SMASH in interactive mode at the end. To run the `Scans/BTScanAll.tcl`, or any other script that includes SSHing to the board to modify settings using SMASH, make sure to exit SMASH interacative mode (escape key) before running the script or it will get stuck. Also, make sure to have an SSH key set up on the board to avoid the password.
 
 When done with the scans, power off something by doing (probably a quicker way to do this):
 
@@ -33,7 +34,7 @@ When done with the scans, power off something by doing (probably a quicker way t
 
 #### On the Computer
 
-Start Vivado and open Hardware Manager. In the Hardware Menu to the left, press the Auto Link button (looks like two sideways Y's) to get a list of all the connected devices. Right-click on the one with all the 0s and press Open Target. This will close any other devices that might be open. Once the desired device open, right-click on the FPGA xcvu7p and press Program Device to run a bitstream file from the `BitFiles/` folder. In the top menu, go to Tools, and then to Run Tcl Script. Then, run a script to generate the links from the `GenerateLinks/` folder. Links should be listed in the Serial I/O Links tab. Everything is now set up to run the scans.
+Start Vivado and open Hardware Manager. In the Hardware Menu to the left, press the Auto Link button (looks like two sideways Y's) to get a list of all the connected devices. For board 03 (board 04), right-click on `Digilent/210249A847C1` (`Xilinx/00000000000000`) and press Open Target. This will close any other devices that might be open. Once the desired device open, right-click on the FPGA ku15p (xcvu7p) and press Program Device to run a bitstream file from the `BitFiles/` folder. In the top menu, go to Tools, and then to Run Tcl Script. Then, run a script to generate the links from the `GenerateLinks/` folder. Links should be listed in the Serial I/O Links tab. Everything is now set up to run the scans.
 
 ## Run Scans
 
