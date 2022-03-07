@@ -15,7 +15,7 @@ remove_hw_sio_scan [get_hw_sio_scans {}]
 set systemTime [clock seconds]
  
 set folderName [clock format $systemTime -format %Y_%m_%d_%H%M-%S]
-set folderName "/home/meholmbe/optics-scan/results/$folderName-all"
+set folderName "/home/meholmbe/optics-scan/results/Board04-$folderName-all"
 
 # Generate the folders 
 exec mkdir -p -- $folderName
@@ -257,7 +257,7 @@ foreach group $groups {
     puts "Setting equalization to $eq_val($index_eq)..."
     catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $eq_val($index_eq)"} eq_value
     while { $eq_value == "child process exited abnormally" } {
-      puts "set EQ i2c error: $eq_value"
+      puts "Set EQ i2c error: $eq_value"
       catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $eq_val($index_eq)"} eq_value
     }
     puts "Equalization value: $eq_value"
@@ -361,7 +361,7 @@ foreach group $groups {
                   run_hw_sio_scan [get_hw_sio_scans $xil_newScan]
                   wait_on_hw_sio_scan [get_hw_sio_scans $xil_newScan]
 
-                  puts "scan finished for $link"
+                  puts "Scan finished for $link"
                   puts $scanName
 
                   set hex_error_count [get_property LOGIC.ERRBIT_COUNT [get_hw_sio_links $link] ]
@@ -370,8 +370,8 @@ foreach group $groups {
                   set open_area_int [get_property Open_Area [get_hw_sio_scans $xil_newScan] ]
                   set open_area [expr 100*$open_area_int/64.0]
 
-                  puts "error_count (after bathtub): $error_count"
-                  puts "received bits: $received_bits"
+                  puts "Error_count (after bathtub): $error_count"
+                  puts "Received bits: $received_bits"
                   puts "Open Area: $open_area"
                   puts "Best Area: $best_area($link)"
 
@@ -466,8 +466,8 @@ foreach group $groups {
                 set rx_ber [ get_property RX_BER [get_hw_sio_links $link] ]
                 set error_count [expr 0x$hex_error_count]
 
-                puts "received bits: $received_bits"
-                puts "error count: $error_count"
+                puts "Received bits: $received_bits"
+                puts "Error count: $error_count"
                 puts "BER: $rx_ber"
 
                 # The best Error Count and open area
