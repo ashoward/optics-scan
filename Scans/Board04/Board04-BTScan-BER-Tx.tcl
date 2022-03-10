@@ -43,7 +43,8 @@ set config [ dict create ]
 
 
 # Tx Diff/Swing [mV]
-set txdiff_default_key (11000)
+set txdiff_default_index (11000)
+set txdiff_default 950
 array set txdiff_setting_gty {
     (00101) 530
     (11000) 950
@@ -85,7 +86,8 @@ array set txdiff_setting_gty {
 
 
 # TxPre [dB]
-set txpre_default_key (00000)
+set txpre_default_index (00000)
+set txpre_default 0.00
 array set txpre_setting_gty {
     (00000) 0.00
     (01001) 2.21
@@ -128,7 +130,8 @@ array set txpre_setting_gty {
 
 
 # TxPost [dB]
-set txpost_default_key (00000)
+set txpost_default_index (00000)
+set txpost_default 0.00
 array set txpost_setting_gty {
     (00000) 0.00
     (01001) 2.21
@@ -603,9 +606,9 @@ foreach group $groups {
 
   # Reset values to default
   foreach link $links {
-    set_property TXPRE "$txpre_setting_gty($txpre_default_key) dB $txpre_default_key" [get_hw_sio_links $link]
-    set_property TXPOST "$txpost_setting_gty($txpost_default_key) dB $txpost_default_key" [get_hw_sio_links $link]
-    set_property TXDIFFSWING "$txdiff_setting_gty($txdiff_default_key) mV $txdiff_default_key" [get_hw_sio_links $link]
+    set_property TXPRE "$txpre_default dB $txpre_default_index" [get_hw_sio_links $link]
+    set_property TXPOST "$txpost_default dB $txpost_default_index" [get_hw_sio_links $link]
+    set_property TXDIFFSWING "$txdiff_default mV $txdiff_default_index" [get_hw_sio_links $link]
 
     set_property RXDFEENABLED $dfe_default [get_hw_sio_links $link]
     set_property RXTERM "$rxterm_default mV" [get_hw_sio_links $link]
