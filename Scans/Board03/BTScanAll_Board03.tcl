@@ -209,6 +209,30 @@ array set eq_val {
   # 10 9.8
 
 
+# Other default values 
+set amp_default 300
+set preemp_default 0
+
+
+# Set optical configurations default
+# Remember to exit the Smash interactive shell, or the script will be stuck here
+puts "Setting amplitude $amp_default..."
+catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setAmp.sh $amp_default"} amp_value
+while { $eq_value == "child process exited abnormally" } {
+puts "Set Amp i2c error: $amp_value"
+catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setAmp.sh $amp_default"} amp_value
+}
+puts "Amplitude value: $amp_value"
+
+puts "Setting pre-emphasis $preemp_default..."
+catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setPre-emp.sh $preemp_default"} preemp_value
+while { $eq_value == "child process exited abnormally" } {
+puts "Set Pre-Emp i2c error: $preemp_value"
+catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setPre-emp.sh $preemp_default"} preemp_value
+}
+puts "Pre-emphasis value: $preemp_value"
+
+
 # Start loop over values
 set i 0
 set sweep 0

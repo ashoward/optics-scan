@@ -163,6 +163,22 @@ array set txpost_setting_gty {
     # (11111) 12.96
 
 
+# Optical EQ on the transmitter [dB]
+set eq_default 2
+array set eq_val {
+  5 4
+}
+# All possible TxEQ values
+  # 1 0
+  # 2 1
+  # 3 2 # Default
+  # 4 3
+  # 5 4
+  # 6 5
+  # 7 6
+  # 8 7
+
+
 # Termination voltage [mV]
 set rxterm_default 800
 array set rxterm_setting_gty {
@@ -188,22 +204,9 @@ array set rxterm_setting_gty {
     # 15  1000
     # 16  1100 
 
-# Optical EQ on the transmitter [dB]
-array set eq_val {
-  5 4
-}
-# All possible EQ values
-  # 1 0
-  # 2 1
-  # 3 2 # Default
-  # 4 3
-  # 5 4
-  # 6 5
-  # 7 6
-  # 8 7
-set eq_default 2
 
 # Values for setting the amplitude
+set amp_default Medium
 array set amplitude {
   1 High
   2 Low
@@ -215,9 +218,10 @@ array set amplitude {
   # 2 Low
   # 3 Medium # Default
   # 4 Off
-set amp_default Medium
+
 
 # Values for setting the pre-emphasis [dB]
+set preemp_default 2
 array set pre_emp {
     1 0
     2 1
@@ -237,7 +241,6 @@ array set pre_emp {
   # 6 5
   # 7 6
   # 8 7.5
-set preemp_default 2
 
 
 # Start loop over values

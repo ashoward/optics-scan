@@ -163,6 +163,24 @@ array set txpost_setting_gty {
     # (11111) 12.96
 
 
+# Optical EQ on the transmitter [dB]
+set eq_default 1.2
+array set eq_val {
+  1 1.2
+}
+# All possible TxEQ values
+  # 1 1.2 # Default
+  # 2 1.9
+  # 3 2.7
+  # 4 3.7
+  # 5 4.8
+  # 6 6.5
+  # 7 7.2
+  # 8 8.2
+  # 9 8.8
+  # 10 9.8
+
+
 # Termination voltage [mV]
 set rxterm_default 800
 array set rxterm_setting_gty {
@@ -189,24 +207,8 @@ array set rxterm_setting_gty {
     # 16  1100 
 
 
-# Optical EQ on the transmitter [dB]
-array set eq_val {
-  1 1.2
-}
-# All possible EQ values
-  # 1 1.2 # Default
-  # 2 1.9
-  # 3 2.7
-  # 4 3.7
-  # 5 4.8
-  # 6 6.5
-  # 7 7.2
-  # 8 8.2
-  # 9 8.8
-  # 10 9.8
-set eq_default 1.2
-
 # Values for setting the amplitude [mV]
+set amp_default 300
 array set amplitude {
   1 300
   2 450
@@ -218,9 +220,10 @@ array set amplitude {
   # 2 450
   # 3 600
   # 4 900
-set amp_default 300
+
 
 # Values for setting the pre-emphasis [dB]
+set preemp_default 0
 array set pre_emp {
   1 0
   2 1
@@ -240,7 +243,6 @@ array set pre_emp {
   # 6 5
   # 7 6
   # 8 7.5
-set preemp_default 0
 
 
 # Start loop over values
@@ -314,7 +316,7 @@ foreach group $groups {
         puts "Set Amp i2c error: $amp_value"
         catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setAmp.sh $amplitude($index_amp)"} amp_value
       }
-      puts "Equalization value: $amp_value"
+      puts "Amplitude value: $amp_value"
 
       # Loop over pre-emphasis
       foreach index_pre_emp [array names pre_emp] {
@@ -327,7 +329,7 @@ foreach group $groups {
           puts "Set Pre-Emp i2c error: $preemp_value"
           catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setPre-emp.sh $pre_emp($index_pre_emp)"} preemp_value
         }
-        puts "Equalization value: $preemp_value"
+        puts "Pre-emphasis value: $preemp_value"
 
         foreach index_diff [array names txdiff_setting_gty] {
           foreach index_pre [array names txpre_setting_gty] {
