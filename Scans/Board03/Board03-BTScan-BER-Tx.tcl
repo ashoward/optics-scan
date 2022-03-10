@@ -600,11 +600,6 @@ foreach group $groups {
     # Save one of the best scans...
     write_hw_sio_scan -force "$folderName/data/best_errors/$scanName" [get_hw_sio_scans $best_err_xil_newScan($link)]
 
-    # Set one of the best configurations
-    set_property TXPRE "$best_err_txpre($link) dB $best_err_txpre_index($link)" [get_hw_sio_links $link]
-    set_property TXPOST "$best_err_txpost($link) dB $best_err_txpost_index($link)" [get_hw_sio_links $link]
-    # Add the other values as well?
-
     incr j
   }
   # Reset values to default
