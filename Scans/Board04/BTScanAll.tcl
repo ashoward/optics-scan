@@ -289,12 +289,12 @@ foreach group $groups {
     # Set optical equalisation on transmitter
     # Remember to exit the Smash interactive shell, or the script will be stuck here
     puts "Setting equalization to $txeq_setting($index_eq)..."
-    catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_setting($index_eq)"} txeq_settingue
-    while { $txeq_settingue == "child process exited abnormally" } {
-      puts "Set EQ i2c error: $txeq_settingue"
-      catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_setting($index_eq)"} txeq_settingue
+    catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_setting($index_eq)"} txeq_value
+    while { $txeq_value == "child process exited abnormally" } {
+      puts "Set EQ i2c error: $txeq_value"
+      catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_setting($index_eq)"} txeq_value
     }
-    puts "Equalization value: $txeq_settingue"
+    puts "Equalization value: $txeq_value"
 
     foreach index_diff [array names txdiff_setting_gty] {
       foreach index_pre [array names txpre_setting_gty] {

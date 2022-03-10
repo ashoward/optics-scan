@@ -207,7 +207,7 @@ array set rxterm_setting_gty {
 
 # Values for setting the amplitude
 set rxamp_default Medium
-array set amplitude {
+array set rxamp_setting {
   1 High
   2 Low
   3 Medium
@@ -312,11 +312,11 @@ foreach group $groups {
 
       # Set optical configurations
       # Remember to exit the Smash interactive shell, or the script will be stuck here
-      puts "Setting amplitude $amplitude($index_rxamp)..."
-      catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amplitude($index_rxamp)"} rxamp_value
+      puts "Setting amplitude $rxamp_setting($index_rxamp)..."
+      catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_setting($index_rxamp)"} rxamp_value
       while { $rxamp_value == "child process exited abnormally" } {
         puts "Set Amp i2c error: $rxamp_value"
-        catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amplitude($index_rxamp)"} rxamp_value
+        catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_setting($index_rxamp)"} rxamp_value
       }
       puts "Amplitude value: $rxamp_value"
 
@@ -371,7 +371,7 @@ foreach group $groups {
 
                     # Optical values
                     puts "EQ      : $txeq_setting($index_eq)"
-                    puts "AMP     : $amplitude($index_rxamp)"
+                    puts "AMP     : $rxamp_setting($index_rxamp)"
                     puts "PRE-EMP : $rxemp_setting($index_rxemp)"
 
                     # RX reset
@@ -399,7 +399,7 @@ foreach group $groups {
                       set DFE dfe
                     }
 
-                    set scanName "$DFE RXTERM-$rxterm_setting_gty($index_rxterm) TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) EQ-$txeq_setting($index_eq) AMP-$amplitude($index_rxamp) PREEMP-$rxemp_setting($index_rxemp) Scan $groupName $linkName"
+                    set scanName "$DFE RXTERM-$rxterm_setting_gty($index_rxterm) TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) EQ-$txeq_setting($index_eq) AMP-$rxamp_setting($index_rxamp) PREEMP-$rxemp_setting($index_rxemp) Scan $groupName $linkName"
 
                     # Get the DCs info
                     set linkName [ lindex [ split $linkName " " ] 1 ]
@@ -462,7 +462,7 @@ foreach group $groups {
                         set best_txpost_index($link) $index_post
                         set best_rxterm($link) $rxterm_setting_gty($index_rxterm)
                         set best_txeq($link) $txeq_setting($index_eq)
-                        set best_rxamp($link) $amplitude($index_rxamp)
+                        set best_rxamp($link) $rxamp_setting($index_rxamp)
                         set best_rxemp($link) $rxemp_setting($index_rxemp)
                         set best_scanName($link) $scanName
                         set best_xil_newScan($link) $xil_newScan
@@ -524,7 +524,7 @@ foreach group $groups {
                     append text "\"rxTerm\" : \"$rxterm_setting_gty($index_rxterm)\", \n"
 
                     append text "\"Eq\" : \"$txeq_setting($index_eq)\", \n"
-                    append text "\"Amp\" : \"$amplitude($index_rxamp)\", \n"
+                    append text "\"Amp\" : \"$rxamp_setting($index_rxamp)\", \n"
                     append text "\"PreEmp\" : \"$rxemp_setting($index_rxemp)\", \n"
 
                     append text "\"OpenArea\" : \"$open_area\", \n"
@@ -563,16 +563,16 @@ foreach group $groups {
                       set best_err_txpre_index($link) $index_pre
                       set best_err_txpost_index($link) $index_post
                       set best_err_txeq($link) $txeq_setting($index_eq)
-                      set best_err_rxamp($link) $amplitude($index_rxamp)
+                      set best_err_rxamp($link) $rxamp_setting($index_rxamp)
                       set best_err_rxemp($link) $rxemp_setting($index_rxemp)
                       set best_err_scanName($link) $scanName
                       set best_err_xil_newScan($link) $xil_newScan
                       # Reset best configuration list and save the better one
                       set best_err_cfg($link) {}
-                      set best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$txeq_setting($index_eq),$amplitude($index_rxamp),$rxemp_setting($index_rxemp))"
+                      set best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$txeq_setting($index_eq),$rxamp_setting($index_rxamp),$rxemp_setting($index_rxemp))"
                     } elseif {$error_count == $best_err_errors($link) && $open_area == $best_err_area($link)} {
                       # Save configuration as it gave the same result as the current best
-                      lappend best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$txeq_setting($index_eq),$amplitude($index_rxamp),$rxemp_setting($index_rxemp))"
+                      lappend best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$txeq_setting($index_eq),$rxamp_setting($index_rxamp),$rxemp_setting($index_rxemp))"
                     }
 
                     # Write BER file
@@ -583,7 +583,7 @@ foreach group $groups {
                     append text "txPost: $txpost_setting_gty($index_post)\n"
                     append text "txEq  : $txeq_setting($index_eq)\n"
                     append text "rxTerm: $rxterm_setting_gty($index_rxterm)\n"
-                    append text "Amp   : $amplitude($index_rxamp)\n"
+                    append text "Amp   : $rxamp_setting($index_rxamp)\n"
                     append text "PreEmp: $rxemp_setting($index_rxemp)\n"
                     append text "Bits  : $received_bits\n"
                     append text "Errors: $error_count\n"
