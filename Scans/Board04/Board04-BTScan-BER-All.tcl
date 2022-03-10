@@ -43,7 +43,8 @@ set config [ dict create ]
 
 
 # Tx Diff/Swing [mV]
-set txdiff_default_key (11000)
+set txdiff_default_index (11000)
+set txdiff_default 950
 array set txdiff_setting_gty {
     (11000) 950
 }
@@ -83,7 +84,8 @@ array set txdiff_setting_gty {
 
 
 # TxPre [dB]
-set txpre_default_key (00000)
+set txpre_default_index (00000)
+set txpre_default 0.00
 array set txpre_setting_gty {
     (00000) 0.00
 }
@@ -124,7 +126,8 @@ array set txpre_setting_gty {
 
 
 # TxPost [dB]
-set txpost_default_key (00000)
+set txpost_default_index (00000)
+set txpost_default 0.00
 array set txpost_setting_gty {
     (00000) 0.00
 }
@@ -164,7 +167,7 @@ array set txpost_setting_gty {
 
 
 # Optical EQ on the transmitter [dB]
-set txeq_default None
+set txeq_default 0
 array set txeq_setting {
   5 4
 }
