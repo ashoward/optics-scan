@@ -174,7 +174,7 @@ array set txpost_setting_gty {
 
 
 # Optical EQ on the transmitter [dB]
-set txeq_default None
+set txeq_default 0
 array set txeq_setting {
   1 0
   2 1
