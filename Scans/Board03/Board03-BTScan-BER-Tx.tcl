@@ -14,8 +14,8 @@ remove_hw_sio_scan [get_hw_sio_scans {}]
 # Get the system time to name the directory
 set systemTime [clock seconds]
  
-set folderName [clock format $systemTime -format %Y_%m_%d_%H%M-%S]
-set folderName "/home/meholmbe/optics-scan/results/Board03-$folderName-all"
+set folderName [clock format $systemTime -format %Y-%m-%d-%H%M]
+set folderName "/home/meholmbe/optics-scan/results/Board03_BTScan_BER_Tx_$folderName"
 
 # Generate the folders 
 exec mkdir -p -- $folderName
@@ -360,7 +360,7 @@ foreach group $groups {
                   set DFE dfe
                 }
 
-                set scanName "$DFE RXTERM-$rxterm_setting_gty($index_rxterm) TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) TXEQ-$txeq_setting($index_eq) Scan $groupName $linkName"
+                set scanName "$DFE TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) TXEQ-$txeq_setting($index_eq) RXTERM-$rxterm_setting_gty($index_rxterm) Scan $groupName $linkName"
 
                 # Get the DCs info
                 set linkName [ lindex [ split $linkName " " ] 1 ]

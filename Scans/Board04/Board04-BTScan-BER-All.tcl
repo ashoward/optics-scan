@@ -14,8 +14,8 @@ remove_hw_sio_scan [get_hw_sio_scans {}]
 # Get the system time to name the directory
 set systemTime [clock seconds]
  
-set folderName [clock format $systemTime -format %Y_%m_%d_%H%M-%S]
-set folderName "/home/meholmbe/optics-scan/results/Board04-$folderName-Bathtub-Error-Rx"
+set folderName [clock format $systemTime -format %Y-%m-%d-%H%M]
+set folderName "/home/meholmbe/optics-scan/results/Board04_BTScan_BER_All_$folderName"
 
 # Generate the folders 
 exec mkdir -p -- $folderName
@@ -373,9 +373,9 @@ foreach group $groups {
                     puts "TXPOST: $txpost_setting_gty($index_post)"
 
                     # Optical values
-                    puts "EQ      : $txeq_setting($index_eq)"
-                    puts "AMP     : $rxamp_setting($index_rxamp)"
-                    puts "PRE-EMP : $rxemp_setting($index_rxemp)"
+                    puts "TXEQ      : $txeq_setting($index_eq)"
+                    puts "RXAMP     : $rxamp_setting($index_rxamp)"
+                    puts "RXPRE-EMP : $rxemp_setting($index_rxemp)"
 
                     # RX reset
                     set_property LOGIC.RX_RESET_DATAPATH 1 [get_hw_sio_links $link]
@@ -402,7 +402,7 @@ foreach group $groups {
                       set DFE dfe
                     }
 
-                    set scanName "$DFE RXTERM-$rxterm_setting_gty($index_rxterm) TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) EQ-$txeq_setting($index_eq) AMP-$rxamp_setting($index_rxamp) PREEMP-$rxemp_setting($index_rxemp) Scan $groupName $linkName"
+                    set scanName "$DFE TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) TXEQ-$txeq_setting($index_eq) RXTERM-$rxterm_setting_gty($index_rxterm) RXAMP-$rxamp_setting($index_rxamp) RXEMP-$rxemp_setting($index_rxemp) Scan $groupName $linkName"
 
                     # Get the DCs info
                     set linkName [ lindex [ split $linkName " " ] 1 ]
@@ -586,8 +586,8 @@ foreach group $groups {
                     append text "txPost: $txpost_setting_gty($index_post)\n"
                     append text "txEq  : $txeq_setting($index_eq)\n"
                     append text "rxTerm: $rxterm_setting_gty($index_rxterm)\n"
-                    append text "Amp   : $rxamp_setting($index_rxamp)\n"
-                    append text "PreEmp: $rxemp_setting($index_rxemp)\n"
+                    append text "rxAmp : $rxamp_setting($index_rxamp)\n"
+                    append text "rxEmp : $rxemp_setting($index_rxemp)\n"
                     append text "Bits  : $received_bits\n"
                     append text "Errors: $error_count\n"
                     append text "BER   : $rx_ber\n"
