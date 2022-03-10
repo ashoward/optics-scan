@@ -191,11 +191,11 @@ array set rxterm_setting_gty {
 
 # Optical EQ on the transmitter [dB]
 array set eq_val {
-  2 1.9
+  1 1.2
 }
-# All possible EQ values. Which one is default?
-  # 1 1.2
-  # 2 1.9 # Default?
+# All possible EQ values
+  # 1 1.2 # Default
+  # 2 1.9
   # 3 2.7
   # 4 3.7
   # 5 4.8
@@ -204,7 +204,7 @@ array set eq_val {
   # 8 8.2
   # 9 8.8
   # 10 9.8
-set eq_default 1.9
+set eq_default 1.2
 
 # Values for setting the amplitude [mV]
 array set amplitude {
@@ -213,12 +213,12 @@ array set amplitude {
   3 600
   4 900
 }
-# All possible amplitude values. Which one is default?
-  # 1 300
+# All possible amplitude values
+  # 1 300 # Default
   # 2 450
   # 3 600
   # 4 900
-set amp_default 600
+set amp_default 300
 
 # Values for setting the pre-emphasis [dB]
 array set pre_emp {
@@ -231,8 +231,8 @@ array set pre_emp {
   7 6
   8 7.5
 }
-# All possible pre-emphasis values. Which one is default?
-  # 1 0
+# All possible pre-emphasis values
+  # 1 0 # Default
   # 2 1
   # 3 2
   # 4 3

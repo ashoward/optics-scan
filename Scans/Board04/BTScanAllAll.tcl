@@ -228,16 +228,16 @@ array set pre_emp {
     7 6
     8 7.5
 }
-# All possible pre-emphasis values. Which one is default?
+# All possible pre-emphasis values
   # 1 0
   # 2 1
-  # 3 2
+  # 3 2 # Default
   # 4 3
   # 5 4
   # 6 5
   # 7 6
   # 8 7.5
-set preemp_default 0
+set preemp_default 2
 
 
 # Start loop over values
