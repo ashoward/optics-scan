@@ -59,7 +59,7 @@ class AmazingClassName():
         self.openarea_cut = openarea_cut
 
         # Names of the columns for dataframe, same as the values in BER_summary.txt
-        self.column_names = ["Link", "txDiff", "txPre", "txPost", "rxTerm", "txEq", "Amp", "PreEmp", "Bits", "Errors", "BER", "OpenA"]
+        self.column_names = ["Link", "txDiff", "txPre", "txPost", "rxTerm", "txEq", "rxAmp", "rxEmp", "Bits", "Errors", "BER", "OpenA"]
 
         # Stuff we will fill
         self.df = pd.DataFrame(columns = self.column_names) # Dataframe with all the results from the input files
@@ -74,8 +74,8 @@ class AmazingClassName():
         self.nTxDiff_vals = self.df["txDiff"].nunique()
         self.nTxEq_vals = self.df["txEq"].nunique()
         self.nRxTerm_vals = self.df["rxTerm"].nunique()
-        self.nRxAmp_vals = self.df["Amp"].nunique()
-        self.nRxEmp_vals = self.df["PreEmp"].nunique()
+        self.nRxAmp_vals = self.df["rxAmp"].nunique()
+        self.nRxEmp_vals = self.df["rxEmp"].nunique()
 
         # Dictionary of unique values
         self.txPre_vals = {sorted(self.df["txPre"].unique())[i] : i for i in range(self.nTxPre_vals)}
@@ -83,8 +83,8 @@ class AmazingClassName():
         self.txDiff_vals = {sorted(self.df["txDiff"].unique())[i] : i for i in range(self.nTxDiff_vals)}
         self.txEq_vals = {sorted(self.df["txEq"].unique())[i] : i for i in range(self.nTxEq_vals)}
         self.rxTerm_vals = {sorted(self.df["rxTerm"].unique())[i] : i for i in range(self.nRxTerm_vals)}
-        self.rxAmp_vals = {sorted(self.df["Amp"].unique())[i] : i for i in range(self.nRxAmp_vals)}
-        self.rxEmp_vals = {sorted(self.df["PreEmp"].unique())[i] : i for i in range(self.nRxEmp_vals)}
+        self.rxAmp_vals = {sorted(self.df["rxAmp"].unique())[i] : i for i in range(self.nRxAmp_vals)}
+        self.rxEmp_vals = {sorted(self.df["rxEmp"].unique())[i] : i for i in range(self.nRxEmp_vals)}
 
         # Make new dictionaries of arrays which will correspond to our Tx histogram of values
         self.openA_tx_dict = { rxTerm : {link : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for link in self.link_dict.keys()} for rxTerm in self.rxTerm_vals.keys()}
@@ -190,8 +190,8 @@ class AmazingClassName():
         for index, row in self.df.iterrows():
 
             # Compute the x/y indices of where to save the values
-            x_index = self.rxTerm_vals[row["rxTerm"]] * self.nRxAmp_vals + self.rxAmp_vals[row["Amp"]]
-            y_index = self.rxEmp_vals[row["PreEmp"]]
+            x_index = self.rxTerm_vals[row["rxTerm"]] * self.nRxAmp_vals + self.rxAmp_vals[row["rxAmp"]]
+            y_index = self.rxEmp_vals[row["rxEmp"]]
 
             # Fill arrays
             link= row["Link"]
