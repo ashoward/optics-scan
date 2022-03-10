@@ -22,8 +22,8 @@ Clone this repo into the machine, with Vivado installed, you want to run the sca
 
 Before running the scans, SSH into the Serenity board and set it up:
 
-    source setup_320_alpha.sh # For board 04
     source setup_320_biFF.sh # For board 03
+    source setup_320_alpha.sh # For board 04
 
 This will enter SMASH in interactive mode at the end. To run the `Scans/BTScanAll.tcl`, or any other script that includes SSHing to the board to modify settings using SMASH, make sure to exit SMASH interacative mode (escape key) before running the script or it will get stuck. Also, make sure to have an SSH key set up on the board to avoid the password.
 
@@ -54,7 +54,9 @@ In the terminal, type
 
 Plotting script can plot histograms of e.g. the open area, error count, and number of good links, for each configuration in histograms. It can also use tSNE to plot the multi-dimensional configuration/results space into a two-dimensional scatter plot. Example of how to run
 
-    python3 plotting_script.py -i results/<DIRECTORY_NAME> -o plots/
+    python3 plotting_script.py -i results/<DIRECTORY_NAME> -o plots/ -b 04 -tx
+
+Specifying which board to plot with the `-b` flag is a requirement. One must also specify which plots to create: `-tsne`, `-tx`, `-txinv`, `-rx`. It is also possible to set the open area cut using the `--open_area` flag.
 
 ## Useful Links
 
