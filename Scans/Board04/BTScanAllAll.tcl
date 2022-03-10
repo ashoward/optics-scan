@@ -164,8 +164,8 @@ array set txpost_setting_gty {
 
 
 # Optical EQ on the transmitter [dB]
-set eq_default 2
-array set eq_val {
+set txeq_default 2
+array set txeq_setting {
   5 4
 }
 # All possible TxEQ values
@@ -221,8 +221,8 @@ array set amplitude {
 
 
 # Values for setting the pre-emphasis [dB]
-set preemp_default 2
-array set pre_emp {
+set rxemp_default 2
+array set rxemp_setting {
     1 0
     2 1
     3 2
@@ -259,31 +259,31 @@ foreach group $groups {
   foreach link $links {
     # Best Open Area
     set best_area($link) -1
+    set best_errors($link) 999999999999
     set best_txdiff($link) -1
     set best_txdiff_index($link) -1
     set best_txpre($link) -1
     set best_txpre_index($link) -1
     set best_txpost($link) -1
     set best_txpost_index($link) -1
-    set best_errors($link) 999999999999
-    set best_eq($link) -1
-    set best_amp($link) unset
-    set best_preemp(link) -1
+    set best_txeq($link) -1
+    set best_rxamp($link) unset
+    set best_rxemp(link) -1
     set best_dfe($link) unset
     set best_scanName($link) unset
     set best_xil_newScan($link) unset
     # Best Error Count
     set best_err_area($link) -1
+    set best_err_errors($link) 999999999999
     set best_err_txdiff($link) -1
     set best_err_txdiff_index($link) -1
     set best_err_txpre($link) -1
     set best_err_txpre_index($link) -1
     set best_err_txpost($link) -1
     set best_err_txpost_index($link) -1
-    set best_err_errors($link) 999999999999
-    set best_err_eq($link) -1
-    set best_err_amp($link) unset
-    set best_err_preemp($link) -1
+    set best_err_txeq($link) -1
+    set best_err_rxamp($link) unset
+    set best_err_rxemp($link) -1
     set best_err_dfe($link) unset
     set best_err_xil_newScan($link) unset
     set best_err_scanName($link) unset
@@ -291,43 +291,43 @@ foreach group $groups {
   }
 
   # Loop over equalisation values
-  foreach index_eq [array names eq_val] {
+  foreach index_eq [array names txeq_setting] {
 
     # Set optical configurations
     # Remember to exit the Smash interactive shell, or the script will be stuck here
-    puts "Setting equalization $eq_val($index_eq)..."
-    catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $eq_val($index_eq)"} eq_value
-    while { $eq_value == "child process exited abnormally" } {
-      puts "Set EQ i2c error: $eq_value"
-      catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $eq_val($index_eq)"} eq_value
+    puts "Setting equalization $txeq_setting($index_eq)..."
+    catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_setting($index_eq)"} txeq_value
+    while { $txeq_value == "child process exited abnormally" } {
+      puts "Set EQ i2c error: $txeq_value"
+      catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_setting($index_eq)"} txeq_value
     }
-    puts "Equalization value: $eq_value"
+    puts "Equalization value: $txeq_value"
 
     # Loop over amplitude
-    foreach index_amp [array names amplitude] {
+    foreach index_rxamp [array names amplitude] {
 
       # Set optical configurations
       # Remember to exit the Smash interactive shell, or the script will be stuck here
-      puts "Setting amplitude $amplitude($index_amp)..."
-      catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amplitude($index_amp)"} amp_value
-      while { $eq_value == "child process exited abnormally" } {
-        puts "Set Amp i2c error: $amp_value"
-        catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amplitude($index_amp)"} amp_value
+      puts "Setting amplitude $amplitude($index_rxamp)..."
+      catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amplitude($index_rxamp)"} rxamp_value
+      while { $rxamp_value == "child process exited abnormally" } {
+        puts "Set Amp i2c error: $rxamp_value"
+        catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amplitude($index_rxamp)"} rxamp_value
       }
-      puts "Amplitude value: $amp_value"
+      puts "Amplitude value: $rxamp_value"
 
       # Loop over pre-emphasis
-      foreach index_pre_emp [array names pre_emp] {
+      foreach index_rxemp [array names rxemp_setting] {
 
         # Set optical configurations
         # Remember to exit the Smash interactive shell, or the script will be stuck here
-        puts "Setting pre-emphasis $pre_emp($index_pre_emp)..."
-        catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $pre_emp($index_pre_emp)"} preemp_value
-        while { $eq_value == "child process exited abnormally" } {
-          puts "Set Pre-Emp i2c error: $preemp_value"
-          catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $pre_emp($index_pre_emp)"} preemp_value
+        puts "Setting pre-emphasis $rxemp_setting($index_rxemp)..."
+        catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $rxemp_setting($index_rxemp)"} rxemp_value
+        while { $rxemp_value == "child process exited abnormally" } {
+          puts "Set Pre-Emp i2c error: $rxemp_value"
+          catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $rxemp_setting($index_rxemp)"} rxemp_value
         }
-        puts "Pre-emphasis value: $preemp_value"
+        puts "Pre-emphasis value: $rxemp_value"
 
         foreach index_diff [array names txdiff_setting_gty] {
           foreach index_pre [array names txpre_setting_gty] {
@@ -366,9 +366,9 @@ foreach group $groups {
                     puts "TXPOST: $txpost_setting_gty($index_post)"
 
                     # Optical values
-                    puts "EQ      : $eq_val($index_eq)"
-                    puts "AMP     : $amplitude($index_amp)"
-                    puts "PRE-EMP : $pre_emp($index_pre_emp)"
+                    puts "EQ      : $txeq_setting($index_eq)"
+                    puts "AMP     : $amplitude($index_rxamp)"
+                    puts "PRE-EMP : $rxemp_setting($index_rxemp)"
 
                     # RX reset
                     set_property LOGIC.RX_RESET_DATAPATH 1 [get_hw_sio_links $link]
@@ -395,7 +395,7 @@ foreach group $groups {
                       set DFE dfe
                     }
 
-                    set scanName "$DFE RXTERM-$rxterm_setting_gty($index_rxterm) TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) EQ-$eq_val($index_eq) AMP-$amplitude($index_amp) PREEMP-$pre_emp($index_pre_emp) Scan $groupName $linkName"
+                    set scanName "$DFE RXTERM-$rxterm_setting_gty($index_rxterm) TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) EQ-$txeq_setting($index_eq) AMP-$amplitude($index_rxamp) PREEMP-$rxemp_setting($index_rxemp) Scan $groupName $linkName"
 
                     # Get the DCs info
                     set linkName [ lindex [ split $linkName " " ] 1 ]
@@ -457,9 +457,9 @@ foreach group $groups {
                         set best_txpre_index($link) $index_pre
                         set best_txpost_index($link) $index_post
                         set best_rxterm($link) $rxterm_setting_gty($index_rxterm)
-                        set best_eq($link) $eq_val($index_eq)
-                        set best_amp($link) $amplitude($index_amp)
-                        set best_preemp($link) $pre_emp($index_pre_emp)
+                        set best_txeq($link) $txeq_setting($index_eq)
+                        set best_rxamp($link) $amplitude($index_rxamp)
+                        set best_rxemp($link) $rxemp_setting($index_rxemp)
                         set best_scanName($link) $scanName
                         set best_xil_newScan($link) $xil_newScan
                       }
@@ -519,9 +519,9 @@ foreach group $groups {
 
                     append text "\"rxTerm\" : \"$rxterm_setting_gty($index_rxterm)\", \n"
 
-                    append text "\"Eq\" : \"$eq_val($index_eq)\", \n"
-                    append text "\"Amp\" : \"$amplitude($index_amp)\", \n"
-                    append text "\"PreEmp\" : \"$pre_emp($index_pre_emp)\", \n"
+                    append text "\"Eq\" : \"$txeq_setting($index_eq)\", \n"
+                    append text "\"Amp\" : \"$amplitude($index_rxamp)\", \n"
+                    append text "\"PreEmp\" : \"$rxemp_setting($index_rxemp)\", \n"
 
                     append text "\"OpenArea\" : \"$open_area\", \n"
                     append text "\"ErrorCount\" : \"$error_count\" \n"
@@ -558,17 +558,17 @@ foreach group $groups {
                       set best_err_txdiff_index($link) $index_diff
                       set best_err_txpre_index($link) $index_pre
                       set best_err_txpost_index($link) $index_post
-                      set best_err_eq($link) $eq_val($index_eq)
-                      set best_err_amp($link) $amplitude($index_amp)
-                      set best_err_preemp($link) $pre_emp($index_pre_emp)
+                      set best_err_txeq($link) $txeq_setting($index_eq)
+                      set best_err_rxamp($link) $amplitude($index_rxamp)
+                      set best_err_rxemp($link) $rxemp_setting($index_rxemp)
                       set best_err_scanName($link) $scanName
                       set best_err_xil_newScan($link) $xil_newScan
                       # Reset best configuration list and save the better one
                       set best_err_cfg($link) {}
-                      set best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$eq_val($index_eq),$amplitude($index_amp),$pre_emp($index_pre_emp))"
+                      set best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$txeq_setting($index_eq),$amplitude($index_rxamp),$rxemp_setting($index_rxemp))"
                     } elseif {$error_count == $best_err_errors($link) && $open_area == $best_err_area($link)} {
                       # Save configuration as it gave the same result as the current best
-                      lappend best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$eq_val($index_eq),$amplitude($index_amp),$pre_emp($index_pre_emp))"
+                      lappend best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$txeq_setting($index_eq),$amplitude($index_rxamp),$rxemp_setting($index_rxemp))"
                     }
 
                     # Write BER file
@@ -577,10 +577,10 @@ foreach group $groups {
                     append text "txDiff: $txdiff_setting_gty($index_diff)\n"
                     append text "txPre : $txpre_setting_gty($index_pre)\n"
                     append text "txPost: $txpost_setting_gty($index_post)\n"
+                    append text "txEq  : $txeq_setting($index_eq)\n"
                     append text "rxTerm: $rxterm_setting_gty($index_rxterm)\n"
-                    append text "txEq  : $eq_val($index_eq)\n"
-                    append text "Amp   : $amplitude($index_amp)\n"
-                    append text "PreEmp: $pre_emp($index_pre_emp)\n"
+                    append text "Amp   : $amplitude($index_rxamp)\n"
+                    append text "PreEmp: $rxemp_setting($index_rxemp)\n"
                     append text "Bits  : $received_bits\n"
                     append text "Errors: $error_count\n"
                     append text "BER   : $rx_ber\n"
@@ -659,29 +659,29 @@ foreach group $groups {
   }
   # Set optical configurations default
   # Remember to exit the Smash interactive shell, or the script will be stuck here
-  puts "Setting equalization $eq_default..."
-  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $eq_default"} eq_value
-  while { $eq_value == "child process exited abnormally" } {
-  puts "Set EQ i2c error: $eq_value"
-  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $eq_default"} eq_value
+  puts "Setting equalization $txeq_default..."
+  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_default"} txeq_value
+  while { $txeq_value == "child process exited abnormally" } {
+  puts "Set EQ i2c error: $txeq_value"
+  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_default"} txeq_value
   }
-  puts "Equalization value: $eq_value"
+  puts "Equalization value: $txeq_value"
 
   puts "Setting amplitude $amp_default..."
-  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amp_default"} amp_value
-  while { $eq_value == "child process exited abnormally" } {
-  puts "Set Amp i2c error: $amp_value"
-  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amp_default"} amp_value
+  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amp_default"} rxamp_value
+  while { $txeq_value == "child process exited abnormally" } {
+  puts "Set Amp i2c error: $rxamp_value"
+  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amp_default"} rxamp_value
   }
-  puts "Amplitude value: $amp_value"
+  puts "Amplitude value: $rxamp_value"
 
-  puts "Setting pre-emphasis $preemp_default..."
-  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $preemp_default"} preemp_value
-  while { $eq_value == "child process exited abnormally" } {
-  puts "Set Pre-Emp i2c error: $preemp_value"
-  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $preemp_default"} preemp_value
+  puts "Setting pre-emphasis $rxemp_default..."
+  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $rxemp_default"} rxemp_value
+  while { $txeq_value == "child process exited abnormally" } {
+  puts "Set Pre-Emp i2c error: $rxemp_value"
+  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $rxemp_default"} rxemp_value
   }
-  puts "Pre-emphasis value: $preemp_value"
+  puts "Pre-emphasis value: $rxemp_value"
 
 }
 
