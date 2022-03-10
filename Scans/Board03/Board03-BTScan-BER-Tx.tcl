@@ -47,8 +47,6 @@ set txdiff_default_index (11000)
 set txdiff_default 950
 array set txdiff_setting_gty {
     (00101) 530
-    (11000) 950
-    (11111) 1040
 }
 # All possible TxDiffSwing values
     # (00000) 390
@@ -90,9 +88,6 @@ set txpre_default_index (00000)
 set txpre_default 0.00
 array set txpost_setting_gty {
     (00000) 0.00
-    (01001) 2.21
-    (01111) 4.08
-    (10100) 6.02
 }
 # All possible TxPost values
     # (00000) 0.00 # Default
@@ -134,8 +129,6 @@ set txpost_default_index (00000)
 set txpost_default 0.00
 array set txpre_setting_gty {
     (00000) 0.00
-    (01001) 2.21
-    (01111) 4.08
 }
 # All possible TxPre values
 #     (00000) 0.00 # Default
@@ -177,10 +170,6 @@ array set txpre_setting_gty {
 set txeq_default 1.3
 array set txeq_setting {
   1 1.3
-  2 1.9
-  3 2.7
-  5 4.8
-  7 7.2
 }
 # All possible EQ values
   # 1 1.3  # Default
@@ -199,8 +188,6 @@ array set txeq_setting {
 set rxterm_default 800
 array set rxterm_setting_gty {
     1  100
-    6  400
-    11  800
 }
 # All possible RxTerm values
     # 1  100

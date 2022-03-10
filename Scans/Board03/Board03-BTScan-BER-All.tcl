@@ -660,9 +660,9 @@ foreach group $groups {
 
   # Reset values to default
   foreach link $links {
-    set_property TXPRE "$txpre_setting_gty($txpre_default_key) dB $txpre_default_key" [get_hw_sio_links $link]
-    set_property TXPOST "$txpost_setting_gty($txpost_default_key) dB $txpost_default_key" [get_hw_sio_links $link]
-    set_property TXDIFFSWING "$txdiff_setting_gty($txdiff_default_key) mV $txdiff_default_key" [get_hw_sio_links $link]
+    set_property TXPRE "$txpre_default dB $txpre_default_index" [get_hw_sio_links $link]
+    set_property TXPOST "$txpost_default dB $txpost_default_index" [get_hw_sio_links $link]
+    set_property TXDIFFSWING "$txdiff_default mV $txdiff_default_index" [get_hw_sio_links $link]
 
     set_property RXDFEENABLED $dfe_default [get_hw_sio_links $link]
     set_property RXTERM "$rxterm_default mV" [get_hw_sio_links $link]
