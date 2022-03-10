@@ -164,7 +164,7 @@ array set txpost_setting_gty {
 
 
 # Optical EQ on the transmitter [dB]
-set txeq_default 2
+set txeq_default None
 array set txeq_setting {
   5 4
 }
@@ -206,7 +206,7 @@ array set rxterm_setting_gty {
 
 
 # Values for setting the amplitude
-set amp_default Medium
+set rxamp_default Medium
 array set amplitude {
   1 High
   2 Low
@@ -241,6 +241,10 @@ array set rxemp_setting {
   # 6 5
   # 7 6
   # 8 7.5
+
+
+# Other default values
+set dfe_default 0
 
 
 # Start loop over values
@@ -654,8 +658,8 @@ foreach group $groups {
     set_property TXPOST "$txpost_setting_gty($txpost_default_key) dB $txpost_default_key" [get_hw_sio_links $link]
     set_property TXDIFFSWING "$txdiff_setting_gty($txdiff_default_key) mV $txdiff_default_key" [get_hw_sio_links $link]
 
-    set_property RXDFEENABLED $dfe [get_hw_sio_links $link]
-    set_property RXTERM "$rxterm_setting_gty($index_rxterm) mV" [get_hw_sio_links $link]
+    set_property RXDFEENABLED $dfe_default [get_hw_sio_links $link]
+    set_property RXTERM "$rxterm_default mV" [get_hw_sio_links $link]
   }
   # Set optical configurations default
   # Remember to exit the Smash interactive shell, or the script will be stuck here
@@ -667,11 +671,11 @@ foreach group $groups {
   }
   puts "Equalization value: $txeq_value"
 
-  puts "Setting amplitude $amp_default..."
-  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amp_default"} rxamp_value
+  puts "Setting amplitude $rxamp_default..."
+  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
   while { $txeq_value == "child process exited abnormally" } {
   puts "Set Amp i2c error: $rxamp_value"
-  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amp_default"} rxamp_value
+  catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
   }
   puts "Amplitude value: $rxamp_value"
 

@@ -42,6 +42,8 @@ set groups [ get_hw_sio_linkgroups ]
 set config [ dict create ]
 
 
+# Tx Diff/Swing [mV]
+set txdiff_default_key (11000)
 array set txdiff_setting_gty {
     (00101) 530
     (11000) 950
@@ -82,47 +84,8 @@ array set txdiff_setting_gty {
     # (11111) 1040
 
 
-array set txpost_setting_gty {
-    (00000) 0.00
-    (01001) 2.21
-    (01111) 4.08
-    (10100) 6.02
-}
-# All possible TxPost values
-    # (00000) 0.00 # Default
-    # (00001) 0.22
-    # (00010) 0.45
-    # (00011) 0.68
-    # (00100) 0.92
-    # (00101) 1.16
-    # (00110) 1.41
-    # (00111) 1.67
-    # (01000) 1.94
-    # (01001) 2.21
-    # (01010) 2.50
-    # (01011) 2.79
-    # (01100) 3.10
-    # (01101) 3.41
-    # (01110) 3.74
-    # (01111) 4.08
-    # (10000) 4.44
-    # (10001) 4.81
-    # (10010) 5.19
-    # (10011) 5.60
-    # (10100) 6.02
-    # (10101) 6.47
-    # (10110) 6.94
-    # (10111) 7.43
-    # (11000) 7.96
-    # (11001) 8.52
-    # (11010) 9.12
-    # (11011) 9.76
-    # (11100) 10.46
-    # (11101) 11.21
-    # (11110) 12.04
-    # (11111) 12.96
-
-
+# TxPre [dB]
+set txpre_default_key (00000)
 array set txpre_setting_gty {
     (00000) 0.00
     (01001) 2.21
@@ -164,7 +127,51 @@ array set txpre_setting_gty {
 #     (11111) 6.02
 
 
-# Values for changing the optical EQ on the transmitter
+# TxPost [dB]
+set txpost_default_key (00000)
+array set txpost_setting_gty {
+    (00000) 0.00
+    (01001) 2.21
+    (01111) 4.08
+    (10100) 6.02
+}
+# All possible TxPost values
+    # (00000) 0.00 # Default
+    # (00001) 0.22
+    # (00010) 0.45
+    # (00011) 0.68
+    # (00100) 0.92
+    # (00101) 1.16
+    # (00110) 1.41
+    # (00111) 1.67
+    # (01000) 1.94
+    # (01001) 2.21
+    # (01010) 2.50
+    # (01011) 2.79
+    # (01100) 3.10
+    # (01101) 3.41
+    # (01110) 3.74
+    # (01111) 4.08
+    # (10000) 4.44
+    # (10001) 4.81
+    # (10010) 5.19
+    # (10011) 5.60
+    # (10100) 6.02
+    # (10101) 6.47
+    # (10110) 6.94
+    # (10111) 7.43
+    # (11000) 7.96
+    # (11001) 8.52
+    # (11010) 9.12
+    # (11011) 9.76
+    # (11100) 10.46
+    # (11101) 11.21
+    # (11110) 12.04
+    # (11111) 12.96
+
+
+# Optical EQ on the transmitter [dB]
+set txeq_default None
 array set txeq_setting {
   1 0
   2 1
@@ -175,7 +182,7 @@ array set txeq_setting {
 # All possible EQ values
   # 1 0
   # 2 1
-  # 3 2 # Default
+  # 3 2
   # 4 3
   # 5 4
   # 6 5
@@ -183,6 +190,8 @@ array set txeq_setting {
   # 8 7
 
 
+# Termination voltage [mV]
+set rxterm_default 800
 array set rxterm_setting_gty {
     1  100
     6  400
@@ -206,18 +215,20 @@ array set rxterm_setting_gty {
     # 15  1000
     # 16  1100 
 
+
 # Other default values 
-set amp_default Medium
+set rxamp_default Medium
 set rxemp_default 2
+set dfe_default 0
 
 
 # Set optical configurations default
 # Remember to exit the Smash interactive shell, or the script will be stuck here
-puts "Setting amplitude $amp_default..."
-catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amp_default"} rxamp_value
+puts "Setting amplitude $rxamp_default..."
+catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
 while { $rxamp_value == "child process exited abnormally" } {
 puts "Set Amp i2c error: $rxamp_value"
-catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $amp_default"} rxamp_value
+catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
 }
 puts "Amplitude value: $rxamp_value"
 
@@ -594,6 +605,26 @@ foreach group $groups {
 
     incr j
   }
+
+  # Reset values to default
+  foreach link $links {
+    set_property TXPRE "$txpre_setting_gty($txpre_default_key) dB $txpre_default_key" [get_hw_sio_links $link]
+    set_property TXPOST "$txpost_setting_gty($txpost_default_key) dB $txpost_default_key" [get_hw_sio_links $link]
+    set_property TXDIFFSWING "$txdiff_setting_gty($txdiff_default_key) mV $txdiff_default_key" [get_hw_sio_links $link]
+
+    set_property RXDFEENABLED $dfe_default [get_hw_sio_links $link]
+    set_property RXTERM "$rxterm_default mV" [get_hw_sio_links $link]
+  }
+  # Set optical configurations default
+  # Remember to exit the Smash interactive shell, or the script will be stuck here
+  puts "Setting equalization $txeq_default..."
+  catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setEq.sh $txeq_default"} txeq_value
+  while { $txeq_value == "child process exited abnormally" } {
+  puts "Set EQ i2c error: $txeq_value"
+  catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setEq.sh $txeq_default"} txeq_value
+  }
+  puts "Equalization value: $txeq_value"
+
 }
 
 puts $fout "\}"

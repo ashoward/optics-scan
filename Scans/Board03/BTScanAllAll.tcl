@@ -164,12 +164,12 @@ array set txpost_setting_gty {
 
 
 # Optical EQ on the transmitter [dB]
-set txeq_default 1.2
+set txeq_default 1.3
 array set txeq_setting {
-  1 1.2
+  1 1.3
 }
 # All possible TxEQ values
-  # 1 1.2 # Default
+  # 1 1.3 # Default
   # 2 1.9
   # 3 2.7
   # 4 3.7
@@ -243,6 +243,10 @@ array set rxemp_setting {
   # 6 5
   # 7 6
   # 8 7.5
+
+
+# Other default values
+set dfe_default 0
 
 
 # Start loop over values
@@ -657,8 +661,8 @@ foreach group $groups {
     set_property TXPOST "$txpost_setting_gty($txpost_default_key) dB $txpost_default_key" [get_hw_sio_links $link]
     set_property TXDIFFSWING "$txdiff_setting_gty($txdiff_default_key) mV $txdiff_default_key" [get_hw_sio_links $link]
 
-    set_property RXDFEENABLED $dfe [get_hw_sio_links $link]
-    set_property RXTERM "$rxterm_setting_gty($index_rxterm) mV" [get_hw_sio_links $link]
+    set_property RXDFEENABLED $dfe_default [get_hw_sio_links $link]
+    set_property RXTERM "$rxterm_default mV" [get_hw_sio_links $link]
   }
   # Set optical configurations default
   # Remember to exit the Smash interactive shell, or the script will be stuck here
