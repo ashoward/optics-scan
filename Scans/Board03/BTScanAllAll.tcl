@@ -302,13 +302,13 @@ foreach group $groups {
 
     # Set optical configurations
     # Remember to exit the Smash interactive shell, or the script will be stuck here
-    puts "Setting equalization $txeq_setting($index_txeq)..."
-    catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setEq.sh $txeq_setting($index_txeq)"} txeq_setting
+    puts "Setting equalization $txeq_value($index_txeq)..."
+    catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setEq.sh $txeq_setting($index_txeq)"} txeq_value
     while { $txeq_setting == "child process exited abnormally" } {
-      puts "Set EQ i2c error: $txeq_setting"
-      catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setEq.sh $txeq_setting($index_txeq)"} txeq_setting
+      puts "Set EQ i2c error: $txeq_value"
+      catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setEq.sh $txeq_setting($index_txeq)"} txeq_value
     }
-    puts "Equalization value: $txeq_setting"
+    puts "Equalization value: $txeq_value"
 
     # Loop over amplitude
     foreach index_rxamp [array names amplitude] {
