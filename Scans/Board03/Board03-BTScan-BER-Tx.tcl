@@ -47,6 +47,8 @@ set txdiff_default_index (11000)
 set txdiff_default 950
 array set txdiff_setting_gty {
     (00101) 530
+    (11000) 950
+    (11111) 1040
 }
 # All possible TxDiffSwing values
     # (00000) 390
@@ -86,49 +88,10 @@ array set txdiff_setting_gty {
 # TxPre [dB]
 set txpre_default_index (00000)
 set txpre_default 0.00
-array set txpost_setting_gty {
-    (00000) 0.00
-}
-# All possible TxPost values
-    # (00000) 0.00 # Default
-    # (00001) 0.22
-    # (00010) 0.45
-    # (00011) 0.68
-    # (00100) 0.92
-    # (00101) 1.16
-    # (00110) 1.41
-    # (00111) 1.67
-    # (01000) 1.94
-    # (01001) 2.21
-    # (01010) 2.50
-    # (01011) 2.79
-    # (01100) 3.10
-    # (01101) 3.41
-    # (01110) 3.74
-    # (01111) 4.08
-    # (10000) 4.44
-    # (10001) 4.81
-    # (10010) 5.19
-    # (10011) 5.60
-    # (10100) 6.02
-    # (10101) 6.47
-    # (10110) 6.94
-    # (10111) 7.43
-    # (11000) 7.96
-    # (11001) 8.52
-    # (11010) 9.12
-    # (11011) 9.76
-    # (11100) 10.46
-    # (11101) 11.21
-    # (11110) 12.04
-    # (11111) 12.96
-
-
-# TxPost [dB]
-set txpost_default_index (00000)
-set txpost_default 0.00
 array set txpre_setting_gty {
     (00000) 0.00
+    (01001) 2.21
+    (01111) 4.08
 }
 # All possible TxPre values
 #     (00000) 0.00 # Default
@@ -166,6 +129,50 @@ array set txpre_setting_gty {
 #     (11111) 6.02
 
 
+# TxPost [dB]
+set txpost_default_index (00000)
+set txpost_default 0.00
+array set txpost_setting_gty {
+    (00000) 0.00
+    (01001) 2.21
+    (01111) 4.08
+    (10100) 6.02
+}
+# All possible TxPost values
+    # (00000) 0.00 # Default
+    # (00001) 0.22
+    # (00010) 0.45
+    # (00011) 0.68
+    # (00100) 0.92
+    # (00101) 1.16
+    # (00110) 1.41
+    # (00111) 1.67
+    # (01000) 1.94
+    # (01001) 2.21
+    # (01010) 2.50
+    # (01011) 2.79
+    # (01100) 3.10
+    # (01101) 3.41
+    # (01110) 3.74
+    # (01111) 4.08
+    # (10000) 4.44
+    # (10001) 4.81
+    # (10010) 5.19
+    # (10011) 5.60
+    # (10100) 6.02
+    # (10101) 6.47
+    # (10110) 6.94
+    # (10111) 7.43
+    # (11000) 7.96
+    # (11001) 8.52
+    # (11010) 9.12
+    # (11011) 9.76
+    # (11100) 10.46
+    # (11101) 11.21
+    # (11110) 12.04
+    # (11111) 12.96
+
+
 # Optical EQ on the transmitter [dB]
 set txeq_default 1.3
 array set txeq_setting {
@@ -188,6 +195,8 @@ array set txeq_setting {
 set rxterm_default 800
 array set rxterm_setting_gty {
     1  100
+    6  400
+    11 800
 }
 # All possible RxTerm values
     # 1  100

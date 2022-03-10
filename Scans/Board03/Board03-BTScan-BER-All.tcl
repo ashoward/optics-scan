@@ -188,8 +188,8 @@ array set txeq_setting {
 set rxterm_default 800
 array set rxterm_setting_gty {
     1  100
-    9  600
-    11  800
+    6  400
+    11 800
 }
 # All possible RxTerm values
     # 1  100
@@ -314,13 +314,13 @@ foreach group $groups {
     puts "Equalization value: $txeq_value"
 
     # Loop over amplitude
-    foreach index_rxamp [array names amplitude] {
+    foreach index_rxamp [array names rxamp_setting] {
 
       # Set optical configurations
       # Remember to exit the Smash interactive shell, or the script will be stuck here
       puts "Setting amplitude $rxamp_setting($index_rxamp)..."
       catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setAmp.sh $rxamp_setting($index_rxamp)"} rxamp_value
-      while { $txeq_setting == "child process exited abnormally" } {
+      while { $rxamp_value == "child process exited abnormally" } {
         puts "Set Amp i2c error: $rxamp_value"
         catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setAmp.sh $rxamp_setting($index_rxamp)"} rxamp_value
       }
@@ -333,7 +333,7 @@ foreach group $groups {
         # Remember to exit the Smash interactive shell, or the script will be stuck here
         puts "Setting pre-emphasis $rxemp_setting($index_rxemp)..."
         catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setPre-emp.sh $rxemp_setting($index_rxemp)"} rxemp_value
-        while { $txeq_setting == "child process exited abnormally" } {
+        while { $rxemp_value == "child process exited abnormally" } {
           puts "Set Pre-Emp i2c error: $rxemp_value"
           catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setPre-emp.sh $rxemp_setting($index_rxemp)"} rxemp_value
         }

@@ -676,7 +676,7 @@ foreach group $groups {
 
   puts "Setting amplitude $rxamp_default..."
   catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
-  while { $txeq_value == "child process exited abnormally" } {
+  while { $rxamp_value == "child process exited abnormally" } {
   puts "Set Amp i2c error: $rxamp_value"
   catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
   }
@@ -684,7 +684,7 @@ foreach group $groups {
 
   puts "Setting pre-emphasis $rxemp_default..."
   catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $rxemp_default"} rxemp_value
-  while { $txeq_value == "child process exited abnormally" } {
+  while { $rxemp_value == "child process exited abnormally" } {
   puts "Set Pre-Emp i2c error: $rxemp_value"
   catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $rxemp_default"} rxemp_value
   }
