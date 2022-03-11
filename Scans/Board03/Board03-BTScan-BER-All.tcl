@@ -405,7 +405,7 @@ foreach group $groups {
                       set DFE dfe
                     }
 
-                    set scanName "$DFE TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) TXEQ-$txeq_setting($index_eq) RXTERM-$rxterm_setting_gty($index_rxterm) RXAMP-$rxamp_setting($index_rxamp) RXEMP-$rxemp_setting($index_rxemp) Scan $groupName $linkName"
+                    set scanName "$DFE TXDIFF-$txdiff_setting_gty($index_diff) TXPOST-$txpost_setting_gty($index_post) TXPRE-$txpre_setting_gty($index_pre) TXEQ-$txeq_setting($index_txeq) RXTERM-$rxterm_setting_gty($index_rxterm) RXAMP-$rxamp_setting($index_rxamp) RXEMP-$rxemp_setting($index_rxemp) Scan $groupName $linkName"
 
                     # Get the DCs info
                     set linkName [ lindex [ split $linkName " " ] 1 ]
