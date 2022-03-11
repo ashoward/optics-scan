@@ -1,12 +1,8 @@
 # General files
-*.txt
-best*.json
-*summary.json
-*.png
-*.pdf
+/plots/
 
 # Do not ignore
-!results/*
+
 
 # Xilinx files
 .Xil/
