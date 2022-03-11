@@ -9,6 +9,7 @@ Scripts and files for testing and scanning the optical links on Serenity.
 - `GenerateLinks/` scripts for generating the links. It is possible to change which `json` configuration file to load to change the order of the links.
 - `Scans/` scripts for running the actual scans.
 - `json/` configuration files, e.g. for generating the links.
+- `results/` contains data and plots for some of the scans. See `results/README.md` for more information.
 - `plotting_script.py` script that uses the results from the scans to create plots.
 
 ## Setup
@@ -54,9 +55,11 @@ In the terminal, type
 
 Plotting script can plot histograms of e.g. the open area, error count, and number of good links, for each configuration in histograms. It can also use tSNE to plot the multi-dimensional configuration/results space into a two-dimensional scatter plot. Example of how to run
 
-    python3 plotting_script.py -i results/<DIRECTORY_NAME> -o plots/ -b 04 -tx
+    python3 plotting_script.py -i results/<DIRECTORY_NAME> -b 04 -tx
 
-Specifying which board to plot with the `-b` flag is a requirement. One must also specify which plots to create: `-tsne`, `-tx`, `-txinv`, `-rx`. It is also possible to set the open area cut using the `--open_area` flag.
+Specifying which board to plot with the `-b` flag is a requirement. One must also specify which plots to create: `-tsne`, `-tx`, `-txinv`, `-rx`. 
+The default output directory for the plots is within the input directory, but this can be changed with the `-o` flag. 
+It is also possible to set the open area cut using the `--open_area` flag.
 
 ## Useful Links
 
