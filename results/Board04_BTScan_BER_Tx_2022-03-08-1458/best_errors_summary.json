@@ -1,0 +1,110 @@
+{
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_229/MGT_X1Y21/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_228/MGT_X1Y17/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-0:X0-vu7p_so1-hnzf-Rx1-0", 
+"ScanName: "lpm RXTERM-800 TXDIFF-530 TXPOST-0.00 TXPRE-4.08 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-0:X0-vu7p_so1-hnzf-Rx1-0", 
+"BestArea" : "70.3125", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(530,4.08,0.00,800,7) (530,0.00,0.00,800,7) (530,0.00,0.00,800,4) (530,2.21,0.00,800,4) (530,2.21,0.00,800,0) (950,2.21,0.00,800,1) (530,0.00,0.00,800,1) (530,0.00,0.00,400,1) (1040,2.21,2.21,800,2) (950,4.08,0.00,800,2) (950,0.00,0.00,800,2) (950,2.21,0.00,800,2) (530,0.00,0.00,400,2) (530,2.21,0.00,800,2)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_228/MGT_X1Y19/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_228/MGT_X1Y19/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-1:X0-vu7p_so1-hnzf-Rx1-1", 
+"ScanName: "lpm RXTERM-800 TXDIFF-950 TXPOST-0.00 TXPRE-2.21 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-1:X0-vu7p_so1-hnzf-Rx1-1", 
+"BestArea" : "54.6875", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(950,2.21,0.00,800,7) (530,4.08,0.00,800,7) (530,0.00,2.21,400,7) (530,2.21,0.00,800,7) (530,2.21,0.00,400,7) (530,2.21,2.21,800,7) (950,0.00,0.00,800,4) (530,0.00,0.00,800,4) (530,2.21,0.00,400,4) (530,2.21,2.21,800,4) (1040,0.00,0.00,800,0) (950,2.21,2.21,800,0) (530,4.08,0.00,800,0) (530,2.21,0.00,800,0) (530,4.08,0.00,800,1) (530,2.21,0.00,800,1) (1040,0.00,0.00,800,2) (1040,2.21,2.21,800,2) (950,2.21,0.00,800,2) (530,2.21,0.00,800,2)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_228/MGT_X1Y17/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_229/MGT_X1Y21/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-2:X0-vu7p_so1-hnzf-Rx1-2", 
+"ScanName: "lpm RXTERM-800 TXDIFF-950 TXPOST-0.00 TXPRE-2.21 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-2:X0-vu7p_so1-hnzf-Rx1-2", 
+"BestArea" : "67.1875", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(950,2.21,0.00,800,7) (950,2.21,2.21,800,7) (950,2.21,2.21,400,7) (530,4.08,0.00,800,7) (530,0.00,2.21,800,7) (530,2.21,0.00,800,7) (530,2.21,2.21,800,7) (530,2.21,2.21,400,7) (1040,2.21,0.00,800,4) (530,0.00,2.21,400,4) (530,2.21,0.00,800,4) (530,2.21,2.21,800,4) (950,2.21,2.21,800,0) (950,4.08,0.00,800,1) (530,0.00,0.00,800,1) (530,0.00,2.21,800,1) (530,2.21,2.21,800,1) (1040,4.08,0.00,800,2) (1040,2.21,0.00,800,2) (950,0.00,2.21,800,2) (950,2.21,0.00,800,2) (530,0.00,0.00,800,2) (530,2.21,0.00,800,2) (530,2.21,2.21,800,2)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_229/MGT_X1Y20/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_228/MGT_X1Y16/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-3:X0-vu7p_so1-hnzf-Rx1-3", 
+"ScanName: "lpm RXTERM-800 TXDIFF-530 TXPOST-0.00 TXPRE-0.00 TXEQ-1 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-3:X0-vu7p_so1-hnzf-Rx1-3", 
+"BestArea" : "60.9375", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(530,0.00,0.00,800,1)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_228/MGT_X1Y18/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_228/MGT_X1Y18/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-4:X0-vu7p_so1-hnzf-Rx1-4", 
+"ScanName: "lpm RXTERM-400 TXDIFF-1040 TXPOST-2.21 TXPRE-0.00 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-4:X0-vu7p_so1-hnzf-Rx1-4", 
+"BestArea" : "68.75", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(1040,0.00,2.21,400,7) (530,0.00,2.21,800,7) (530,2.21,0.00,800,7) (530,2.21,0.00,400,7) (1040,0.00,0.00,800,4) (950,2.21,0.00,800,4) (530,0.00,0.00,800,4) (530,0.00,2.21,800,4) (530,2.21,2.21,800,4) (950,0.00,2.21,800,0) (530,0.00,0.00,800,0) (530,0.00,2.21,400,0) (530,2.21,2.21,800,0) (530,2.21,2.21,400,0) (950,2.21,0.00,800,1) (530,0.00,0.00,400,1) (1040,0.00,2.21,800,2) (530,0.00,0.00,800,2)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_228/MGT_X1Y16/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_229/MGT_X1Y20/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-5:X0-vu7p_so1-hnzf-Rx1-5", 
+"ScanName: "lpm RXTERM-800 TXDIFF-1040 TXPOST-2.21 TXPRE-0.00 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-5:X0-vu7p_so1-hnzf-Rx1-5", 
+"BestArea" : "54.6875", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(1040,0.00,2.21,800,7) (950,0.00,0.00,800,1) (950,0.00,0.00,800,2)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_230/MGT_X1Y27/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_229/MGT_X1Y23/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-6:X0-vu7p_so1-hnzf-Rx1-6", 
+"ScanName: "lpm RXTERM-800 TXDIFF-530 TXPOST-0.00 TXPRE-2.21 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-6:X0-vu7p_so1-hnzf-Rx1-6", 
+"BestArea" : "65.625", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(530,2.21,0.00,800,7) (530,2.21,2.21,800,7) (950,0.00,0.00,800,4) (530,2.21,0.00,800,4) (1040,0.00,2.21,800,0) (1040,2.21,2.21,800,0) (530,2.21,0.00,800,0) (950,0.00,2.21,800,1) (950,4.08,0.00,800,2) (530,4.08,0.00,800,2) (530,0.00,0.00,800,2) (530,2.21,0.00,800,2)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_230/MGT_X1Y25/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_230/MGT_X1Y27/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-7:X0-vu7p_so1-hnzf-Rx1-7", 
+"ScanName: "lpm RXTERM-800 TXDIFF-1040 TXPOST-4.08 TXPRE-0.00 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-7:X0-vu7p_so1-hnzf-Rx1-7", 
+"BestArea" : "59.375", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(1040,0.00,4.08,800,7) (1040,0.00,4.08,400,7) (1040,0.00,2.21,400,7) (530,0.00,0.00,800,7) (950,0.00,0.00,400,0) (530,0.00,0.00,400,0) (530,0.00,2.21,400,0) (950,0.00,0.00,800,1) (530,0.00,0.00,400,1) (530,0.00,2.21,800,1) (530,0.00,0.00,400,2) (530,0.00,2.21,800,2) (530,0.00,2.21,400,2)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_229/MGT_X1Y23/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_230/MGT_X1Y25/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-8:X0-vu7p_so1-hnzf-Rx1-8", 
+"ScanName: "lpm RXTERM-800 TXDIFF-530 TXPOST-0.00 TXPRE-0.00 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-8:X0-vu7p_so1-hnzf-Rx1-8", 
+"BestArea" : "67.1875", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(530,0.00,0.00,800,7) (530,2.21,0.00,800,7) (950,2.21,0.00,800,4) (530,0.00,0.00,800,4) (530,2.21,0.00,800,0) (530,2.21,0.00,800,1)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_230/MGT_X1Y26/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_229/MGT_X1Y22/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-9:X0-vu7p_so1-hnzf-Rx1-9", 
+"ScanName: "lpm RXTERM-800 TXDIFF-950 TXPOST-2.21 TXPRE-2.21 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-9:X0-vu7p_so1-hnzf-Rx1-9", 
+"BestArea" : "53.125", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(950,2.21,2.21,800,7) (530,0.00,0.00,800,4) (530,2.21,0.00,800,4) (530,0.00,0.00,800,1)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_230/MGT_X1Y24/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_230/MGT_X1Y24/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-10:X0-vu7p_so1-hnzf-Rx1-10", 
+"ScanName: "lpm RXTERM-400 TXDIFF-530 TXPOST-6.02 TXPRE-0.00 TXEQ-7 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-10:X0-vu7p_so1-hnzf-Rx1-10", 
+"BestArea" : "64.0625", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(530,0.00,6.02,400,7) (530,0.00,2.21,400,7) (530,0.00,6.02,800,0) (530,0.00,4.08,400,1) (530,0.00,2.21,800,1) (530,0.00,4.08,800,2)], 
+
+},
+"localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_229/MGT_X1Y22/TX->localhost:3121/xilinx_tcf/Xilinx/00000000000000/0_1_0_0/IBERT/Quad_230/MGT_X1Y26/RX" : {
+"LinkName: "Link X0-vu7p_so1-hnzf-Tx1-11:X0-vu7p_so1-hnzf-Rx1-11", 
+"ScanName: "lpm RXTERM-800 TXDIFF-530 TXPOST-0.00 TXPRE-2.21 TXEQ-1 Scan Serenity_08-Fibre:X0-Rx1<->X0-Tx1 Link X0-vu7p_so1-hnzf-Tx1-11:X0-vu7p_so1-hnzf-Rx1-11", 
+"BestArea" : "56.25", 
+"Errors" : "0", 
+"DFE" : "0", 
+"txDiff,txPre,txPost,rxTerm,txEq" : [(530,2.21,0.00,800,1)], 
+
+}
+}
