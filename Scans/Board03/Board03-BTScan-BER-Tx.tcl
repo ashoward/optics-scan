@@ -177,6 +177,10 @@ array set txpost_setting_gty {
 set txeq_default 1.3
 array set txeq_setting {
   1 1.3
+  3 2.7
+  4 3.7
+  6 6.5
+  9 8.8
 }
 # All possible EQ values
   # 1 1.3  # Default

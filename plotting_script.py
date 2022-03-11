@@ -32,7 +32,7 @@ input_list = [dir+"/BER_summary.txt" for dir in args.inputDir]
 
 # Create output directory
 if not args.outputDir:
-    args.outputDir = args.inputDir + "/plots"
+    args.outputDir = args.inputDir[0] + "/plots" # Just take the first input directory...
 args.outputDir += "/"
 if not os.path.exists(args.outputDir):
     os.makedirs(args.outputDir)
@@ -241,7 +241,7 @@ class AmazingClassName():
     def setRxConfigAxesTicks(self, axes, fontsize=10):
 
         # Plot Amplitude Axis
-        axes.set_xlabel("Amplitude %s" % ("[mV]" if isinstance(next(iter(self.rxAmp_vals.keys())), int) else ""))
+        axes.set_xlabel("Amplitude %s" % ("[mV]" if isinstance(list(self.rxAmp_vals.keys())[0], int) else ""))
         x1_tick_labels = [str(val) for i in range(self.nRxTerm_vals) for val in self.rxAmp_vals]
         axes.set_xticks(np.arange(self.nRxAmp_vals*self.nRxTerm_vals))  # Set ticks
         axes.set_xticklabels(x1_tick_labels, fontsize=fontsize)  # Set tick labels
