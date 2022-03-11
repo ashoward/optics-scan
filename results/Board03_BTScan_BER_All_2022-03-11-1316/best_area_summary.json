@@ -1,0 +1,98 @@
+{
+"localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_132/MGT_X0Y21/TX->localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_131/MGT_X0Y19/RX" : {
+"LinkName: "Link X0-sm1_v2-a002-Tx1-10:X0-sm1_v2-a002-Rx1-0", 
+"ScanName: "lpm TXDIFF-950 TXPOST-0.00 TXPRE-0.00 TXEQ-1.3 RXTERM-400 RXAMP-900 RXEMP-2 Scan Serenity_03-Fibre:X0-Rx1<->X0-Tx1 Link X0-sm1_v2-a002-Tx1-10:X0-sm1_v2-a002-Rx1-0", 
+"BestArea" : "67.1875", 
+"Errors" : "141375", 
+"txDiff" : "950", 
+"txPre" : "0.00", 
+"txPost" : "0.00", 
+"rxTerm" : "400", 
+"DFE" : "0", 
+
+},
+"localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_132/MGT_X0Y20/TX->localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_131/MGT_X0Y18/RX" : {
+"LinkName: "Link X0-sm1_v2-a002-Tx1-11:X0-sm1_v2-a002-Rx1-1", 
+"ScanName: "lpm TXDIFF-950 TXPOST-0.00 TXPRE-0.00 TXEQ-1.3 RXTERM-400 RXAMP-450 RXEMP-0 Scan Serenity_03-Fibre:X0-Rx1<->X0-Tx1 Link X0-sm1_v2-a002-Tx1-11:X0-sm1_v2-a002-Rx1-1", 
+"BestArea" : "57.8125", 
+"Errors" : "149709", 
+"txDiff" : "950", 
+"txPre" : "0.00", 
+"txPost" : "0.00", 
+"rxTerm" : "400", 
+"DFE" : "0", 
+
+},
+"localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_132/MGT_X0Y23/TX->localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_131/MGT_X0Y17/RX" : {
+"LinkName: "Link X0-sm1_v2-a002-Tx1-8:X0-sm1_v2-a002-Rx1-2", 
+"ScanName: "lpm TXDIFF-950 TXPOST-0.00 TXPRE-0.00 TXEQ-1.3 RXTERM-800 RXAMP-900 RXEMP-3 Scan Serenity_03-Fibre:X0-Rx1<->X0-Tx1 Link X0-sm1_v2-a002-Tx1-8:X0-sm1_v2-a002-Rx1-2", 
+"BestArea" : "67.1875", 
+"Errors" : "129204", 
+"txDiff" : "950", 
+"txPre" : "0.00", 
+"txPost" : "0.00", 
+"rxTerm" : "800", 
+"DFE" : "0", 
+
+},
+"localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_132/MGT_X0Y22/TX->localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_131/MGT_X0Y16/RX" : {
+"LinkName: "Link X0-sm1_v2-a002-Tx1-9:X0-sm1_v2-a002-Rx1-3", 
+"ScanName: "lpm TXDIFF-950 TXPOST-0.00 TXPRE-0.00 TXEQ-1.3 RXTERM-400 RXAMP-900 RXEMP-0 Scan Serenity_03-Fibre:X0-Rx1<->X0-Tx1 Link X0-sm1_v2-a002-Tx1-9:X0-sm1_v2-a002-Rx1-3", 
+"BestArea" : "62.5", 
+"Errors" : "144578", 
+"txDiff" : "950", 
+"txPre" : "0.00", 
+"txPost" : "0.00", 
+"rxTerm" : "400", 
+"DFE" : "0", 
+
+},
+"localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_131/MGT_X0Y19/TX->localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_132/MGT_X0Y21/RX" : {
+"LinkName: "Link X0-sm1_v2-a002-Rx1-8:X0-sm1_v2-a002-Tx1-2", 
+"ScanName: "lpm TXDIFF-950 TXPOST-0.00 TXPRE-0.00 TXEQ-1.3 RXTERM-800 RXAMP-450 RXEMP-1 Scan Serenity_03-Fibre:X0-Rx1<->X0-Tx1 Link X0-sm1_v2-a002-Rx1-8:X0-sm1_v2-a002-Tx1-2", 
+"BestArea" : "65.625", 
+"Errors" : "134223", 
+"txDiff" : "950", 
+"txPre" : "0.00", 
+"txPost" : "0.00", 
+"rxTerm" : "800", 
+"DFE" : "0", 
+
+},
+"localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_131/MGT_X0Y18/TX->localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_132/MGT_X0Y20/RX" : {
+"LinkName: "Link X0-sm1_v2-a002-Rx1-9:X0-sm1_v2-a002-Tx1-3", 
+"ScanName: "lpm TXDIFF-950 TXPOST-0.00 TXPRE-0.00 TXEQ-1.3 RXTERM-400 RXAMP-450 RXEMP-4 Scan Serenity_03-Fibre:X0-Rx1<->X0-Tx1 Link X0-sm1_v2-a002-Rx1-9:X0-sm1_v2-a002-Tx1-3", 
+"BestArea" : "59.375", 
+"Errors" : "148516", 
+"txDiff" : "950", 
+"txPre" : "0.00", 
+"txPost" : "0.00", 
+"rxTerm" : "400", 
+"DFE" : "0", 
+
+},
+"localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_131/MGT_X0Y17/TX->localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_132/MGT_X0Y23/RX" : {
+"LinkName: "Link X0-sm1_v2-a002-Rx1-10:X0-sm1_v2-a002-Tx1-0", 
+"ScanName: "lpm TXDIFF-950 TXPOST-0.00 TXPRE-0.00 TXEQ-1.3 RXTERM-800 RXAMP-900 RXEMP-7.5 Scan Serenity_03-Fibre:X0-Rx1<->X0-Tx1 Link X0-sm1_v2-a002-Rx1-10:X0-sm1_v2-a002-Tx1-0", 
+"BestArea" : "60.9375", 
+"Errors" : "138001", 
+"txDiff" : "950", 
+"txPre" : "0.00", 
+"txPost" : "0.00", 
+"rxTerm" : "800", 
+"DFE" : "0", 
+
+},
+"localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_131/MGT_X0Y16/TX->localhost:3121/xilinx_tcf/Digilent/210249A847C1/0_1_0_0/IBERT/Quad_132/MGT_X0Y22/RX" : {
+"LinkName: "Link X0-sm1_v2-a002-Rx1-11:X0-sm1_v2-a002-Tx1-1", 
+"ScanName: "lpm TXDIFF-950 TXPOST-0.00 TXPRE-0.00 TXEQ-1.3 RXTERM-400 RXAMP-300 RXEMP-0 Scan Serenity_03-Fibre:X0-Rx1<->X0-Tx1 Link X0-sm1_v2-a002-Rx1-11:X0-sm1_v2-a002-Tx1-1", 
+"BestArea" : "68.75", 
+"Errors" : "149427", 
+"txDiff" : "950", 
+"txPre" : "0.00", 
+"txPost" : "0.00", 
+"rxTerm" : "400", 
+"DFE" : "0", 
+
+}
+}
