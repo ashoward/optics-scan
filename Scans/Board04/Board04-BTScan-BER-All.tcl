@@ -311,7 +311,7 @@ foreach group $groups {
     puts "Equalization value: $txeq_value"
 
     # Loop over amplitude
-    foreach index_rxamp [array names amplitude] {
+    foreach index_rxamp [array names rxamp_setting] {
 
       # Set optical configurations
       # Remember to exit the Smash interactive shell, or the script will be stuck here
