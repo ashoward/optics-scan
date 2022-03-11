@@ -1,13 +1,18 @@
-results/
+# General files
 *.txt
 best*.json
 *summary.json
 *.png
 *.pdf
 
+# Do not ignore
+!results/*
+
+# Xilinx files
 .Xil/
 *.log
 *.jou
 *.str
 
+# MacOS files
 .DS_Store
