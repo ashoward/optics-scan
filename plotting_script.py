@@ -526,7 +526,7 @@ if args.rx:
     amazing_thing.plotArrays(primary_dict=amazing_thing.openA_rx_dict,
                              secondary_dict=amazing_thing.error_rx_dict,
                              tx=False,
-                             title="Board %s, All Links, Open Area>%i%%, txPre %i dB, txPost %i dB, txDiff %i mV, txEq %i dB" % (args.board, amazing_thing.openarea_cut, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
+                             title="Board %s, All Links, Open Area>%i%%, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (args.board, amazing_thing.openarea_cut, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                              cbar_label="Open Area [%]",
                              cbar_limits=(amazing_thing.openarea_cut,100),
                              output_name="board%s_rx_openArea_error_all" % (args.board)
@@ -537,7 +537,7 @@ if args.rx:
                              secondary_dict=amazing_thing.error_rx_dict,
                              tx=False,
                              mask=False,
-                             title="Board %s, All Links, txPre %i dB, txPost %i dB, txDiff %i mV, txEq %i dB" % (args.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
+                             title="Board %s, All Links, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (args.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                              cbar_label="Open Area [%]",
                              cbar_limits=(0,100),
                              output_name="board%s_rx_openArea_error_all" % (args.board)
@@ -547,7 +547,7 @@ if args.rx:
                                   secondary_array=amazing_thing.good_links_rx,
                                   tx=False,
                                   mask=False,
-                                  title="Board %s, txPre %i dB, txPost %i dB, txDiff %i mV, txEq %i dB\n Number of good links: 0 Errors" % (args.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
+                                  title="Board %s, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of good links: 0 Errors" % (args.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                                   cbar_label="Number of good links",
                                   cbar_limits=(0,len(amazing_thing.link_dict)),
                                   output_name="board%s_rx_good_links" % (args.board)
@@ -557,7 +557,7 @@ if args.rx:
                                   secondary_array=amazing_thing.super_good_links_rx,
                                   tx=False,
                                   mask=False,
-                                  title="Board %s, txPre %i dB, txPost %i dB, txDiff %i mV, txEq %i dB\n Number of super good links: 0 Errors, Open Area>%i%%" % (args.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys())), amazing_thing.openarea_cut),
+                                  title="Board %s, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of super good links: 0 Errors, Open Area>%i%%" % (args.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys())), amazing_thing.openarea_cut),
                                   cbar_label="Number of super good links",
                                   cbar_limits=(0,len(amazing_thing.link_dict)),
                                   output_name="board%s_rx_super_good_links" % (args.board)
