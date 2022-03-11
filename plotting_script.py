@@ -13,7 +13,7 @@ import seaborn as sns
 # Argument parser
 parser = argparse.ArgumentParser(description="Reads scan data and makes plots.", formatter_class=argparse.RawDescriptionHelpFormatter)
 parser.add_argument("-i", "--inputDir", default=None, nargs="+", help="Directory to the scan results.")
-parser.add_argument("-o", "--outputDir", default="./plots/", help="Name of output directory. (default = %(default)s)")
+parser.add_argument("-o", "--outputDir", default=None, help="Name of output directory. Defaults to input directory.")
 parser.add_argument("-b", "--board", default=None, help="Board number, e.g. 04.")
 parser.add_argument("--open_area", default=30, help="Open area cut in \%.")
 parser.add_argument("-tsne", action='store_true', help="Plot tSNE.")
@@ -31,6 +31,8 @@ if args.board is None:
 input_list = [dir+"/BER_summary.txt" for dir in args.inputDir]
 
 # Create output directory
+if not args.outputDir:
+    args.outputDir = args.inputDir + "/plots"
 args.outputDir += "/"
 if not os.path.exists(args.outputDir):
     os.makedirs(args.outputDir)
@@ -421,7 +423,7 @@ class AmazingClassName():
         cbar.set_label(cbar_label)
     
         # Save figure
-        plt.savefig("%sconfigs%s_all%s.pdf" % (self.output_dir, "_"+output_name if output_name else "", "" if mask else "_unmasked"))
+        plt.savefig("%sconfigs%s%s.pdf" % (self.output_dir, "_"+output_name if output_name else "", "" if mask else "_unmasked"))
         # plt.show()
         plt.close()
 
@@ -449,7 +451,7 @@ if args.test:
                                   title="Board %s, %s, Open Area>%i%%, RxTerm %i mV" % (args.board, test_link, amazing_thing.openarea_cut, test_rxTerm),
                                   cbar_label="Open Area [%]",
                                   cbar_limits=(amazing_thing.openarea_cut,100),
-                                  output_name="board%s_tx_openArea_error_%s_rxTerm%i" % (args.board, test_link, test_rxTerm)
+                                  output_name="board%s_tx_openArea_error_rxTerm%i_%s" % (args.board, test_rxTerm, test_link)
                                  )
 
 # Create all Tx plots
@@ -462,7 +464,7 @@ if args.tx or args.txinv:
     #                                       title="Board %s, %s, Open Area>%i%%, RxTerm %i mV" % (args.board, link, amazing_thing.openarea_cut, rxTerm),
     #                                       cbar_label="Open Area [%]",
     #                                       cbar_limits=(amazing_thing.openarea_cut,100),
-    #                                       output_name="board%s_tx%s_openArea_error_%s_rxTerm%i" % (args.board, "_inverted" if args.tx else "", link, rxTerm)
+    #                                       output_name="board%s_tx%s_openArea_error_rxTerm%i_%s" % (args.board, "_inverted" if args.tx else "", rxTerm, link)
     #                                      )
 
     # All links in the same plot
@@ -472,7 +474,7 @@ if args.tx or args.txinv:
                                  title="Board %s, All Links%s, Open Area>%i%%, RxTerm %i mV" % (args.board, " Inverted" if args.txinv else "", amazing_thing.openarea_cut, rxTerm),
                                  cbar_label="Open Area [%]",
                                  cbar_limits=(amazing_thing.openarea_cut,100),
-                                 output_name="board%s_tx%s_openArea_error_all_rxTerm%i" % (args.board, "_inverted" if args.txinv else "", rxTerm)
+                                 output_name="board%s_tx%s_openArea_error_rxTerm%i_all" % (args.board, "_inverted" if args.txinv else "", rxTerm)
                                 )
 
     # All links in the same plot but don't mask 0 errors and open area cut
@@ -483,7 +485,7 @@ if args.tx or args.txinv:
                                  title="Board %s, All Links%s, RxTerm %i mV" % (args.board, " Inverted" if args.txinv else "", rxTerm),
                                  cbar_label="Open Area [%]",
                                  cbar_limits=(0,100),
-                                 output_name="board%s_tx%s_openArea_error_all_rxTerm%i" % (args.board, "_inverted" if args.txinv else "", rxTerm)
+                                 output_name="board%s_tx%s_openArea_error_rxTerm%i_all" % (args.board, "_inverted" if args.txinv else "", rxTerm)
                                 )
 
     # Plot number of good links, 0 errors
@@ -527,7 +529,7 @@ if args.rx:
                              title="Board %s, All Links, Open Area>%i%%, txPre %i dB, txPost %i dB, txDiff %i mV, txEq %i dB" % (args.board, amazing_thing.openarea_cut, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                              cbar_label="Open Area [%]",
                              cbar_limits=(amazing_thing.openarea_cut,100),
-                             output_name="board%s_rx_openArea_error_all_rx" % (args.board)
+                             output_name="board%s_rx_openArea_error_all" % (args.board)
                             )
 
     # All links in the same plot but don't mask 0 errors and open area cut
@@ -538,7 +540,7 @@ if args.rx:
                              title="Board %s, All Links, txPre %i dB, txPost %i dB, txDiff %i mV, txEq %i dB" % (args.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                              cbar_label="Open Area [%]",
                              cbar_limits=(0,100),
-                             output_name="board%s_rx_openArea_error_all_rx" % (args.board)
+                             output_name="board%s_rx_openArea_error_all" % (args.board)
                             )
 
     amazing_thing.plotSingleArray(primary_array=amazing_thing.good_links_rx,
