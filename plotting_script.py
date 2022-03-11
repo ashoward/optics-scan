@@ -357,7 +357,7 @@ class AmazingClassName():
         cbar.set_label(cbar_label)
     
         # Save figure
-        plt.savefig("%sconfigs%s%s.pdf" % (self.output_dir, "_"+output_name if output_name else "", "" if mask else "_unmasked"))
+        plt.savefig("%sconfigs%s%s.pdf" % (self.output_dir, "_"+output_name if output_name else "", "_masked" if mask else ""))
         # plt.show()
         plt.close()
 
@@ -423,7 +423,7 @@ class AmazingClassName():
         cbar.set_label(cbar_label)
     
         # Save figure
-        plt.savefig("%sconfigs%s%s.pdf" % (self.output_dir, "_"+output_name if output_name else "", "" if mask else "_unmasked"))
+        plt.savefig("%sconfigs%s%s.pdf" % (self.output_dir, "_"+output_name if output_name else "", "_masked" if mask else ""))
         # plt.show()
         plt.close()
 

@@ -16,7 +16,8 @@ The file names contain some keywords that describe what the plots contain:
 - `tx`/`rx` if the Tx or if the Rx settings were varied during the scans.
 - `rxTerm` the rxTerm value that were used for the plot (in mV).
 - `all` if all links are plotted in the same file.
-- `unmasked` don't mask the histogram bins that contains errors and doesn't meet the open area cut.
+- `masked` mask the histogram bins that contains errors and doesn't meet the open area cut.
+- `inverted` links have been inverted, e.g. tx-0 to rx-11, tx-1 to rx-10 etc.
 
 ## Data
 
