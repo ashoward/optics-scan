@@ -148,7 +148,10 @@ class AmazingClassName():
 
                 # Insert val in the dataframe
                 if key in self.column_names:
-                    self.df.at[row, key] = float(val)
+                    try:
+                        self.df.at[row, key] = float(val)
+                    except ValueError: # Some settings are strings like "On/Off"
+                        self.df.at[row, key] = val
 
 
     # Fills open area and error arrays for Tx side
