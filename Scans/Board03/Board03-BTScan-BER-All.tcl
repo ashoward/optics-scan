@@ -24,8 +24,8 @@ exec mkdir -p -- $folderName
 exec mkdir -p -- $folderName/data
 
 # Open file to store the BER and open area
-set fber [open ./BER_summary.txt w]
-puts $fber "Link: $argv\n"
+set file_ber [open ./BER_summary.txt w]
+puts $file_ber "Link: $argv\n"
 
 # Get links 
 set links [ get_hw_sio_links ]
@@ -458,7 +458,7 @@ foreach group $groups {
                     append text "OpenA : $open_area\n"
                     append text "DFE   : $DFE\n"
 
-                    puts $fber $text
+                    puts $file_ber $text
 
                     incr i
                   }
@@ -510,5 +510,5 @@ foreach group $groups {
 }
 
 # Close and move BER summary
-close $fber
+close $file_ber
 exec mv ./BER_summary.txt $folderName
