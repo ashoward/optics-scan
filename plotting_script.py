@@ -62,6 +62,12 @@ class AmazingClassName():
         self.board = board
         self.openarea_cut = openarea_cut
 
+        # Set board optics
+        if self.board == "03":
+            self.optics = "4+4 Ch"
+        elif self.board == "04":
+            self.optics = "12 Ch"
+
         # Names of the columns for dataframe, same as the values in BER_summary.txt
         self.column_names = ["Link", "txDiff", "txPre", "txPost", "rxTerm", "txEq", "rxAmp", "rxEmp", "Bits", "Errors", "BER", "OpenA"]
 
@@ -94,7 +100,7 @@ class AmazingClassName():
         else:
             self.df.drop(self.df[self.df.rxAmp == "Off"].index, inplace=True)
             self.df.reset_index(inplace=True, drop=True)
-            self.nRxAmp_vals -= 1
+            self.nRxAmp_vals -= 1 if self.nRxAmp_vals > 1 else 0
             rxAmp_list = ["Low", "Medium", "High"] # Hardcoded bodge
             self.rxAmp_vals = {rxAmp_list[i] : i for i in range(self.nRxAmp_vals)}
 
@@ -254,7 +260,7 @@ class AmazingClassName():
     def setRxConfigAxesTicks(self, axes, fontsize=10):
 
         # Plot Amplitude Axis
-        axes.set_xlabel("Amplitude %s" % ("[mV]" if isinstance(list(self.rxAmp_vals.keys())[0], int) else ""))
+        axes.set_xlabel("Amplitude %s" % ("[mV]" if isinstance(list(self.rxAmp_vals.keys())[0], float) else ""))
         x1_tick_labels = [str(val) for i in range(self.nRxTerm_vals) for val in self.rxAmp_vals]
         axes.set_xticks(np.arange(self.nRxAmp_vals*self.nRxTerm_vals))  # Set ticks
         axes.set_xticklabels(x1_tick_labels, fontsize=fontsize)  # Set tick labels
@@ -328,7 +334,7 @@ class AmazingClassName():
             markers=['o'] if only_good_configs else ['X', 's', 'o'],
             legend="full",
             alpha=0.4
-        ).set(title="Board %s, only good configurations: 0 errors, Open Area>%i%%\nTraining input: %s" % (self.board, self.openarea_cut, list(df_data.columns)) if only_good_configs else "Board %s\nTraining input: %s" % (self.board, list(df_data.columns)))
+        ).set(title="Board %s (%s), only good configurations: 0 errors, Open Area>%i%%\nTraining input: %s" % (self.board, self.optics, self.openarea_cut, list(df_data.columns)) if only_good_configs else "Board %s (%s)\nTraining input: %s" % (self.board, self.optics, list(df_data.columns)))
 
         # Fix padding
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
@@ -467,7 +473,7 @@ if args.test:
     test_link = next(iter(amazing_thing.link_dict.keys()))
     amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_tx_dict[test_rxTerm][test_link],
                                   secondary_array=amazing_thing.error_tx_dict[test_rxTerm][test_link],
-                                  title="Board %s, %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.board, test_link, amazing_thing.openarea_cut, test_rxTerm),
+                                  title="Board %s (%s), %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.board, amazing_thing.optics, test_link, amazing_thing.openarea_cut, test_rxTerm),
                                   cbar_label="Open Area [%]",
                                   cbar_limits=(amazing_thing.openarea_cut,100),
                                   output_name="board%s_tx_openArea_error_rxTerm%i_%s" % (amazing_thing.board, test_rxTerm, test_link)
@@ -481,9 +487,10 @@ if args.tx or args.txinv:
             for link in amazing_thing.link_dict.keys():
                 amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_tx_dict[rxTerm][link],
                                               secondary_array=amazing_thing.error_tx_dict[rxTerm][link],
-                                              title="Board %s, %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.board, link, amazing_thing.openarea_cut, rxTerm),
+                                              title="Board %s (%s), %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.board, amazing_thing.optics, link, amazing_thing.openarea_cut, rxTerm),
+                                              mask=False,
                                               cbar_label="Open Area [%]",
-                                              cbar_limits=(amazing_thing.openarea_cut,100),
+                                              cbar_limits=(0,100),
                                               output_name="board%s_tx%s_openArea_error_rxTerm%i_%s" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm, link)
                                              )
 
@@ -491,7 +498,7 @@ if args.tx or args.txinv:
     for rxTerm in amazing_thing.rxTerm_vals.keys():
         amazing_thing.plotArrays(primary_dict=amazing_thing.openA_tx_dict[rxTerm],
                                  secondary_dict=amazing_thing.error_tx_dict[rxTerm],
-                                 title="Board %s, All Links%s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.board, " Inverted" if args.txinv else "", amazing_thing.openarea_cut, rxTerm),
+                                 title="Board %s (%s), All Links%s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.board, amazing_thing.optics, " Inverted" if args.txinv else "", amazing_thing.openarea_cut, rxTerm),
                                  cbar_label="Open Area [%]",
                                  cbar_limits=(amazing_thing.openarea_cut,100),
                                  output_name="board%s_tx%s_openArea_error_rxTerm%i_all" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm)
@@ -502,7 +509,7 @@ if args.tx or args.txinv:
         amazing_thing.plotArrays(primary_dict=amazing_thing.openA_tx_dict[rxTerm],
                                  secondary_dict=amazing_thing.error_tx_dict[rxTerm],
                                  mask=False,
-                                 title="Board %s, All Links%s, RxTerm %i mV" % (amazing_thing.board, " Inverted" if args.txinv else "", rxTerm),
+                                 title="Board %s (%s), All Links%s, RxTerm %i mV" % (amazing_thing.board, amazing_thing.optics, " Inverted" if args.txinv else "", rxTerm),
                                  cbar_label="Open Area [%]",
                                  cbar_limits=(0,100),
                                  output_name="board%s_tx%s_openArea_error_rxTerm%i_all" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm)
@@ -513,7 +520,7 @@ if args.tx or args.txinv:
         amazing_thing.plotSingleArray(primary_array=amazing_thing.good_links_tx_dict[rxTerm],
                                       secondary_array=amazing_thing.good_links_tx_dict[rxTerm],
                                       mask=False,
-                                      title="Board %s, number of good links%s (RxTerm %i mV): 0 Errors" % (amazing_thing.board, " inverted" if args.txinv else "", rxTerm),
+                                      title="Board %s (%s), number of good links%s (RxTerm %i mV): 0 Errors" % (amazing_thing.board, amazing_thing.optics, " inverted" if args.txinv else "", rxTerm),
                                       cbar_label="Number of good links",
                                       cbar_limits=(0,len(amazing_thing.link_dict)),
                                       output_name="board%s_tx%s_good_links_rxTerm%i" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm)
@@ -524,7 +531,7 @@ if args.tx or args.txinv:
         amazing_thing.plotSingleArray(primary_array=amazing_thing.super_good_links_tx_dict[rxTerm],
                                       secondary_array=amazing_thing.super_good_links_tx_dict[rxTerm],
                                       mask=False,
-                                      title="Board %s, number of super good links%s (RxTerm %i mV): 0 Errors, Open Area>%i%%" % (amazing_thing.board, " inverted" if args.txinv else "", rxTerm, amazing_thing.openarea_cut),
+                                      title="Board %s (%s), number of super good links%s (RxTerm %i mV): 0 Errors, Open Area>%i%%" % (amazing_thing.board, amazing_thing.optics, " inverted" if args.txinv else "", rxTerm, amazing_thing.openarea_cut),
                                       cbar_label="Number of super good links",
                                       cbar_limits=(0,len(amazing_thing.link_dict)),
                                       output_name="board%s_tx%s_super_good_links_rxTerm%i" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm)
@@ -537,16 +544,16 @@ if args.rx:
             amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_rx_dict,
                                           secondary_array=amazing_thing.error_rx_dict,
                                           tx=False,
-                                          title="Board %s, %s, Open Area>%i%%" % (args.board, link, amazing_thing.openarea_cut),
+                                          title="Board %s (%s), %s, Open Area>%i%%" % (amazing_thing.board, amazing_thing.optics, link, amazing_thing.openarea_cut),
                                           cbar_label="Open Area [%]",
                                           cbar_limits=(amazing_thing.openarea_cut,100),
-                                          output_name="board%s_rx_openArea_error_%s" % (args.board, link)
+                                          output_name="board%s_rx_openArea_error_%s" % (amazing_thing.board, link)
                                          )
 
     amazing_thing.plotArrays(primary_dict=amazing_thing.openA_rx_dict,
                              secondary_dict=amazing_thing.error_rx_dict,
                              tx=False,
-                             title="Board %s, All Links, Open Area>%i%%, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (args.board, amazing_thing.openarea_cut, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
+                             title="Board %s (%s), All Links, Open Area>%i%%, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (amazing_thing.board, amazing_thing.optics, amazing_thing.openarea_cut, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                              cbar_label="Open Area [%]",
                              cbar_limits=(amazing_thing.openarea_cut,100),
                              output_name="board%s_rx_openArea_error_all" % (amazing_thing.board)
@@ -557,7 +564,7 @@ if args.rx:
                              secondary_dict=amazing_thing.error_rx_dict,
                              tx=False,
                              mask=False,
-                             title="Board %s, All Links, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (amazing_thing.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
+                             title="Board %s (%s), All Links, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (amazing_thing.board, amazing_thing.optics, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                              cbar_label="Open Area [%]",
                              cbar_limits=(0,100),
                              output_name="board%s_rx_openArea_error_all" % (amazing_thing.board)
@@ -567,7 +574,7 @@ if args.rx:
                                   secondary_array=amazing_thing.good_links_rx,
                                   tx=False,
                                   mask=False,
-                                  title="Board %s, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of good links: 0 Errors" % (amazing_thing.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
+                                  title="Board %s (%s), txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of good links: 0 Errors" % (amazing_thing.board, amazing_thing.optics, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                                   cbar_label="Number of good links",
                                   cbar_limits=(0,len(amazing_thing.link_dict)),
                                   output_name="board%s_rx_good_links" % (amazing_thing.board)
@@ -577,7 +584,7 @@ if args.rx:
                                   secondary_array=amazing_thing.super_good_links_rx,
                                   tx=False,
                                   mask=False,
-                                  title="Board %s, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of super good links: 0 Errors, Open Area>%i%%" % (amazing_thing.board, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys())), amazing_thing.openarea_cut),
+                                  title="Board %s (%s), txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of super good links: 0 Errors, Open Area>%i%%" % (amazing_thing.board, amazing_thing.optics, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys())), amazing_thing.openarea_cut),
                                   cbar_label="Number of super good links",
                                   cbar_limits=(0,len(amazing_thing.link_dict)),
                                   output_name="board%s_rx_super_good_links" % (amazing_thing.board)
