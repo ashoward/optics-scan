@@ -1,6 +1,8 @@
 ## ALL relevant settings - beware > 500000 sweeps!!
 ## 500 scans per hour
 
+## Makes scans varying all settings. Can be edited to only do Tx/Rx.
+
 ### Which precision ###
 
 ##set dwell_ber 1e-8
@@ -20,17 +22,8 @@ set folderName "/home/meholmbe/optics-scan/results/Board04_BTScan_BER_All_$folde
 # Generate the folders 
 exec mkdir -p -- $folderName
 exec mkdir -p -- $folderName/data
-exec mkdir -p -- $folderName/data/best
 
-# Open file to store the configuration 
-set fout [open ./configuration_summary.json w]
-puts $fout "{"
-# Open file to store the best configuration
-set fbest [open ./best_area_summary.json w]
-puts $fbest "{"
-set fbest_err [open ./best_errors_summary.json w]
-puts $fbest_err "{"
-# Open file to store the BER
+# Open file to store the BER and open area
 set fber [open ./BER_summary.txt w]
 puts $fber "Link: $argv\n"
 
@@ -83,7 +76,7 @@ array set txdiff_setting_gty {
     # (11111) 1040
 
 
-# TxPre [dB]
+# TxPrecursor [dB]
 set txpre_default_index (00000)
 set txpre_default 0.00
 array set txpre_setting_gty {
@@ -125,7 +118,7 @@ array set txpre_setting_gty {
 #     (11111) 6.02
 
 
-# TxPost [dB]
+# TxPostcursor [dB]
 set txpost_default_index (00000)
 set txpost_default 0.00
 array set txpost_setting_gty {
@@ -208,7 +201,7 @@ array set rxterm_setting_gty {
     # 16  1100 
 
 
-# Values for setting the amplitude
+# Amplitude
 set rxamp_default Medium
 array set rxamp_setting {
   1 High
@@ -263,43 +256,10 @@ foreach group $groups {
   #set DC [ lindex [ split $tmp "_" ] 2 ]
   set links [get_hw_sio_links -of_objects [get_hw_sio_linkgroups $group]]
 
-  foreach link $links {
-    # Best Open Area
-    set best_area($link) -1
-    set best_errors($link) 999999999999
-    set best_txdiff($link) -1
-    set best_txdiff_index($link) -1
-    set best_txpre($link) -1
-    set best_txpre_index($link) -1
-    set best_txpost($link) -1
-    set best_txpost_index($link) -1
-    set best_txeq($link) -1
-    set best_rxamp($link) unset
-    set best_rxemp(link) -1
-    set best_dfe($link) unset
-    set best_scanName($link) unset
-    set best_xil_newScan($link) unset
-    # Best Error Count
-    set best_err_area($link) -1
-    set best_err_errors($link) 999999999999
-    set best_err_txdiff($link) -1
-    set best_err_txdiff_index($link) -1
-    set best_err_txpre($link) -1
-    set best_err_txpre_index($link) -1
-    set best_err_txpost($link) -1
-    set best_err_txpost_index($link) -1
-    set best_err_txeq($link) -1
-    set best_err_rxamp($link) unset
-    set best_err_rxemp($link) -1
-    set best_err_dfe($link) unset
-    set best_err_xil_newScan($link) unset
-    set best_err_scanName($link) unset
-    set best_err_cfg($link) unset
-  }
-
-  # Loop over equalisation values
+  # Loop over Tx Equalisation
   foreach index_eq [array names txeq_setting] {
 
+    
     # Set optical configurations
     # Remember to exit the Smash interactive shell, or the script will be stuck here
     puts "Setting equalization $txeq_setting($index_eq)..."
@@ -313,8 +273,6 @@ foreach group $groups {
     # Loop over amplitude
     foreach index_rxamp [array names rxamp_setting] {
 
-      # Set optical configurations
-      # Remember to exit the Smash interactive shell, or the script will be stuck here
       puts "Setting amplitude $rxamp_setting($index_rxamp)..."
       catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_setting($index_rxamp)"} rxamp_value
       while { $rxamp_value == "child process exited abnormally" } {
@@ -323,11 +281,9 @@ foreach group $groups {
       }
       puts "Amplitude value: $rxamp_value"
 
-      # Loop over pre-emphasis
+      # Loop over Pre-emphasis
       foreach index_rxemp [array names rxemp_setting] {
 
-        # Set optical configurations
-        # Remember to exit the Smash interactive shell, or the script will be stuck here
         puts "Setting pre-emphasis $rxemp_setting($index_rxemp)..."
         catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $rxemp_setting($index_rxemp)"} rxemp_value
         while { $rxemp_value == "child process exited abnormally" } {
@@ -336,12 +292,17 @@ foreach group $groups {
         }
         puts "Pre-emphasis value: $rxemp_value"
 
+        # Loop over Tx DiffSwing
         foreach index_diff [array names txdiff_setting_gty] {
+          # Loop over Tx Precursor
           foreach index_pre [array names txpre_setting_gty] {
+            # Loop over Tx Postcursor
             foreach index_post [array names txpost_setting_gty] {
+              # Loop over Rx Termination voltage
               foreach index_rxterm [array names rxterm_setting_gty] { 
                 # Loop over LPM and DFE filters [list 0 1]
                 foreach dfe [list 0] {
+                  # Loop over all links
                   foreach link $links {
 
                     after 3000 
@@ -434,7 +395,7 @@ foreach group $groups {
                       set_property HORIZONTAL_INCREMENT {1} [get_hw_sio_scans $xil_newScan]
                       set_property DWELL_BER $dwell_ber [get_hw_sio_scans $xil_newScan]
 
-                      # Run the scan! :) 
+                      # Run the bathtub scan! :) 
                       run_hw_sio_scan [get_hw_sio_scans $xil_newScan]
                       wait_on_hw_sio_scan [get_hw_sio_scans $xil_newScan]
 
@@ -448,28 +409,8 @@ foreach group $groups {
                       set open_area [expr 100*$open_area_int/64.0]
 
                       puts "Error_count (after bathtub): $error_count"
-                      puts "Received bits: $received_bits"
+                      puts "Received bits (after bathtub): $received_bits"
                       puts "Open Area: $open_area"
-                      puts "Best Area: $best_area($link)"
-
-                      # The best Open Area
-                      if { $open_area > $best_area($link)} {
-                        set best_area($link) $open_area
-                        set best_errors($link) $error_count
-                        set best_dfe($link) [ get_property RXDFEENABLED  $link ]
-                        set best_txdiff($link) $txdiff_setting_gty($index_diff)
-                        set best_txpre($link) $txpre_setting_gty($index_pre)
-                        set best_txpost($link) $txpost_setting_gty($index_post)
-                        set best_txdiff_index($link) $txdiff_setting_gty($index_diff)
-                        set best_txpre_index($link) $index_pre
-                        set best_txpost_index($link) $index_post
-                        set best_rxterm($link) $rxterm_setting_gty($index_rxterm)
-                        set best_txeq($link) $txeq_setting($index_eq)
-                        set best_rxamp($link) $rxamp_setting($index_rxamp)
-                        set best_rxemp($link) $rxemp_setting($index_rxemp)
-                        set best_scanName($link) $scanName
-                        set best_xil_newScan($link) $xil_newScan
-                      }
 
                       # Save the scan! :D
                       exec mkdir -p -- $folderName/data/sweep$sweep
@@ -483,59 +424,7 @@ foreach group $groups {
                     set rx_polarity [ get_property PORT.RXPOLARITY $link ]
                     set DFE_enabled [ get_property RXDFEENABLED  $link ]
 
-                    # Write configuration to out file
-                    set text ""
-
-                    if { $i > 0 } {
-                      append text "\},\n"
-                    }
-
-                    append text "\"$scanName\" : \{\n"
-                    append text "\"baseBoard\" : \"$baseBoard\",\n"
-
-                    append text "\"DCtx\" : \{ "
-                    append text "\"site\" : \""
-                    append text [ dict get $DCtx site ]
-                    append text "\", \"type\" : \""
-                    append text [ dict get $DCtx type ]
-                    append text "\", \"id\" : \""
-                    append text [ dict get $DCtx id ]
-                    append text "\" \},\n"
-
-                    append text "\"DCrx\" : \{ "
-                    append text "\"site\" : \""
-                    append text [ dict get $DCrx site ]
-                    append text "\", \"type\" : \""
-                    append text [ dict get $DCrx type ]
-                    append text "\", \"id\" : \""
-                    append text [ dict get $DCrx id ]
-                    append text "\" \},\n"
-
-                    append text "\"status\" : \"$status\", \n"
-                    append text "\"DFE\" : \"$DFE_enabled\", \n"
-                    append text "\"tx\" : \"$txEndpoint\",\n" 
-                    append text "\"txPolarity\" : \"$tx_polarity\", \n"
-                    append text "\"txPattern\" : \"$tx_pattern\", \n"
-                    append text "\"rx\" : \"$rxEndpoint\", \n"
-                    append text "\"rxPolarity\" : \"$rx_polarity\", \n"
-                    append text "\"rxPattern\" : \"$rx_pattern\", \n"
-
-                    append text "\"txDiff\" : \"$txdiff_setting_gty($index_diff)\", \n"
-                    append text "\"txPre\" : \"$txpre_setting_gty($index_pre)\", \n"
-                    append text "\"txPost\" : \"$txpost_setting_gty($index_post)\", \n"
-
-                    append text "\"rxTerm\" : \"$rxterm_setting_gty($index_rxterm)\", \n"
-
-                    append text "\"Eq\" : \"$txeq_setting($index_eq)\", \n"
-                    append text "\"Amp\" : \"$rxamp_setting($index_rxamp)\", \n"
-                    append text "\"PreEmp\" : \"$rxemp_setting($index_rxemp)\", \n"
-
-                    append text "\"OpenArea\" : \"$open_area\", \n"
-                    append text "\"ErrorCount\" : \"$error_count\" \n"
-
-                    puts $fout $text
-
-                    # Measure errors
+                    # Measure BER and error count
                     # Do it after the bathtub scan or one get an "incorrect" error count
                     refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xcvu7p_0] 0] 
                     set_property LOGIC.MGT_ERRCNT_RESET_CTRL 1 [get_hw_sio_links $link]
@@ -551,32 +440,6 @@ foreach group $groups {
                     puts "Received bits: $received_bits"
                     puts "Error count: $error_count"
                     puts "BER: $rx_ber"
-
-                    # The best Error Count and open area
-                    # Add within 3%?
-                    if { $error_count < $best_err_errors($link) || ($error_count == $best_err_errors($link) && $open_area > $best_err_area($link))} {
-                      set best_err_area($link) $open_area
-                      set best_err_errors($link) $error_count
-                      set best_err_dfe($link) [ get_property RXDFEENABLED  $link ]
-                      set best_err_txdiff($link) $txdiff_setting_gty($index_diff)
-                      set best_err_txpre($link) $txpre_setting_gty($index_pre)
-                      set best_err_txpost($link) $txpost_setting_gty($index_post)
-                      set best_err_rxterm($link) $rxterm_setting_gty($index_rxterm)
-                      set best_err_txdiff_index($link) $index_diff
-                      set best_err_txpre_index($link) $index_pre
-                      set best_err_txpost_index($link) $index_post
-                      set best_err_txeq($link) $txeq_setting($index_eq)
-                      set best_err_rxamp($link) $rxamp_setting($index_rxamp)
-                      set best_err_rxemp($link) $rxemp_setting($index_rxemp)
-                      set best_err_scanName($link) $scanName
-                      set best_err_xil_newScan($link) $xil_newScan
-                      # Reset best configuration list and save the better one
-                      set best_err_cfg($link) {}
-                      set best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$txeq_setting($index_eq),$rxamp_setting($index_rxamp),$rxemp_setting($index_rxemp))"
-                    } elseif {$error_count == $best_err_errors($link) && $open_area == $best_err_area($link)} {
-                      # Save configuration as it gave the same result as the current best
-                      lappend best_err_cfg($link) "($txdiff_setting_gty($index_diff),$txpre_setting_gty($index_pre),$txpost_setting_gty($index_post),$rxterm_setting_gty($index_rxterm),$txeq_setting($index_eq),$rxamp_setting($index_rxamp),$rxemp_setting($index_rxemp))"
-                    }
 
                     # Write BER file
                     set text ""
@@ -692,21 +555,6 @@ foreach group $groups {
 
 }
 
-puts $fout "\}"
-puts $fout "\}"
-close $fout
-
-puts $fbest "\}"
-puts $fbest "\}"
-close $fbest
-
-puts $fbest_err "\}"
-puts $fbest_err "\}"
-close $fbest_err
-
+# Close and move BER summary
 close $fber
-
-exec mv ./configuration_summary.json $folderName
-exec mv ./best_area_summary.json $folderName
-exec mv ./best_errors_summary.json $folderName
 exec mv ./BER_summary.txt $folderName
