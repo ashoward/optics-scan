@@ -1,5 +1,6 @@
-# General files
+# General files and folders
 /plots/
+*:*.pdf
 
 # Do not ignore
 
