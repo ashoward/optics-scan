@@ -471,53 +471,6 @@ foreach group $groups {
     }
   }
 
-  # The best configurations
-  set j 0
-  foreach link $links {
-
-    set linkName [get_property DESCRIPTION $link]
-
-    # Best Open Area
-    set text ""
-    if { $j > 0 } {
-      append text "\},\n"
-    }
-    append text "\"$link\" : \{\n"
-    append text "\"LinkName: \"$linkName\", \n"
-    append text "\"ScanName: \"$best_scanName($link)\", \n"
-    append text "\"BestArea\" : \"$best_area($link)\", \n"
-    append text "\"Errors\" : \"$best_errors($link)\", \n"
-    append text "\"txDiff\" : \"$best_txdiff($link)\", \n"
-    append text "\"txPre\" : \"$best_txpre($link)\", \n"
-    append text "\"txPost\" : \"$best_txpost($link)\", \n"
-    append text "\"rxTerm\" : \"$best_rxterm($link)\", \n"
-    append text "\"DFE\" : \"$best_dfe($link)\", \n"
-
-    puts $fbest $text
-
-    # Save best scan
-    write_hw_sio_scan -force "$folderName/data/best_area/$scanName" [get_hw_sio_scans $best_xil_newScan($link)]
-
-    # Best Error Count
-    set text ""
-    if { $j > 0 } {
-      append text "\},\n"
-    }
-    append text "\"$link\" : \{\n"
-    append text "\"LinkName: \"$linkName\", \n"
-    append text "\"ScanName: \"$best_err_scanName($link)\", \n"
-    append text "\"BestArea\" : \"$best_err_area($link)\", \n"
-    append text "\"Errors\" : \"$best_err_errors($link)\", \n"
-    append text "\"DFE\" : \"$best_err_dfe($link)\", \n"
-    append text "\"txDiff,txPre,txPost,rxTerm,txEq\" : \[$best_err_cfg($link)\], \n"
-    puts $fbest_err $text
-
-    # Save one of the best scans...
-    write_hw_sio_scan -force "$folderName/data/best_errors/$scanName" [get_hw_sio_scans $best_err_xil_newScan($link)]
-
-    incr j
-  }
-
   # Reset values to default
   foreach link $links {
     set_property TXPRE "$txpre_default dB $txpre_default_index" [get_hw_sio_links $link]
