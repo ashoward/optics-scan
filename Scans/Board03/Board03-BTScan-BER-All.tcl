@@ -6,9 +6,11 @@
 ###########################
 # Set folder and file names
 
+# Get the system time to name the directory
+set systemTime [clock seconds]
+set folderTime [clock format $systemTime -format %Y-%m-%d-%H%M]
 # Output folder
-set folderName [clock format $systemTime -format %Y-%m-%d-%H%M]
-set folderName "/home/meholmbe/optics-scan/results/Board03_BTScan_BER_All_$folderName"
+set folderName "/home/meholmbe/optics-scan/results/Board03_BTScan_BER_Tx_$folderTime"
 # Board name
 set boardName "cmx@serenity-2368-03-i5.cern.ch"
 # Paths to scripts on the board
@@ -32,9 +34,6 @@ exec mkdir -p -- $folderName/data
 
 # Remove the current scans if any
 remove_hw_sio_scan [get_hw_sio_scans {}]
-
-# Get the system time to name the directory
-set systemTime [clock seconds]
 
 # Get links 
 set links [ get_hw_sio_links ]
