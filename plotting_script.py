@@ -58,14 +58,26 @@ class AmazingClassName():
         self.board = board
         self.openarea_cut = openarea_cut
 
-        # Set board optics
+        # Set board specific values
         if self.board == "03":
-            self.channels = "4+4 Ch"
+            self.channels = "4+4 Ch" # Number of channels, used for plot titles
+            # TSNE training settings
+            self.perplexity = 150
+            self.n_iter = 1000
+            self.learning_rate = 200
         elif self.board == "04":
-            self.channels = "12 Ch"
+            self.channels = "12 Ch" # Number of channels, used for plot titles
+            # TSNE training settings
+            self.perplexity = 150
+            self.n_iter = 1000
+            self.learning_rate = 200
         else:
-            print("Warning: undefined board, unknown channels.")
+            print("Warning: undefined board. Using default...")
             self.channels = ""
+            # TSNE training settings
+            self.perplexity = 150
+            self.n_iter = 1000
+            self.learning_rate = 200
 
         # Names of the columns for dataframe, same as the values in BER_summary.txt
         self.column_names = ["Link", "txDiff", "txPre", "txPost", "rxTerm", "txEq", "rxAmp", "rxEmp", "Bits", "Errors", "BER", "OpenA"]
@@ -308,13 +320,7 @@ class AmazingClassName():
         df_data.reset_index(inplace=True, drop=True)
     
         # Do the TSNE dimensionality reduction
-        if self.board == "03":
-            tsne = TSNE(n_components=2, perplexity=150, n_iter=1000, learning_rate=200)
-        elif self.board == "04":
-            tsne = TSNE(n_components=2, perplexity=150, n_iter=1000, learning_rate=200)
-        else:
-            print("Warning: undefined board, unknown tSNE settings. Using default...")
-            tsne = TSNE(n_components=2, perplexity=150, n_iter=1000, learning_rate=200)
+        tsne = TSNE(n_components=2, perplexity=self.perplexity, n_iter=self.n_iter, learning_rate=self.learning_rate)
         tsne_results = tsne.fit_transform(df_data.values)
     
         # Convert results into dataframe
