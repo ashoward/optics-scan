@@ -12,9 +12,9 @@ import seaborn as sns
 
 # Argument parser
 parser = argparse.ArgumentParser(description="Reads scan data and makes plots.", formatter_class=argparse.RawDescriptionHelpFormatter)
-parser.add_argument("-i", "--inputDir", default=None, nargs="+", help="Directory to the scan results.")
+parser.add_argument("-i", "--inputDir", nargs="+", help="Directory to the scan results with the BER_summary.txt file. Multiple directories possible, but not really used...", required=True)
 parser.add_argument("-o", "--outputDir", default=None, help="Name of output directory. Defaults to input directory.")
-parser.add_argument("-b", "--board", default=None, help="Board number, e.g. 04.")
+parser.add_argument("-b", "--board", default=None, help="Board number, e.g. 04.", required=True)
 parser.add_argument("--open_area", default=30, help="Open area cut in \%.")
 parser.add_argument("-tsne", action='store_true', help="Plot tSNE.")
 parser.add_argument("-test", action='store_true', help="Plot single link test.")
@@ -23,10 +23,6 @@ parser.add_argument("-txinv", action='store_true', help="Plot all Tx inverted li
 parser.add_argument("-rx", action='store_true', help="Plot all Rx.")
 parser.add_argument("-all", action='store_true', help="Make separate plots for all links.")
 args = parser.parse_args()
-
-# Check that the user specified which board to analyse
-if args.board is None:
-    sys.exit("Board is not set, use the '-b' flag. Exit program...")
 
 # Create list of input files. Only used for tSNE plots
 input_list = [dir+"/BER_summary.txt" for dir in args.inputDir]
@@ -64,9 +60,12 @@ class AmazingClassName():
 
         # Set board optics
         if self.board == "03":
-            self.optics = "4+4 Ch"
+            self.channels = "4+4 Ch"
         elif self.board == "04":
-            self.optics = "12 Ch"
+            self.channels = "12 Ch"
+        else:
+            print("Warning: undefined board, unknown channels.")
+            self.channels = ""
 
         # Names of the columns for dataframe, same as the values in BER_summary.txt
         self.column_names = ["Link", "txDiff", "txPre", "txPost", "rxTerm", "txEq", "rxAmp", "rxEmp", "Bits", "Errors", "BER", "OpenA"]
@@ -314,7 +313,7 @@ class AmazingClassName():
         elif self.board == "04":
             tsne = TSNE(n_components=2, perplexity=150, n_iter=1000, learning_rate=200)
         else:
-            print("Warning: undefined board.")
+            print("Warning: undefined board, unknown tSNE settings. Using default...")
             tsne = TSNE(n_components=2, perplexity=150, n_iter=1000, learning_rate=200)
         tsne_results = tsne.fit_transform(df_data.values)
     
@@ -334,7 +333,7 @@ class AmazingClassName():
             markers=['o'] if only_good_configs else ['X', 's', 'o'],
             legend="full",
             alpha=0.4
-        ).set(title="Board %s (%s), only good configurations: 0 errors, Open Area>%i%%\nTraining input: %s" % (self.board, self.optics, self.openarea_cut, list(df_data.columns)) if only_good_configs else "Board %s (%s)\nTraining input: %s" % (self.board, self.optics, list(df_data.columns)))
+        ).set(title="Board %s (%s), only good configurations: 0 errors, Open Area>%i%%\nTraining input: %s" % (self.board, self.channels, self.openarea_cut, list(df_data.columns)) if only_good_configs else "Board %s (%s)\nTraining input: %s" % (self.board, self.channels, list(df_data.columns)))
 
         # Fix padding
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
