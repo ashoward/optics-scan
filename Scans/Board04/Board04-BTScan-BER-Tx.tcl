@@ -10,11 +10,11 @@
 set systemTime [clock seconds]
 set folderTime [clock format $systemTime -format %Y-%m-%d-%H%M]
 # Output folder
-set folderName "/home/meholmbe/optics-scan/results/Board03_BTScan_BER_Tx_$folderTime"
+set folderName "/home/meholmbe/optics-scan/results/Board04_BTScan_BER_Tx_$folderTime"
 # Board name
 set boardName "cmx@serenity-2368-04-i5.cern.ch"
 # Paths to scripts on the board
-set setEqScript "ahoward/picocom/setEq.sh"
+set setEqScript "ahoward/picocom/setPre.sh"
 set setAmpScript "ahoward/picocom/setAmp.sh"
 set setPreEmpScript "ahoward/picocom/setPre-emp.sh"
 
@@ -453,10 +453,10 @@ foreach group $groups {
   # Set optical configurations default
   # Remember to exit the Smash interactive shell, or the script will be stuck here
   puts "Setting equalization $txeq_default..."
-  catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source $setEqScript $txeq_default"} txeq_value
+  catch {exec -ignorestderr ssh $boardName "source $setEqScript $txeq_default"} txeq_value
   while { $txeq_value == "child process exited abnormally" } {
   puts "Set EQ i2c error: $txeq_value"
-  catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source $setEqScript $txeq_default"} txeq_value
+  catch {exec -ignorestderr ssh $boardName "source $setEqScript $txeq_default"} txeq_value
   }
   puts "Equalization value: $txeq_value"
 

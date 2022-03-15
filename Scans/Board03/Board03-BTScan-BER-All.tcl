@@ -10,7 +10,7 @@
 set systemTime [clock seconds]
 set folderTime [clock format $systemTime -format %Y-%m-%d-%H%M]
 # Output folder
-set folderName "/home/meholmbe/optics-scan/results/Board03_BTScan_BER_Tx_$folderTime"
+set folderName "/home/meholmbe/optics-scan/results/Board03_BTScan_BER_All_$folderTime"
 # Board name
 set boardName "cmx@serenity-2368-03-i5.cern.ch"
 # Paths to scripts on the board

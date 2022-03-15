@@ -10,11 +10,11 @@
 set systemTime [clock seconds]
 set folderTime [clock format $systemTime -format %Y-%m-%d-%H%M]
 # Output folder
-set folderName "/home/meholmbe/optics-scan/results/Board03_BTScan_BER_Tx_$folderTime"
+set folderName "/home/meholmbe/optics-scan/results/Board04_BTScan_BER_All_$folderTime"
 # Board name
 set boardName "cmx@serenity-2368-04-i5.cern.ch"
 # Paths to scripts on the board
-set setEqScript "ahoward/picocom/setEq.sh"
+set setEqScript "ahoward/picocom/setPre.sh"
 set setAmpScript "ahoward/picocom/setAmp.sh"
 set setPreEmpScript "ahoward/picocom/setPre-emp.sh"
 
