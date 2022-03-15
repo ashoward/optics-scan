@@ -3,29 +3,38 @@
 
 ## Makes scans with varying settings on the Tx path (and RxTerm but this can be changed)
 
-### Which precision ###
+###########################
+# Set folder and file names
 
-##set dwell_ber 1e-8
+# Output folder
+set folderName [clock format $systemTime -format %Y-%m-%d-%H%M]
+set folderName "/home/meholmbe/optics-scan/results/Board04_BTScan_BER_Tx_$folderName"
+# Board name
+set boardName "cmx@serenity-2368-04-i5.cern.ch"
+# Paths to scripts on the board
+set setEqScript "ahoward/picocom/setEq.sh"
+set setAmpScript "ahoward/picocom/setAmp.sh"
+set setPreEmpScript "ahoward/picocom/setPre-emp.sh"
+
+###########################
+
+# Which precision
+#set dwell_ber 1e-8
 set dwell_ber 1e-6
 
-#######################
+# Open file to store the BER and open area
+set file_ber [open ./BER_summary.txt w]
+puts $file_ber "Link: $argv\n"
+
+# Generate the folders 
+exec mkdir -p -- $folderName
+exec mkdir -p -- $folderName/data
 
 # Remove the current scans if any
 remove_hw_sio_scan [get_hw_sio_scans {}]
 
 # Get the system time to name the directory
 set systemTime [clock seconds]
- 
-set folderName [clock format $systemTime -format %Y-%m-%d-%H%M]
-set folderName "/home/meholmbe/optics-scan/results/Board04_BTScan_BER_Tx_$folderName"
-
-# Generate the folders 
-exec mkdir -p -- $folderName
-exec mkdir -p -- $folderName/data
-
-# Open file to store the BER and open area
-set file_ber [open ./BER_summary.txt w]
-puts $file_ber "Link: $argv\n"
 
 # Get links 
 set links [ get_hw_sio_links ]
@@ -221,18 +230,18 @@ set dfe_default 0
 # Set optical configurations default
 # Remember to exit the Smash interactive shell, or the script will be stuck here
 puts "Setting amplitude $rxamp_default..."
-catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
+catch {exec -ignorestderr ssh $boardName "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
 while { $rxamp_value == "child process exited abnormally" } {
 puts "Set Amp i2c error: $rxamp_value"
-catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
+catch {exec -ignorestderr ssh $boardName "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
 }
 puts "Amplitude value: $rxamp_value"
 
 puts "Setting pre-emphasis $rxemp_default..."
-catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $rxemp_default"} rxemp_value
+catch {exec -ignorestderr ssh $boardName "source $setPreEmpScript $rxemp_default"} rxemp_value
 while { $rxemp_value == "child process exited abnormally" } {
 puts "Set Pre-Emp i2c error: $rxemp_value"
-catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre-emp.sh $rxemp_default"} rxemp_value
+catch {exec -ignorestderr ssh $boardName "source $setPreEmpScript $rxemp_default"} rxemp_value
 }
 puts "Pre-emphasis value: $rxemp_value"
 
@@ -254,10 +263,10 @@ foreach group $groups {
   foreach index_eq [array names txeq_setting] {
 
     puts "Setting equalization to $txeq_setting($index_eq)..."
-    catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_setting($index_eq)"} txeq_value
+    catch {exec -ignorestderr ssh $boardName "source $setEqScript $txeq_setting($index_eq)"} txeq_value
     while { $txeq_value == "child process exited abnormally" } {
       puts "Set EQ i2c error: $txeq_value"
-      catch {exec -ignorestderr ssh cmx@serenity-2368-04-i5.cern.ch "source ahoward/picocom/setPre.sh $txeq_setting($index_eq)"} txeq_value
+      catch {exec -ignorestderr ssh $boardName "source $setEqScript $txeq_setting($index_eq)"} txeq_value
     }
     puts "Equalization value: $txeq_value"
 
@@ -445,10 +454,10 @@ foreach group $groups {
   # Set optical configurations default
   # Remember to exit the Smash interactive shell, or the script will be stuck here
   puts "Setting equalization $txeq_default..."
-  catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setEq.sh $txeq_default"} txeq_value
+  catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source $setEqScript $txeq_default"} txeq_value
   while { $txeq_value == "child process exited abnormally" } {
   puts "Set EQ i2c error: $txeq_value"
-  catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source /home/cmx/ahoward/bin/setEq.sh $txeq_default"} txeq_value
+  catch {exec -ignorestderr ssh cmx@serenity-2368-03-i5.cern.ch "source $setEqScript $txeq_default"} txeq_value
   }
   puts "Equalization value: $txeq_value"
 
