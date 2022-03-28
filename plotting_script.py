@@ -61,23 +61,18 @@ class AmazingClassName():
         # Set board specific values
         if self.board == "03":
             self.channels = "4+4 Ch" # Number of channels, used for plot titles
-            # TSNE training settings
-            self.perplexity = 150
-            self.n_iter = 1000
-            self.learning_rate = 200
         elif self.board == "04":
             self.channels = "12 Ch" # Number of channels, used for plot titles
-            # TSNE training settings
-            self.perplexity = 150
-            self.n_iter = 1000
-            self.learning_rate = 200
+        elif self.board == "HNZN":
+            self.channels = "12+12 Ch" # Number of channels, used for plot titles
         else:
-            print("Warning: undefined board. Using default values...")
+            print("Warning: undefined board, no channels specified. Used for plot titles.")
             self.channels = ""
-            # TSNE training settings
-            self.perplexity = 150
-            self.n_iter = 1000
-            self.learning_rate = 200
+
+        # TSNE training settings
+        self.perplexity = 150
+        self.n_iter = 1000
+        self.learning_rate = 200
 
         # Names of the columns for dataframe, same as the values in BER_summary.txt
         self.column_names = ["Link", "txDiff", "txPre", "txPost", "rxTerm", "txEq", "rxAmp", "rxEmp", "Bits", "Errors", "BER", "OpenA"]
