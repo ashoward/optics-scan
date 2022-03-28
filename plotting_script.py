@@ -72,7 +72,7 @@ class AmazingClassName():
             self.n_iter = 1000
             self.learning_rate = 200
         else:
-            print("Warning: undefined board. Using default...")
+            print("Warning: undefined board. Using default values...")
             self.channels = ""
             # TSNE training settings
             self.perplexity = 150
@@ -114,8 +114,14 @@ class AmazingClassName():
                 self.df.drop(self.df[self.df.rxAmp == "Off"].index, inplace=True)
                 self.nRxAmp_vals -= 1 if self.nRxAmp_vals > 1 else 0
                 self.df.reset_index(inplace=True, drop=True)
-            rxAmp_list = ["Low", "Medium", "High"] # Hardcoded bodge
-            self.rxAmp_vals = {rxAmp_list[i] : i for i in range(self.nRxAmp_vals)}
+            # Add the strings to the value dictionary
+            rxAmp_list = ["Low", "Medium", "High"] # Hardcoded bodge to keep this specific order
+            self.rxAmp_vals = {}
+            i = 0
+            for val in rxAmp_list:
+                if val in self.df["rxAmp"].unique():
+                    self.rxAmp_vals[val] = i
+                    i += 1
 
         # Make new dictionaries of arrays which will correspond to our Tx histogram of values
         self.openA_tx_dict = { rxTerm : {link : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for link in self.link_dict.keys()} for rxTerm in self.rxTerm_vals.keys()}
