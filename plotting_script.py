@@ -14,7 +14,7 @@ import seaborn as sns
 parser = argparse.ArgumentParser(description="Reads scan data and makes plots.", formatter_class=argparse.RawDescriptionHelpFormatter)
 parser.add_argument("-i", "--inputDir", nargs="+", help="Directory to the scan results with the BER_summary.txt file. Multiple directories possible, but not really used...", required=True)
 parser.add_argument("-o", "--outputDir", default=None, help="Name of output directory. Defaults to input directory.")
-parser.add_argument("-b", "--board", default=None, help="Board number, e.g. 04.", required=True)
+parser.add_argument("-p", "--plotTitle", default=None, help="Start of each plot title, e.g. board name, optics, number of channels.", required=True)
 parser.add_argument("--open_area", default=30, help="Open area cut in \%.")
 parser.add_argument("-tsne", action='store_true', help="Plot tSNE.")
 parser.add_argument("-test", action='store_true', help="Plot single link test.")
@@ -55,19 +55,11 @@ class AmazingClassName():
         # Set input parameters
         self.file_list = file_list
         self.output_dir = output_dir
-        self.board = board
+        self.plotTitle = board
         self.openarea_cut = openarea_cut
 
-        # Set board specific values
-        if self.board == "03":
-            self.channels = "4+4 Ch" # Number of channels, used for plot titles
-        elif self.board == "04":
-            self.channels = "12 Ch" # Number of channels, used for plot titles
-        elif self.board == "HNZN":
-            self.channels = "12+12 Ch" # Number of channels, used for plot titles
-        else:
-            print("Warning: undefined board, no channels specified. Used for plot titles.")
-            self.channels = ""
+        # Set board name... used for plot titles
+        self.plotTitle == board
 
         # TSNE training settings
         self.perplexity = 150
@@ -293,7 +285,7 @@ class AmazingClassName():
 
 
     # Make 2D plots out of multidimensional data using tSNE
-    def plotTSNE(self, only_good_configs=False, output_name=""):
+    def plotTSNE(self, only_good_configs=False):
     
         # Only use the interesting columns
         df_data = pd.DataFrame(self.df, columns=["txDiff", "txPre", "txPost", "txEq", "rxTerm", "rxAmp", "rxEmp", "Errors", "OpenA", "Link"]) # "BER"
@@ -347,14 +339,14 @@ class AmazingClassName():
             markers=['o'] if only_good_configs else ['X', 's', 'o'],
             legend="full",
             alpha=0.4
-        ).set(title="Board %s (%s), only good configurations: 0 errors, Open Area>%i%%\nTraining input: %s" % (self.board, self.channels, self.openarea_cut, list(df_data.columns)) if only_good_configs else "Board %s (%s)\nTraining input: %s" % (self.board, self.channels, list(df_data.columns)))
+        ).set(title="%s, only good configurations: 0 errors, Open Area>%i%%\nTraining input: %s" % (self.plotTitle, self.openarea_cut, list(df_data.columns)) if only_good_configs else "%s\nTraining input: %s" % (self.plotTitle, list(df_data.columns)))
 
         # Fix padding
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
         fig.tight_layout()
 
         # Save figure
-        plt.savefig("%stsne_%s_%s.pdf" % (self.output_dir, output_name, "good" if only_good_configs else "all"), bbox_inches='tight')
+        plt.savefig("%stsne_%s.pdf" % (self.output_dir, "good" if only_good_configs else "all"), bbox_inches='tight')
         # plt.show()
         plt.close()
 
@@ -469,13 +461,13 @@ class AmazingClassName():
 ########################################
 # Run script
 
-amazing_thing = AmazingClassName(file_list=input_list, output_dir=args.outputDir, board=args.board, openarea_cut=args.open_area)
+amazing_thing = AmazingClassName(file_list=input_list, output_dir=args.outputDir, board=args.plotTitle, openarea_cut=args.open_area)
 
 
 # Plot snake
 if args.tsne:
-    amazing_thing.plotTSNE(output_name="board%s" % (amazing_thing.board))
-    # amazing_thing.plotTSNE(only_good_configs=True, output_name="board%s" % (amazing_thing.board))
+    amazing_thing.plotTSNE()
+    # amazing_thing.plotTSNE(only_good_configs=True)
 
 
 # Plot error count and open area
@@ -486,10 +478,10 @@ if args.test:
     test_link = next(iter(amazing_thing.link_dict.keys()))
     amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_tx_dict[test_rxTerm][test_link],
                                   secondary_array=amazing_thing.error_tx_dict[test_rxTerm][test_link],
-                                  title="Board %s (%s), %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.board, amazing_thing.channels, test_link, amazing_thing.openarea_cut, test_rxTerm),
+                                  title="%s, %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.plotTitle, test_link, amazing_thing.openarea_cut, test_rxTerm),
                                   cbar_label="Open Area [%]",
                                   cbar_limits=(amazing_thing.openarea_cut,100),
-                                  output_name="board%s_tx_openArea_error_rxTerm%i_%s" % (amazing_thing.board, test_rxTerm, test_link)
+                                  output_name="tx_openArea_error_rxTerm%i_%s" % (test_rxTerm, test_link)
                                  )
 
 # Create all Tx plots
@@ -500,21 +492,21 @@ if args.tx or args.txinv:
             for link in amazing_thing.link_dict.keys():
                 amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_tx_dict[rxTerm][link],
                                               secondary_array=amazing_thing.error_tx_dict[rxTerm][link],
-                                              title="Board %s (%s), %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.board, amazing_thing.channels, link, amazing_thing.openarea_cut, rxTerm),
+                                              title="%s, %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.plotTitle, link, amazing_thing.openarea_cut, rxTerm),
                                               mask=False,
                                               cbar_label="Open Area [%]",
                                               cbar_limits=(0,100),
-                                              output_name="board%s_tx%s_openArea_error_rxTerm%i_%s" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm, link)
+                                              output_name="tx%s_openArea_error_rxTerm%i_%s" % ("_inverted" if args.txinv else "", rxTerm, link)
                                              )
 
     # All links in the same plot
     for rxTerm in amazing_thing.rxTerm_vals.keys():
         amazing_thing.plotArrays(primary_dict=amazing_thing.openA_tx_dict[rxTerm],
                                  secondary_dict=amazing_thing.error_tx_dict[rxTerm],
-                                 title="Board %s (%s), All Links%s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.board, amazing_thing.channels, " Inverted" if args.txinv else "", amazing_thing.openarea_cut, rxTerm),
+                                 title="%s, All Links%s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.plotTitle, " Inverted" if args.txinv else "", amazing_thing.openarea_cut, rxTerm),
                                  cbar_label="Open Area [%]",
                                  cbar_limits=(amazing_thing.openarea_cut,100),
-                                 output_name="board%s_tx%s_openArea_error_rxTerm%i_all" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm)
+                                 output_name="tx%s_openArea_error_rxTerm%i_all" % ("_inverted" if args.txinv else "", rxTerm)
                                 )
 
     # All links in the same plot but don't mask 0 errors and open area cut
@@ -522,10 +514,10 @@ if args.tx or args.txinv:
         amazing_thing.plotArrays(primary_dict=amazing_thing.openA_tx_dict[rxTerm],
                                  secondary_dict=amazing_thing.error_tx_dict[rxTerm],
                                  mask=False,
-                                 title="Board %s (%s), All Links%s, RxTerm %i mV" % (amazing_thing.board, amazing_thing.channels, " Inverted" if args.txinv else "", rxTerm),
+                                 title="%s, All Links%s, RxTerm %i mV" % (amazing_thing.plotTitle, " Inverted" if args.txinv else "", rxTerm),
                                  cbar_label="Open Area [%]",
                                  cbar_limits=(0,100),
-                                 output_name="board%s_tx%s_openArea_error_rxTerm%i_all" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm)
+                                 output_name="tx%s_openArea_error_rxTerm%i_all" % ("_inverted" if args.txinv else "", rxTerm)
                                 )
 
     # Plot number of good links, 0 errors
@@ -533,10 +525,10 @@ if args.tx or args.txinv:
         amazing_thing.plotSingleArray(primary_array=amazing_thing.good_links_tx_dict[rxTerm],
                                       secondary_array=amazing_thing.good_links_tx_dict[rxTerm],
                                       mask=False,
-                                      title="Board %s (%s), number of good links%s (RxTerm %i mV): 0 Errors" % (amazing_thing.board, amazing_thing.channels, " inverted" if args.txinv else "", rxTerm),
+                                      title="%s, number of good links%s (RxTerm %i mV): 0 Errors" % (amazing_thing.plotTitle, " inverted" if args.txinv else "", rxTerm),
                                       cbar_label="Number of good links",
                                       cbar_limits=(0,len(amazing_thing.link_dict)),
-                                      output_name="board%s_tx%s_good_links_rxTerm%i" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm)
+                                      output_name="tx%s_good_links_rxTerm%i" % ("_inverted" if args.txinv else "", rxTerm)
                                      )
 
     # Plot number of super good links, cut on both error and open area
@@ -544,10 +536,10 @@ if args.tx or args.txinv:
         amazing_thing.plotSingleArray(primary_array=amazing_thing.super_good_links_tx_dict[rxTerm],
                                       secondary_array=amazing_thing.super_good_links_tx_dict[rxTerm],
                                       mask=False,
-                                      title="Board %s (%s), number of super good links%s (RxTerm %i mV): 0 Errors, Open Area>%i%%" % (amazing_thing.board, amazing_thing.channels, " inverted" if args.txinv else "", rxTerm, amazing_thing.openarea_cut),
+                                      title="%s, number of super good links%s (RxTerm %i mV): 0 Errors, Open Area>%i%%" % (amazing_thing.plotTitle, " inverted" if args.txinv else "", rxTerm, amazing_thing.openarea_cut),
                                       cbar_label="Number of super good links",
                                       cbar_limits=(0,len(amazing_thing.link_dict)),
-                                      output_name="board%s_tx%s_super_good_links_rxTerm%i" % (amazing_thing.board, "_inverted" if args.txinv else "", rxTerm)
+                                      output_name="tx%s_super_good_links_rxTerm%i" % ("_inverted" if args.txinv else "", rxTerm)
                                      )
 
 # Create all Rx plots
@@ -557,19 +549,19 @@ if args.rx:
             amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_rx_dict,
                                           secondary_array=amazing_thing.error_rx_dict,
                                           tx=False,
-                                          title="Board %s (%s), %s, Open Area>%i%%" % (amazing_thing.board, amazing_thing.channels, link, amazing_thing.openarea_cut),
+                                          title="%s, %s, Open Area>%i%%" % (amazing_thing.plotTitle, link, amazing_thing.openarea_cut),
                                           cbar_label="Open Area [%]",
                                           cbar_limits=(amazing_thing.openarea_cut,100),
-                                          output_name="board%s_rx_openArea_error_%s" % (amazing_thing.board, link)
+                                          output_name="rx_openArea_error_%s" % (link)
                                          )
 
     amazing_thing.plotArrays(primary_dict=amazing_thing.openA_rx_dict,
                              secondary_dict=amazing_thing.error_rx_dict,
                              tx=False,
-                             title="Board %s (%s), All Links, Open Area>%i%%, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (amazing_thing.board, amazing_thing.channels, amazing_thing.openarea_cut, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
+                             title="%s, All Links, Open Area>%i%%, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (amazing_thing.plotTitle, amazing_thing.openarea_cut, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                              cbar_label="Open Area [%]",
                              cbar_limits=(amazing_thing.openarea_cut,100),
-                             output_name="board%s_rx_openArea_error_all" % (amazing_thing.board)
+                             output_name="rx_openArea_error_all"
                             )
 
     # All links in the same plot but don't mask 0 errors and open area cut
@@ -577,28 +569,28 @@ if args.rx:
                              secondary_dict=amazing_thing.error_rx_dict,
                              tx=False,
                              mask=False,
-                             title="Board %s (%s), All Links, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (amazing_thing.board, amazing_thing.channels, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
+                             title="%s, All Links, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (amazing_thing.plotTitle, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                              cbar_label="Open Area [%]",
                              cbar_limits=(0,100),
-                             output_name="board%s_rx_openArea_error_all" % (amazing_thing.board)
+                             output_name="rx_openArea_error_all"
                             )
 
     amazing_thing.plotSingleArray(primary_array=amazing_thing.good_links_rx,
                                   secondary_array=amazing_thing.good_links_rx,
                                   tx=False,
                                   mask=False,
-                                  title="Board %s (%s), txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of good links: 0 Errors" % (amazing_thing.board, amazing_thing.channels, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
+                                  title="%s, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of good links: 0 Errors" % (amazing_thing.plotTitle, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
                                   cbar_label="Number of good links",
                                   cbar_limits=(0,len(amazing_thing.link_dict)),
-                                  output_name="board%s_rx_good_links" % (amazing_thing.board)
+                                  output_name="rx_good_links"
                                  )
 
     amazing_thing.plotSingleArray(primary_array=amazing_thing.super_good_links_rx,
                                   secondary_array=amazing_thing.super_good_links_rx,
                                   tx=False,
                                   mask=False,
-                                  title="Board %s (%s), txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of super good links: 0 Errors, Open Area>%i%%" % (amazing_thing.board, amazing_thing.channels, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys())), amazing_thing.openarea_cut),
+                                  title="%s, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of super good links: 0 Errors, Open Area>%i%%" % (amazing_thing.plotTitle, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys())), amazing_thing.openarea_cut),
                                   cbar_label="Number of super good links",
                                   cbar_limits=(0,len(amazing_thing.link_dict)),
-                                  output_name="board%s_rx_super_good_links" % (amazing_thing.board)
+                                  output_name="rx_super_good_links"
                                  )
