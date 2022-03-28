@@ -9,6 +9,7 @@ import pandas as pd
 from sklearn.manifold import TSNE
 import numpy as np
 import seaborn as sns
+from collections import defaultdict
 
 # Argument parser
 parser = argparse.ArgumentParser(description="Reads scan data and makes plots.", formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -111,20 +112,38 @@ class AmazingClassName():
                     i += 1
 
         # Make new dictionaries of arrays which will correspond to our Tx histogram of values
-        self.openA_tx_dict = { rxTerm : {link : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for link in self.link_dict.keys()} for rxTerm in self.rxTerm_vals.keys()}
-        self.error_tx_dict = { rxTerm : {link : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for link in self.link_dict.keys()} for rxTerm in self.rxTerm_vals.keys()}
+        self.rx_cfgs = []
+        for rxTerm in self.rxTerm_vals.keys():
+            # Hardcoded bodge because the Tx Scans don't contain rxAmp and rxEmp values
+            if self.rxAmp_vals and self.rxEmp_vals:
+                for rxAmp in self.rxAmp_vals.keys():
+                    for rxEmp in self.rxEmp_vals.keys():
+                        rx_cfg = self.getRxCfgString(rxTerm, rxAmp, rxEmp)
+                        self.rx_cfgs.append(rx_cfg)
+            else:
+                rx_cfg = self.getRxCfgString(rxTerm, None, None)
+                self.rx_cfgs.append(rx_cfg)
+        self.openA_tx_dict = {cfg : {link : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for link in self.link_dict.keys()} for cfg in self.rx_cfgs}
+        self.error_tx_dict = {cfg : {link : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for link in self.link_dict.keys()} for cfg in self.rx_cfgs}
         # Make array with the number of good links for every configuration
-        self.good_links_tx_dict = {rxTerm : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for rxTerm in self.rxTerm_vals.keys()}
-        self.super_good_links_tx_dict = {rxTerm : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for rxTerm in self.rxTerm_vals.keys()}
+        self.good_links_tx_dict = {cfg : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for cfg in self.rx_cfgs}
+        self.super_good_links_tx_dict = {cfg : np.zeros((self.nTxPre_vals*self.nTxPost_vals, self.nTxDiff_vals*self.nTxEq_vals)) for cfg in self.rx_cfgs}
         # Fill arrays
         self.fillTxArrays()
 
         # Same but for Rx
-        self.openA_rx_dict = {link : np.zeros((self.nRxEmp_vals, self.nRxTerm_vals*self.nRxAmp_vals)) for link in self.link_dict.keys()}
-        self.error_rx_dict = {link : np.zeros((self.nRxEmp_vals, self.nRxTerm_vals*self.nRxAmp_vals)) for link in self.link_dict.keys()}
+        self.tx_cfgs = []
+        for txPre in self.txPre_vals.keys():
+            for txPost in self.txPost_vals.keys():
+                for txDiff in self.txDiff_vals.keys():
+                    for txEq in self.txEq_vals.keys():
+                        tx_cfg = self.getTxCfgString(txPre, txPost, txDiff, txEq)
+                        self.tx_cfgs.append(tx_cfg)
+        self.openA_rx_dict = {cfg : {link : np.zeros((self.nRxEmp_vals, self.nRxTerm_vals*self.nRxAmp_vals)) for link in self.link_dict.keys()} for cfg in self.tx_cfgs}
+        self.error_rx_dict = {cfg : {link : np.zeros((self.nRxEmp_vals, self.nRxTerm_vals*self.nRxAmp_vals)) for link in self.link_dict.keys()} for cfg in self.tx_cfgs}
         # Make array with the number of good links for every configuration
-        self.good_links_rx = np.zeros((self.nRxEmp_vals, self.nRxTerm_vals*self.nRxAmp_vals))
-        self.super_good_links_rx = np.zeros((self.nRxEmp_vals, self.nRxTerm_vals*self.nRxAmp_vals))
+        self.good_links_rx = {cfg : np.zeros((self.nRxEmp_vals, self.nRxTerm_vals*self.nRxAmp_vals)) for cfg in self.tx_cfgs}
+        self.super_good_links_rx = {cfg : np.zeros((self.nRxEmp_vals, self.nRxTerm_vals*self.nRxAmp_vals)) for cfg in self.tx_cfgs}
         # Fill arrays
         self.fillRxArrays()
 
@@ -175,6 +194,38 @@ class AmazingClassName():
                         self.df.at[row, key] = val.strip()
 
 
+    # Stupid function to create Tx config string
+    def getTxCfgString(self, txPre, txPost, txDiff, txEq):
+        cfg = ""
+        if txPre:
+            cfg += "txPre %s dB, " % (txPre)
+        if txPost:
+            cfg += "txPost %s dB, " % (txPost)
+        if txDiff:
+            cfg += "txDiff %s mV, " % (txDiff)
+        if txEq:
+            cfg += "txEq %s dB" % (txEq)
+        # Remove comma and space if they are at the end
+        if cfg[-1] == " ":
+            cfg = cfg[:-2]
+        return cfg
+
+
+    # Stupid function to create Rx config string
+    def getRxCfgString(self, rxTerm, rxAmp, rxEmp):
+        cfg = ""
+        if rxTerm:
+            cfg += "rxTerm %s mV, " % (rxTerm)
+        if rxAmp:
+            cfg += "rxAmp %s, " % (rxAmp + (" mV" if isinstance(rxAmp, float) else ""))
+        if rxEmp:
+            cfg += "rxEmp %s dB" % (rxEmp)
+        # Remove comma and space if they are at the end
+        if cfg[-1] == " ":
+            cfg = cfg[:-2]
+        return cfg
+
+
     # Fills open area and error arrays for Tx side
     def fillTxArrays(self):
 
@@ -192,15 +243,15 @@ class AmazingClassName():
 
             # Fill arrays
             link= row["Link"]
-            rxTerm = row["rxTerm"]
-            self.openA_tx_dict[rxTerm][link][y_index][x_index] = row["OpenA"]
-            self.error_tx_dict[rxTerm][link][y_index][x_index] = row["Errors"]
+            rx_cfg = self.getRxCfgString(row["rxTerm"], row["rxAmp"], row["rxEmp"])
+            self.openA_tx_dict[rx_cfg][link][y_index][x_index] = row["OpenA"]
+            self.error_tx_dict[rx_cfg][link][y_index][x_index] = row["Errors"]
 
             # Check if good configuration
             if row["Errors"] == 0:
-                self.good_links_tx_dict[rxTerm][y_index][x_index] += 1
+                self.good_links_tx_dict[rx_cfg][y_index][x_index] += 1
                 if row["OpenA"] > self.openarea_cut:
-                    self.super_good_links_tx_dict[rxTerm][y_index][x_index] += 1
+                    self.super_good_links_tx_dict[rx_cfg][y_index][x_index] += 1
 
         return True
 
@@ -222,14 +273,15 @@ class AmazingClassName():
 
             # Fill arrays
             link= row["Link"]
-            self.openA_rx_dict[link][y_index][x_index] = row["OpenA"]
-            self.error_rx_dict[link][y_index][x_index] = row["Errors"]
+            tx_cfg = self.getTxCfgString(row["txPre"], row["txPost"], row["txDiff"], row["txEq"])
+            self.openA_rx_dict[tx_cfg][link][y_index][x_index] = row["OpenA"]
+            self.error_rx_dict[tx_cfg][link][y_index][x_index] = row["Errors"]
 
             # Check if good configuration
             if row["Errors"] == 0:
-                self.good_links_rx[y_index][x_index] += 1
+                self.good_links_rx[tx_cfg][y_index][x_index] += 1
                 if row["OpenA"] > self.openarea_cut:
-                    self.super_good_links_rx[y_index][x_index] += 1
+                    self.super_good_links_rx[tx_cfg][y_index][x_index] += 1
 
         return True
 
@@ -353,7 +405,7 @@ class AmazingClassName():
 
     # Plots the primary array as a histogram with colourbar
     # Values of a secondary array can be printed in each bin
-    def plotSingleArray(self, primary_array=None, secondary_array=None, tx=True, mask=True, title="", cbar_label="", cbar_limits=(None,None), output_name=""):
+    def plotSingleArray(self, primary_array=None, secondary_array=None, tx=True, mask=False, title="", cbar_label="", cbar_limits=(None,None), output_name=""):
 
         # Make plot
         fig, axes = plt.subplots(figsize=(12, 9))
@@ -393,7 +445,7 @@ class AmazingClassName():
 
 
     # Same as above but plots histograms for all links in the same plot
-    def plotArrays(self, primary_dict=None, secondary_dict=None, tx=True, mask=True, title="", cbar_label="", cbar_limits=(None,None), output_name=""):
+    def plotArrays(self, primary_dict=None, secondary_dict=None, tx=True, mask=False, title="", cbar_label="", cbar_limits=(None,None), output_name=""):
 
         ncols = 4 # Number of subplot columns
         nrows = int(np.ceil(len(self.link_dict)/ncols)) # Number of subplot rows
@@ -474,123 +526,129 @@ if args.tsne:
 
 # Test one link
 if args.test:
-    test_rxTerm = next(iter(amazing_thing.rxTerm_vals.keys()))
+    test_cfg = amazing_thing.rx_cfgs[0]
     test_link = next(iter(amazing_thing.link_dict.keys()))
-    amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_tx_dict[test_rxTerm][test_link],
-                                  secondary_array=amazing_thing.error_tx_dict[test_rxTerm][test_link],
-                                  title="%s, %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.plotTitle, test_link, amazing_thing.openarea_cut, test_rxTerm),
+    amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_tx_dict[test_cfg][test_link],
+                                  secondary_array=amazing_thing.error_tx_dict[test_cfg][test_link],
+                                  title="%s, %s, Open Area>%i%%\n%s" % (amazing_thing.plotTitle, test_link, amazing_thing.openarea_cut, test_cfg),
                                   cbar_label="Open Area [%]",
                                   cbar_limits=(amazing_thing.openarea_cut,100),
-                                  output_name="tx_openArea_error_rxTerm%i_%s" % (test_rxTerm, test_link)
+                                  output_name="tx_openArea_error_%s_%s" % (test_cfg.replace(",", "_").replace(" ", ""), test_link)
                                  )
 
 # Create all Tx plots
 if args.tx or args.txinv:
+    # All links in seperate plots
     if args.all:
-        # All links in seperate plots
-        for rxTerm in amazing_thing.rxTerm_vals.keys():
+        for rx_cfg in amazing_thing.rx_cfgs:
             for link in amazing_thing.link_dict.keys():
-                amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_tx_dict[rxTerm][link],
-                                              secondary_array=amazing_thing.error_tx_dict[rxTerm][link],
-                                              title="%s, %s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.plotTitle, link, amazing_thing.openarea_cut, rxTerm),
-                                              mask=False,
+                amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_tx_dict[rx_cfg][link],
+                                              secondary_array=amazing_thing.error_tx_dict[rx_cfg][link],
+                                              title="%s, %s, Open Area>%i%%, %s" % (amazing_thing.plotTitle, link, amazing_thing.openarea_cut, rx_cfg),
+                                              mask=True,
                                               cbar_label="Open Area [%]",
-                                              cbar_limits=(0,100),
-                                              output_name="tx%s_openArea_error_rxTerm%i_%s" % ("_inverted" if args.txinv else "", rxTerm, link)
+                                              cbar_limits=(amazing_thing.openarea_cut,100),
+                                              output_name="tx%s_openArea_error_%s_%s" % ("_inverted" if args.txinv else "", rx_cfg.replace(",", "_").replace(" ", ""), link)
                                              )
 
     # All links in the same plot
-    for rxTerm in amazing_thing.rxTerm_vals.keys():
-        amazing_thing.plotArrays(primary_dict=amazing_thing.openA_tx_dict[rxTerm],
-                                 secondary_dict=amazing_thing.error_tx_dict[rxTerm],
-                                 title="%s, All Links%s, Open Area>%i%%, RxTerm %i mV" % (amazing_thing.plotTitle, " Inverted" if args.txinv else "", amazing_thing.openarea_cut, rxTerm),
-                                 cbar_label="Open Area [%]",
-                                 cbar_limits=(amazing_thing.openarea_cut,100),
-                                 output_name="tx%s_openArea_error_rxTerm%i_all" % ("_inverted" if args.txinv else "", rxTerm)
-                                )
+    # for rx_cfg in amazing_thing.rx_cfgs:
+    #     amazing_thing.plotArrays(primary_dict=amazing_thing.openA_tx_dict[rx_cfg],
+    #                              secondary_dict=amazing_thing.error_tx_dict[rx_cfg],
+    #                              mask=True,
+    #                              title="%s, All Links%s, Open Area>%i%%, %s" % (amazing_thing.plotTitle, " Inverted" if args.txinv else "", amazing_thing.openarea_cut, rx_cfg),
+    #                              cbar_label="Open Area [%]",
+    #                              cbar_limits=(amazing_thing.openarea_cut,100),
+    #                              output_name="tx%s_openArea_error_%s_all" % ("_inverted" if args.txinv else "", rx_cfg.replace(",", "_").replace(" ", ""))
+    #                             )
 
     # All links in the same plot but don't mask 0 errors and open area cut
-    for rxTerm in amazing_thing.rxTerm_vals.keys():
-        amazing_thing.plotArrays(primary_dict=amazing_thing.openA_tx_dict[rxTerm],
-                                 secondary_dict=amazing_thing.error_tx_dict[rxTerm],
-                                 mask=False,
-                                 title="%s, All Links%s, RxTerm %i mV" % (amazing_thing.plotTitle, " Inverted" if args.txinv else "", rxTerm),
+    for rx_cfg in amazing_thing.rx_cfgs:
+        amazing_thing.plotArrays(primary_dict=amazing_thing.openA_tx_dict[rx_cfg],
+                                 secondary_dict=amazing_thing.error_tx_dict[rx_cfg],
+                                 title="%s, All Links%s, %s" % (amazing_thing.plotTitle, " Inverted" if args.txinv else "", rx_cfg),
                                  cbar_label="Open Area [%]",
                                  cbar_limits=(0,100),
-                                 output_name="tx%s_openArea_error_rxTerm%i_all" % ("_inverted" if args.txinv else "", rxTerm)
+                                 output_name="tx%s_openArea_error_%s_all" % ("_inverted" if args.txinv else "", rx_cfg.replace(",", "_").replace(" ", ""))
                                 )
 
     # Plot number of good links, 0 errors
-    for rxTerm in amazing_thing.rxTerm_vals.keys():
-        amazing_thing.plotSingleArray(primary_array=amazing_thing.good_links_tx_dict[rxTerm],
-                                      secondary_array=amazing_thing.good_links_tx_dict[rxTerm],
-                                      mask=False,
-                                      title="%s, number of good links%s (RxTerm %i mV): 0 Errors" % (amazing_thing.plotTitle, " inverted" if args.txinv else "", rxTerm),
+    for rx_cfg in amazing_thing.rx_cfgs:
+        amazing_thing.plotSingleArray(primary_array=amazing_thing.good_links_tx_dict[rx_cfg],
+                                      secondary_array=amazing_thing.good_links_tx_dict[rx_cfg],
+                                      title="%s, number of good links%s: 0 Errors\n%s" % (amazing_thing.plotTitle, " inverted" if args.txinv else "", rx_cfg),
                                       cbar_label="Number of good links",
                                       cbar_limits=(0,len(amazing_thing.link_dict)),
-                                      output_name="tx%s_good_links_rxTerm%i" % ("_inverted" if args.txinv else "", rxTerm)
+                                      output_name="tx%s_good_links_%s" % ("_inverted" if args.txinv else "", rx_cfg.replace(",", "_").replace(" ", ""))
                                      )
 
     # Plot number of super good links, cut on both error and open area
-    for rxTerm in amazing_thing.rxTerm_vals.keys():
-        amazing_thing.plotSingleArray(primary_array=amazing_thing.super_good_links_tx_dict[rxTerm],
-                                      secondary_array=amazing_thing.super_good_links_tx_dict[rxTerm],
-                                      mask=False,
-                                      title="%s, number of super good links%s (RxTerm %i mV): 0 Errors, Open Area>%i%%" % (amazing_thing.plotTitle, " inverted" if args.txinv else "", rxTerm, amazing_thing.openarea_cut),
-                                      cbar_label="Number of super good links",
-                                      cbar_limits=(0,len(amazing_thing.link_dict)),
-                                      output_name="tx%s_super_good_links_rxTerm%i" % ("_inverted" if args.txinv else "", rxTerm)
-                                     )
+    # for rx_cfg in amazing_thing.rx_cfgs:
+    #     amazing_thing.plotSingleArray(primary_array=amazing_thing.super_good_links_tx_dict[rx_cfg],
+    #                                   secondary_array=amazing_thing.super_good_links_tx_dict[rx_cfg],
+    #                                   title="%s, number of super good links%s: 0 Errors, Open Area>%i%%\n%s" % (amazing_thing.plotTitle, " inverted" if args.txinv else "", amazing_thing.openarea_cut, rx_cfg),
+    #                                   cbar_label="Number of super good links",
+    #                                   cbar_limits=(0,len(amazing_thing.link_dict)),
+    #                                   output_name="tx%s_super_good_links_%s" % ("_inverted" if args.txinv else "", rx_cfg.replace(",", "_").replace(" ", ""))
+    #                                  )
 
 # Create all Rx plots
 if args.rx:
+    # All links in seperate plots
     if args.all:
-        for link in amazing_thing.link_dict.keys():
-            amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_rx_dict,
-                                          secondary_array=amazing_thing.error_rx_dict,
-                                          tx=False,
-                                          title="%s, %s, Open Area>%i%%" % (amazing_thing.plotTitle, link, amazing_thing.openarea_cut),
-                                          cbar_label="Open Area [%]",
-                                          cbar_limits=(amazing_thing.openarea_cut,100),
-                                          output_name="rx_openArea_error_%s" % (link)
-                                         )
+        for tx_cfg in amazing_thing.tx_cfgs:
+            for link in amazing_thing.link_dict.keys():
+                amazing_thing.plotSingleArray(primary_array=amazing_thing.openA_rx_dict,
+                                              secondary_array=amazing_thing.error_rx_dict,
+                                              tx=False,
+                                              mask=True,
+                                              title="%s, %s, Open Area>%i%%" % (amazing_thing.plotTitle, link, amazing_thing.openarea_cut),
+                                              cbar_label="Open Area [%]",
+                                              cbar_limits=(amazing_thing.openarea_cut,100),
+                                              output_name="rx_openArea_error_%s_%s" % (tx_cfg.replace(",", "_").replace(" ", ""), link)
+                                             )
 
-    amazing_thing.plotArrays(primary_dict=amazing_thing.openA_rx_dict,
-                             secondary_dict=amazing_thing.error_rx_dict,
-                             tx=False,
-                             title="%s, All Links, Open Area>%i%%, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (amazing_thing.plotTitle, amazing_thing.openarea_cut, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
-                             cbar_label="Open Area [%]",
-                             cbar_limits=(amazing_thing.openarea_cut,100),
-                             output_name="rx_openArea_error_all"
-                            )
+    # All links in the same plot
+    # for tx_cfg in amazing_thing.tx_cfgs:
+    #     amazing_thing.plotArrays(primary_dict=amazing_thing.openA_rx_dict[tx_cfg],
+    #                              secondary_dict=amazing_thing.error_rx_dict[tx_cfg],
+    #                              tx=False,
+    #                              mask=True,
+    #                              title="%s, All Links, Open Area>%i%%, %s" % (amazing_thing.plotTitle, amazing_thing.openarea_cut, tx_cfg),
+    #                              cbar_label="Open Area [%]",
+    #                              cbar_limits=(amazing_thing.openarea_cut,100),
+    #                              output_name="rx_openArea_error_%s_all" % (tx_cfg.replace(",", "_").replace(" ", ""))
+    #                             )
 
     # All links in the same plot but don't mask 0 errors and open area cut
-    amazing_thing.plotArrays(primary_dict=amazing_thing.openA_rx_dict,
-                             secondary_dict=amazing_thing.error_rx_dict,
-                             tx=False,
-                             mask=False,
-                             title="%s, All Links, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB" % (amazing_thing.plotTitle, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
-                             cbar_label="Open Area [%]",
-                             cbar_limits=(0,100),
-                             output_name="rx_openArea_error_all"
-                            )
+    for tx_cfg in amazing_thing.tx_cfgs:
+        amazing_thing.plotArrays(primary_dict=amazing_thing.openA_rx_dict[tx_cfg],
+                                 secondary_dict=amazing_thing.error_rx_dict[tx_cfg],
+                                 tx=False,
+                                 title="%s, All Links, %s" % (amazing_thing.plotTitle, tx_cfg),
+                                 cbar_label="Open Area [%]",
+                                 cbar_limits=(0,100),
+                                 output_name="rx_openArea_error_%s_all" % (tx_cfg.replace(",", "_").replace(" ", ""))
+                                )
 
-    amazing_thing.plotSingleArray(primary_array=amazing_thing.good_links_rx,
-                                  secondary_array=amazing_thing.good_links_rx,
-                                  tx=False,
-                                  mask=False,
-                                  title="%s, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of good links: 0 Errors" % (amazing_thing.plotTitle, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys()))),
-                                  cbar_label="Number of good links",
-                                  cbar_limits=(0,len(amazing_thing.link_dict)),
-                                  output_name="rx_good_links"
-                                 )
+    # Plot number of good links, 0 errors
+    for tx_cfg in amazing_thing.tx_cfgs:
+        amazing_thing.plotSingleArray(primary_array=amazing_thing.good_links_rx[tx_cfg],
+                                      secondary_array=amazing_thing.good_links_rx[tx_cfg],
+                                      tx=False,
+                                      title="%s, number of good links: 0 Errors\n%s" % (amazing_thing.plotTitle, tx_cfg),
+                                      cbar_label="Number of good links",
+                                      cbar_limits=(0,len(amazing_thing.link_dict)),
+                                      output_name="rx_good_links_%s" % (tx_cfg.replace(",", "_").replace(" ", ""))
+                                     )
 
-    amazing_thing.plotSingleArray(primary_array=amazing_thing.super_good_links_rx,
-                                  secondary_array=amazing_thing.super_good_links_rx,
-                                  tx=False,
-                                  mask=False,
-                                  title="%s, txPre %.2f dB, txPost %.2f dB, txDiff %i mV, txEq %.1f dB\n Number of super good links: 0 Errors, Open Area>%i%%" % (amazing_thing.plotTitle, next(iter(amazing_thing.txPre_vals.keys())), next(iter(amazing_thing.txPost_vals.keys())), next(iter(amazing_thing.txDiff_vals.keys())), next(iter(amazing_thing.txEq_vals.keys())), amazing_thing.openarea_cut),
-                                  cbar_label="Number of super good links",
-                                  cbar_limits=(0,len(amazing_thing.link_dict)),
-                                  output_name="rx_super_good_links"
-                                 )
+    # Plot number of super good links, cut on both error and open area
+    # for tx_cfg in amazing_thing.tx_cfgs:
+    #     amazing_thing.plotSingleArray(primary_array=amazing_thing.super_good_links_rx[tx_cfg],
+    #                                   secondary_array=amazing_thing.super_good_links_rx[tx_cfg],
+    #                                   tx=False,
+    #                                   title="%s, number of super good links: 0 Errors, Open Area>%i%%\n%s" % (amazing_thing.plotTitle, amazing_thing.openarea_cut, tx_cfg),
+    #                                   cbar_label="Number of super good links",
+    #                                   cbar_limits=(0,len(amazing_thing.link_dict)),
+    #                                   output_name="rx_super_good_links_%s" % (rx_cfg.replace(",", "_").replace(" ", ""))
+    #                                  )
