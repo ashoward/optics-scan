@@ -55,9 +55,9 @@ In the terminal, type
 
 Plotting script can plot histograms of e.g. the open area, error count, and number of good links, for each configuration in histograms. It can also use tSNE to plot the multi-dimensional configuration/results space into a two-dimensional scatter plot. Example of how to run
 
-    python3 plotting_script.py -i results/<DIRECTORY_NAME> -b 04 -tx
+    python3 plotting_script.py -i results/<DIRECTORY_NAME> -p "Board 4 (12 Ch)" -tx
 
-Specifying which board to plot with the `-b` flag is a requirement. One must also specify which plots to create: `-tsne`, `-tx`, `-txinv`, `-rx`. 
+Specifying the plot titles with the `-p` flag is a requirement. One must also specify which plots to create: `-tsne`, `-tx`, `-txinv`, `-rx`. 
 The default output directory for the plots is within the input directory, but this can be changed with the `-o` flag. 
 It is also possible to set the open area cut using the `--open_area` flag.
 
