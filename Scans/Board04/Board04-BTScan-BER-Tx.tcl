@@ -230,10 +230,10 @@ set dfe_default 0
 # Set optical configurations default
 # Remember to exit the Smash interactive shell, or the script will be stuck here
 puts "Setting amplitude $rxamp_default..."
-catch {exec -ignorestderr ssh $boardName "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
+catch {exec -ignorestderr ssh $boardName "source $setAmpScript $rxamp_default"} rxamp_value
 while { $rxamp_value == "child process exited abnormally" } {
 puts "Set Amp i2c error: $rxamp_value"
-catch {exec -ignorestderr ssh $boardName "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
+catch {exec -ignorestderr ssh $boardName "source $setAmpScript $rxamp_default"} rxamp_value
 }
 puts "Amplitude value: $rxamp_value"
 
