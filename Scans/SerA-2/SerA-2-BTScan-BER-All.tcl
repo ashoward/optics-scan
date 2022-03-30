@@ -435,7 +435,7 @@ foreach group $groups {
 
                     # Measure BER and error count
                     # Do it after the bathtub scan or one get an "incorrect" error count
-                    #refresh_hw_device -update_hw_probes false [lindex [get_hw_devices $board] 0] 
+                    refresh_hw_device -update_hw_probes false [lindex [get_hw_devices $board] 0] 
                     set_property LOGIC.MGT_ERRCNT_RESET_CTRL 1 [get_hw_sio_links $link]
                     commit_hw_sio [get_hw_sio_links $link]
                     set_property LOGIC.MGT_ERRCNT_RESET_CTRL 0 [get_hw_sio_links $link]
