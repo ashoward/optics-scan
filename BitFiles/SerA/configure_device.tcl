@@ -1,0 +1,7 @@
+current_hw_device [get_hw_devices xcvu9p_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xcvu9p_0] 0]
+set_property PROBES.FILE {./example_IBERT_MGT_16G_25G.ltx} [get_hw_devices xcvu9p_0]
+set_property FULL_PROBES.FILE {./example_IBERT_MGT_16G_25G.ltx} [get_hw_devices xcvu9p_0]
+set_property PROGRAM.FILE {./example_IBERT_MGT_16G_25G.bit} [get_hw_devices xcvu9p_0]
+program_hw_devices [get_hw_devices xcvu9p_0]
+refresh_hw_device [lindex [get_hw_devices xcvu9p_0] 0]
