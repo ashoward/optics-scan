@@ -216,7 +216,6 @@ array set rxamp_setting {
   1 High
   2 Low
   3 Medium
-  4 Off
 }
 # All possible amplitude values
   # 1 High
