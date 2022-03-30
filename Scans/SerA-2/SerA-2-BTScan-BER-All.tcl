@@ -131,7 +131,7 @@ array set txpre_setting_gty {
 set txpost_default_index (00000)
 set txpost_default 0.00
 array set txpost_setting_gty {
-    (01111) 4.08
+    (00000) 0.00
 }
 # All possible TxPost values
     # (00000) 0.00 # Default

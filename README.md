@@ -25,6 +25,7 @@ Before running the scans, SSH into the Serenity board and set it up:
 
     source setup_320_biFF.sh # For board 03
     source setup_320_alpha.sh # For board 04
+    ./optical_eval/configure_clocks.sh # for SerA board to configure the clocks before configuring the FPGA
 
 This will enter SMASH in interactive mode at the end. To run the `Scans/BTScanAll.tcl`, or any other script that includes SSHing to the board to modify settings using SMASH, make sure to exit SMASH interacative mode (escape key) before running the script or it will get stuck. Also, make sure to have an SSH key set up on the board to avoid the password.
 
@@ -37,9 +38,14 @@ When done with the scans, power off something by doing (probably a quicker way t
 
 Start Vivado and open Hardware Manager. In the Hardware Menu to the left, press the Auto Link button (looks like two sideways Y's) to get a list of all the connected devices. For board 03 (board 04), right-click on `Digilent/210249A847C1` (`Xilinx/00000000000000`) and press Open Target. This will close any other devices that might be open. Once the desired device open, right-click on the FPGA ku15p (xcvu7p) and press Program Device to run a bitstream file from the `BitFiles/` folder. In the top menu, go to Tools, and then to Run Tcl Script. Then, run a script to generate the links from the `GenerateLinks/` folder. Links should be listed in the Serial I/O Links tab. Everything is now set up to run the scans.
 
+for SerA start vivado at the root of the optics-scan project. Then, in vivado TCL run "source ./BitFiles/SerA/configure_device.tcl" to configure the FPGA, the cable should be `/Xilinx/000015de453601`
+and run "source ./GenerateLinks/SerA/b14_create_links_b129-130-131.tcl" to create the links 
+
 ## Run Scans
 
 Make sure the steps in Setup has been made. The final results will be written to a `results/` folder. It will save information about all the bathtub scans, where a summary can be found in `configuration_summary.json`. Information about the bit rate error (BER) of every scan can be found in `BER_summary.txt`. For easier comparison, the `best_area_summary.json` saves one value with the best open area from the bathtub scan (Note: doesn't save multiple values if other settings give the same open area). All the settings with the largest open area that gives the lowest errors, are saved in `best_error_summary.json`.
+
+for SerA run in vivado "source ./Scans/SerA-2/SerA-2-BTScan-BER-Tx.tcl" to run the scans
 
 ### Run Interactively
 
