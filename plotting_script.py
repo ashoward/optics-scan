@@ -484,10 +484,6 @@ class AmazingClassName():
                     for j in x_range:
                         text = axes.text(j, i, convert_int_prefix(secondary_dict[link][i, j]), ha="center", va="center", color="black", fontsize=5)
     
-            # Don't plot NaN
-            current_cmap = matplotlib.cm.get_cmap().copy()
-            current_cmap.set_bad(color='white')
-    
             # Increment row and column counters
             if c < ncols-1:
                 c += 1
@@ -608,7 +604,7 @@ if args.rx:
                                               output_name="rx_openArea_error_%s_%s" % (tx_cfg.replace(",", "_").replace(" ", ""), link)
                                              )
 
-    # All links in the same plot
+    # # All links in the same plot
     # for tx_cfg in amazing_thing.tx_cfgs:
     #     amazing_thing.plotArrays(primary_dict=amazing_thing.openA_rx_dict[tx_cfg],
     #                              secondary_dict=amazing_thing.error_rx_dict[tx_cfg],
@@ -642,7 +638,7 @@ if args.rx:
                                       output_name="rx_good_links_%s" % (tx_cfg.replace(",", "_").replace(" ", ""))
                                      )
 
-    # Plot number of super good links, cut on both error and open area
+    # # Plot number of super good links, cut on both error and open area
     # for tx_cfg in amazing_thing.tx_cfgs:
     #     amazing_thing.plotSingleArray(primary_array=amazing_thing.super_good_links_rx[tx_cfg],
     #                                   secondary_array=amazing_thing.super_good_links_rx[tx_cfg],
@@ -650,6 +646,6 @@ if args.rx:
     #                                   title="%s, number of super good links: 0 Errors, Open Area>%i%%\n%s" % (amazing_thing.plotTitle, amazing_thing.openarea_cut, tx_cfg),
     #                                   cbar_label="Number of super good links",
     #                                   cbar_limits=(0,len(amazing_thing.link_dict)),
-    #                                   output_name="rx_super_good_links_%s" % (rx_cfg.replace(",", "_").replace(" ", ""))
+    #                                   output_name="rx_super_good_links_%s" % (tx_cfg.replace(",", "_").replace(" ", ""))
     #                                  )
 
