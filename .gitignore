@@ -13,3 +13,6 @@
 
 # MacOS files
 .DS_Store
+
+# gedit autosave
+*~
