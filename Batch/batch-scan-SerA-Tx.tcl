@@ -1,5 +1,5 @@
 # Script to run scans in batch mode
-# Syntax: vivado -mode batch -source Batch/batch-scan-SerA-All.tcl
+# Syntax: vivado -mode batch -source Batch/batch-scan-SerA-Tx.tcl
 
 open_hw_manager
 connect_hw_server -allow_non_jtag
@@ -14,4 +14,4 @@ refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xcvu9p_0] 0]
 source ./GenerateLinks/SerA/b14_create_links_b129-130-131.tcl
 
 # Run scan
-source ./Scans/SerA-2/SerA-2-BTScan-BER-All.tcl
+source ./Scans/SerA-2/SerA-2-BTScan-BER-Tx.tcl
