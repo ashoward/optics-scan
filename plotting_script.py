@@ -9,7 +9,6 @@ import pandas as pd
 from sklearn.manifold import TSNE
 import numpy as np
 import seaborn as sns
-from collections import defaultdict
 
 # Argument parser
 parser = argparse.ArgumentParser(description="Reads scan data and makes plots.", formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -388,6 +387,7 @@ class AmazingClassName():
             hue="Link",
             palette=sns.color_palette("hls", len(self.link_dict)),
             style=None if only_good_configs else "Errors",
+            style_order=None if only_good_configs else ["True", "False-ish (<1000 errors)", "False"],
             markers=['o'] if only_good_configs else ['X', 's', 'o'],
             legend="full",
             alpha=0.4
