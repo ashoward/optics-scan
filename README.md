@@ -67,12 +67,14 @@ It is also possible to set the open area cut using the `--open_area` flag.
 ### in the ZynqMP
 0. ssh to ZynqMP `ssh root@128.141.223.196` and reset FF `./optical_eval/reset_ff.sh` 
 1. `./optical_eval/configure_clocks.sh` # for SerA board to configure the clocks before configuring the FPGA
-### in the Host PC
+### in the Host PC Interactively
 2. start vivado at the root of the optics-scan project. 
 3. in vivado TCL run `source ./BitFiles/SerA/configure_device.tcl` to configure the FPGA, the cable should be `/Xilinx/000015de453601`
 4. in vivado TCL run `source ./GenerateLinks/SerA/b14_create_links_b129-130-131.tcl` to create the links 
 5. in vivado `source ./Scans/SerA-2/SerA-2-BTScan-BER-Tx.tcl` to run the scans
 6. run the plot script
+### in the Host PC Batch mode
+2. start vivado at the root of the optics-scan project `vivado -mode batch -source Batch/batch-scan-SerA-All.tcl`
 
 ## Measurements Log
 
