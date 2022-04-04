@@ -94,6 +94,19 @@ It is also possible to set the open area cut using the `--open_area` flag.
 | SerA    | KIT May2021                         | SerA-2_BTScan_BER_Tx_2022-03-XX        | TX scan             |
 | SerA    | KIT May2021                         | SerA-2_BTScan_BER_All_2022-03-XX       | RX scan             |
 
+## Firefly Part Numbers
+
+| ID   | Name         | Part Number      | Serial Number | Firmware Version |
+|------|--------------|------------------|---------------|------------------|
+| TX#1 | IC May2021   |                  |               |                  |
+| RX#1 | IC May2021   |                  |               |                  |
+| TX#2 | IC Sept2021  |                  |               |                  |
+| RX#2 | IC Sept2021  |                  |               |                  |
+| TX#3 | KIT Sept2021 | ECUOT12251000513 | UA21090373    | 0x00120216       |
+| RX#3 | KIT Sept2021 | ECUOR12251000513 | UA202509Y0    | 0x0013021F       |
+| TX#4 | KIT May2021  |                  |               |                  |
+| RX#4 | KIT May2021  |                  |               |                  |
+
 ## Useful Links
 
 1. [Serenity Documentation](https://serenity.web.cern.ch/serenity/)
