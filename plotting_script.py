@@ -388,6 +388,7 @@ class AmazingClassName():
             hue="Link",
             palette=sns.color_palette("hls", len(self.link_dict)),
             style=None if only_good_configs else "Errors",
+            style_order=None if only_good_configs else ["True", "False-ish (<1000 errors)", "False"],
             markers=['o'] if only_good_configs else ['X', 's', 'o'],
             legend="full",
             alpha=0.4
@@ -648,4 +649,3 @@ if args.rx:
     #                                   cbar_limits=(0,len(amazing_thing.link_dict)),
     #                                   output_name="rx_super_good_links_%s" % (tx_cfg.replace(",", "_").replace(" ", ""))
     #                                  )
-

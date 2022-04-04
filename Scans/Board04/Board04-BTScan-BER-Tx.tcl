@@ -12,6 +12,7 @@ set folderTime [clock format $systemTime -format %Y-%m-%d-%H%M]
 # Output folder
 set folderName "/home/meholmbe/optics-scan/results/Board04_BTScan_BER_Tx_$folderTime"
 # Board name
+set board "xcvu7p_0"
 set boardName "cmx@serenity-2368-04-i5.cern.ch"
 # Paths to scripts on the board
 set setEqScript "ahoward/picocom/setPre.sh"
@@ -229,10 +230,10 @@ set dfe_default 0
 # Set optical configurations default
 # Remember to exit the Smash interactive shell, or the script will be stuck here
 puts "Setting amplitude $rxamp_default..."
-catch {exec -ignorestderr ssh $boardName "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
+catch {exec -ignorestderr ssh $boardName "source $setAmpScript $rxamp_default"} rxamp_value
 while { $rxamp_value == "child process exited abnormally" } {
 puts "Set Amp i2c error: $rxamp_value"
-catch {exec -ignorestderr ssh $boardName "source ahoward/picocom/setAmp.sh $rxamp_default"} rxamp_value
+catch {exec -ignorestderr ssh $boardName "source $setAmpScript $rxamp_default"} rxamp_value
 }
 puts "Amplitude value: $rxamp_value"
 
@@ -399,8 +400,8 @@ foreach group $groups {
                 set DFE_enabled [ get_property RXDFEENABLED  $link ]
 
                 # Measure BER and error count
-                # Do it after the bathtub scan or one get an "incorrect" error count
-                refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xcvu7p_0] 0] 
+                # Do it after the bathtub scan or one gets an "incorrect" error count
+                refresh_hw_device -update_hw_probes false [lindex [get_hw_devices $board] 0] 
                 set_property LOGIC.MGT_ERRCNT_RESET_CTRL 1 [get_hw_sio_links $link]
                 commit_hw_sio [get_hw_sio_links $link]
                 set_property LOGIC.MGT_ERRCNT_RESET_CTRL 0 [get_hw_sio_links $link]

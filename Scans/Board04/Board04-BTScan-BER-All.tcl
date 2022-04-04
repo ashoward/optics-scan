@@ -12,6 +12,7 @@ set folderTime [clock format $systemTime -format %Y-%m-%d-%H%M]
 # Output folder
 set folderName "/home/meholmbe/optics-scan/results/Board04_BTScan_BER_All_$folderTime"
 # Board name
+set board "xcvu7p_0"
 set boardName "cmx@serenity-2368-04-i5.cern.ch"
 # Paths to scripts on the board
 set setEqScript "ahoward/picocom/setPre.sh"
@@ -215,7 +216,6 @@ array set rxamp_setting {
   1 High
   2 Low
   3 Medium
-  4 Off
 }
 # All possible amplitude values
   # 1 High
@@ -433,8 +433,8 @@ foreach group $groups {
                     set DFE_enabled [ get_property RXDFEENABLED  $link ]
 
                     # Measure BER and error count
-                    # Do it after the bathtub scan or one get an "incorrect" error count
-                    refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xcvu7p_0] 0] 
+                    # Do it after the bathtub scan or one gets an "incorrect" error count
+                    refresh_hw_device -update_hw_probes false [lindex [get_hw_devices $board] 0] 
                     set_property LOGIC.MGT_ERRCNT_RESET_CTRL 1 [get_hw_sio_links $link]
                     commit_hw_sio [get_hw_sio_links $link]
                     set_property LOGIC.MGT_ERRCNT_RESET_CTRL 0 [get_hw_sio_links $link]

@@ -18,6 +18,7 @@ Clone this repo into the machine, with Vivado installed, you want to run the sca
 
     git clone git@github.com:meisonlikesicecream/optics-scan.git
     cd optics-scan/
+    pip3 install -r requirements.txt
 
 #### On the Serenity Board
 
