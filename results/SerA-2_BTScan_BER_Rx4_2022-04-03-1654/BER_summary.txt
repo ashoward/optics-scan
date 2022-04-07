@@ -1,0 +1,1010 @@
+Link: 
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 0 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 85824936400
+Errors: 0
+BER   : 1.165162529616509e-11
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 1 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 84278076880
+Errors: 0
+BER   : 1.186548194999582e-11
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 2 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 91792458160
+Errors: 0
+BER   : 1.0894141196839259e-11
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 3 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 102819054240
+Errors: 0
+BER   : 9.725823753112942e-12
+OpenA : 71.875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 4 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 135552216000
+Errors: 0
+BER   : 7.3772309262727206e-12
+OpenA : 71.875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 5 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 119404711840
+Errors: 0
+BER   : 8.3748788853490187e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 6 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 129217104560
+Errors: 0
+BER   : 7.7389135393887819e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 7 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 125217585040
+Errors: 0
+BER   : 7.9860987550634841e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 8 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 158240598480
+Errors: 0
+BER   : 6.319490760308201e-12
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 9 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 155820323760
+Errors: 0
+BER   : 6.4176480697103132e-12
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 10 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 178932374960
+Errors: 6
+BER   : 3.3532221328539837e-11
+OpenA : 73.4375
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 11 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 161764329440
+Errors: 0
+BER   : 6.1818325675495103e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 0 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 85863806880
+Errors: 0
+BER   : 1.1646350614264775e-11
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 1 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 83405279680
+Errors: 0
+BER   : 1.1989648662970589e-11
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 2 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 105283310480
+Errors: 0
+BER   : 9.4981815773162228e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 3 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 103190687440
+Errors: 0
+BER   : 9.6907969586058616e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 4 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 122186357200
+Errors: 0
+BER   : 8.1842197681952002e-12
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 5 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 120819887760
+Errors: 0
+BER   : 8.2767830573260256e-12
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 6 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 141153226640
+Errors: 0
+BER   : 7.0844997581983722e-12
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 7 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 124947926480
+Errors: 0
+BER   : 8.0033340942241778e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 8 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 158581857920
+Errors: 0
+BER   : 6.3058915636142397e-12
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 9 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 156678275280
+Errors: 0
+BER   : 6.3825057954773783e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 10 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 165043448480
+Errors: 3
+BER   : 1.8177031730911395e-11
+OpenA : 73.4375
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-High RXEMP-0 Scan Link Group B129-130-131 link 11 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : High
+rxEmp : 0
+Bits  : 174812935600
+Errors: 0
+BER   : 5.7204004759016245e-12
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 0 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 87058441600
+Errors: 0
+BER   : 1.1486536878234219e-11
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 1 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 83625082080
+Errors: 0
+BER   : 1.195813475009028e-11
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 2 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 105837825680
+Errors: 0
+BER   : 9.4484178371492029e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 3 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 89374988400
+Errors: 0
+BER   : 1.1188812641009529e-11
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 4 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 122841777360
+Errors: 0
+BER   : 8.1405530064043358e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 5 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 120032008640
+Errors: 0
+BER   : 8.3311111038656366e-12
+OpenA : 71.875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 6 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 129385112240
+Errors: 0
+BER   : 7.7288644936603868e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 7 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 138043294160
+Errors: 0
+BER   : 7.2441041492456951e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 8 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 157913630640
+Errors: 0
+BER   : 6.3325755727808404e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 9 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 155483630480
+Errors: 0
+BER   : 6.431545217415224e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 10 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 164949753520
+Errors: 15
+BER   : 9.093678335312738e-11
+OpenA : 75.0
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 11 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 162577165280
+Errors: 0
+BER   : 6.1509253053941551e-12
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 0 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 85814030240
+Errors: 0
+BER   : 1.1653106108677737e-11
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 1 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 97775616160
+Errors: 0
+BER   : 1.0227498831238253e-11
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 2 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 104788797120
+Errors: 0
+BER   : 9.5430048581895578e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 3 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 88625774320
+Errors: 0
+BER   : 1.1283399300854763e-11
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 4 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 134958889920
+Errors: 0
+BER   : 7.4096637916388696e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 5 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 119899662000
+Errors: 0
+BER   : 8.3403070810991944e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 6 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 141606219920
+Errors: 0
+BER   : 7.0618366944965192e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 7 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 124427948240
+Errors: 0
+BER   : 8.0367796314632858e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 8 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 159432614320
+Errors: 0
+BER   : 6.2722423781678854e-12
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 9 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 156045260480
+Errors: 0
+BER   : 6.4083971337800933e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 10 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 164068676080
+Errors: 377
+BER   : 2.2978182612759947e-09
+OpenA : 73.4375
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Low RXEMP-0 Scan Link Group B129-130-131 link 11 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Low
+rxEmp : 0
+Bits  : 173887915120
+Errors: 0
+BER   : 5.7508309264039438e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 0 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 100550928000
+Errors: 0
+BER   : 9.9452090586374301e-12
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 1 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 83647792800
+Errors: 0
+BER   : 1.1954888067291597e-11
+OpenA : 64.0625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 2 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 105137955520
+Errors: 0
+BER   : 9.5113129702220019e-12
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 3 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 101691016400
+Errors: 0
+BER   : 9.8337103453319398e-12
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 4 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 122262996400
+Errors: 0
+BER   : 8.179089581023878e-12
+OpenA : 71.875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 5 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 120214832880
+Errors: 0
+BER   : 8.318441044610634e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 6 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 140732511920
+Errors: 0
+BER   : 7.1056786122630593e-12
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 7 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 124392067760
+Errors: 0
+BER   : 8.0390978139328266e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 8 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 158583561360
+Errors: 0
+BER   : 6.3058238282964489e-12
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 9 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 154669046400
+Errors: 0
+BER   : 6.4654177631239346e-12
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 10 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 176317073840
+Errors: 133
+BER   : 7.5432286336995166e-10
+OpenA : 71.875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-1.94 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 11 : 
+txDiff: 870
+txPre : 1.94
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 163673637040
+Errors: 0
+BER   : 6.1097194275435529e-12
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 0 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 87406135440
+Errors: 0
+BER   : 1.1440844455209334e-11
+OpenA : 68.75
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 1 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 83220721120
+Errors: 0
+BER   : 1.201623810202331e-11
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 2 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 92000312240
+Errors: 0
+BER   : 1.0869528327157339e-11
+OpenA : 64.0625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 3 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 90018001840
+Errors: 0
+BER   : 1.1108889106174811e-11
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 4 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 122163472000
+Errors: 0
+BER   : 8.1857529393074228e-12
+OpenA : 71.875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 5 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 132338276320
+Errors: 0
+BER   : 7.5563928124766732e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 6 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 128551853200
+Errors: 0
+BER   : 7.7789621472372521e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 7 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 124904195520
+Errors: 0
+BER   : 8.0061361897157191e-12
+OpenA : 67.1875
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 8 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 158172000960
+Errors: 0
+BER   : 6.322231456456628e-12
+OpenA : 70.3125
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 9 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 155394932400
+Errors: 0
+BER   : 6.4352162876580392e-12
+OpenA : 65.625
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 10 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 164885262240
+Errors: 0
+BER   : 6.0648234197210565e-12
+OpenA : 73.4375
+DFE   : lpm
+
+lpm TXDIFF-870 TXPOST-0.00 TXPRE-2.21 TXEQ-6 RXTERM-800 RXAMP-Medium RXEMP-0 Scan Link Group B129-130-131 link 11 : 
+txDiff: 870
+txPre : 2.21
+txPost: 0.00
+txEq  : 6
+rxTerm: 800
+rxAmp : Medium
+rxEmp : 0
+Bits  : 161067414240
+Errors: 0
+BER   : 6.2085804550754179e-12
+OpenA : 67.1875
+DFE   : lpm
+
